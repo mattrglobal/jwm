@@ -28,25 +28,26 @@
     <date day="6" month="December" year="2019"/>
 
     <abstract>
-      <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that are suitable 
-      for transfer over a variety of transport protocols. JWM's through appropriate application of the JOSE specifications have 
-      the ability to achieve properties such as integrity protection and or audience protection, this specification defines how 
-      the protected formats defined by JOSE can be leveraged.</t>
+      <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
+      for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
+      Encryption (JWE) can be digitally signed, integrity protected and or audience protected via encryption.</t>
     </abstract>
   </front>
 
   <middle>
     <section anchor="introduction" title="Introduction">
-      <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that are suitable for
-      transfer over a variety of transport protocols. JWM's through appropriate application of the JOSE specifications have the 
-      ability to achieve properties such as integrity protection and or audience protection, this specification defines how the protected
-      formats defined by JOSE can be leveraged. JWM's are inspired by JWT's <xref target="RFC7519"/>, more details about this relationship 
-      is documented in the section "Relationship to JWT".</t>
+      <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
+      for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
+      Encryption (JWE) can be digitally signed, integrity protected and or audience protected via encryption. JWMs are inspired 
+      by JWTs <xref target="RFC7519"/>, more details about this relationship is documented in the section "Relationship to JWT".</t>
 
       <section anchor="notational-conventions" title="Notational Conventions">
-        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-        document are to be interpreted as described in RFC 2119, BCP 14 <xref target="RFC2119"/> and indicate requirement levels for compliant CoAP
-        implementations.</t>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+        "OPTIONAL" in this document are to be interpreted as described in BCP 14
+        <xref target="RFC2119">RFC 2119</xref> <xref target="RFC8174">RFC
+        8174</xref> when, and only when, they appear in all capitals, as shown
+        here.</t>
       </section>
 
       <section anchor="terminology" title="Terminology">
@@ -57,18 +58,19 @@
 
         <t>The terms "StringOrURI", "NumericDate" are defined by the JWT specification <xref target="RFC7519"/>.</t>
 
-        <t>The follwing terms are defined by this specification:</t>
+        <t>The following terms are defined by this specification:</t>
 
         <t>
           <list style="hanging">
-            <t hangText="Attribute">A piece of information contained inside a message from a sender intended for a recipient or. An attribute is represented as a name/value pair 
+            <t hangText="Attribute">A piece of information contained inside a message sent from a sender intended for a recipient or recipients. An attribute is represented as a name/value pair 
             consisting of an Attribute Name and an Attribute Value.</t>
 
-            <t hangText="Attribute Name">The name portion of an attribute representation. An Attribute Name is always a string.</t>
+            <t hangText="Attribute Name">The name portion of an attribute representation. An attribute name is always a string.</t>
 
-            <t hangText="Attribute Value">The value portion of an attribute representation. An Attribute Value can be any JSON value.</t>
+            <t hangText="Attribute Value">The value portion of an attribute representation. An attribute value can be any JSON value.</t>
 
-            <t hangText="Nested JWM">A JWM in which nested signing and/or encryption are employed. In Nested JWM's, a JWM is used as the payload or plaintext value of an enclosing JWS or JWE structure, respectively.</t>
+            <t hangText="Nested JWM">A JWM in which nested signing and/or encryption are employed. In Nested JWMs, a JWM is used as the payload or plaintext value of an enclosing 
+            JWS or JWE structure, respectively.</t>
 
             <t hangText="Unsecured JWM">A JWM whose attributes are not integrity protected or encrypted.</t>
           </list>
@@ -79,31 +81,31 @@
     <section anchor="json-web-message-jwm-overview" title="JSON Web Message (JWM) Overview">
       <section anchor="relationship-to-jwt" title="Relationship to JWT">
 
-        <t>JWM's conceptually share many parallels to JWT's, these similarities can be sumarized in the following way.</t>
+        <t>JWMs conceptually share many parallels to JWTs, these similarities can be summarized in the following way.</t>
           <t>
             <list style="symbols">
-              <t>A JWM contains a JSON based payload, where public attributes are defined in a JOSE IANA registry, similar in nature to public JWT claims 
-              and the JWT claims registry.</t>
-              <t>A JWM leverages the JOSE formats of JWS and JWE in a similar manner to acheive a confidential and integrity protected payload when required.</t>
+              <t>A JWM contains a JSON based payload comprised of attributes, where public attributes are defined in a JOSE IANA registry, similar in nature to 
+              public JWT claims and the JWT claims registry.</t>
+              <t>A JWM leverages the JOSE formats of JWS and JWE in a similar manner to achieve a confidential and integrity protected payload when required.</t>
             </list>
           </t>
 
-          <t>JWM's also deviate in several important ways from JWT's which prevents the ability of a JWM to simply use and extended the JWT specification.</t>
+          <t>JWMs also deviate in several important ways from JWTs which prevents the ability of a JWM to simply use and extended the JWT specification.</t>
             <t>
               <list style="symbols">
-                <t>JWT's in their pursuit for compactness require the usage of compact serialization for both JWS and JWE representations, this compact serialization 
-                requirement for JWE limits JWT's to only being able to encrypt a payload to one logical recipient.</t>
-                <t>JWM's do not use the compact serialization of JWE, instead they use the JSON based serialization of JWE, which allows for a JWM to be prepared for 
+                <t>JWTs in their pursuit for compactness require the usage of compact serialization for both JWS and JWE representations, this compact serialization 
+                requirement for JWE limits JWTs to only being able to encrypt a payload to one logical recipient.</t>
+                <t>JWMs do not use the compact serialization of JWE, instead they use the JSON based serialization of JWE, which allows for a JWM to be prepared for 
                 multiple recipients.</t>
                 <t>The intent of a JWM is different to a JWT. A JWM is about a sender creating a message composed of attributes that are destined for a recipient or 
-                recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience. This difference in language means a meaningful seperation 
+                recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience. This difference in language means a meaningful separation 
                 of the terminology is required to limit confusion.</t>
-                <t>Breavity - JWT's driven by the usecases they are designed for, made choices around keeping their representation as concise as possible. JWM's on the
+                <t>Brevity - JWTs driven by the use cases they are designed for, made choices around keeping their representation as concise as possible. JWMs on the
                 other hand do not operate with the same constraints. ..?TODO</t>
               </list>
             </t>
 
-          <t>In the spirit of specification re-use, this specification is inspired by the work of the <eref target="https://tools.ietf.org/html/rfc7519">JWT</eref> RFC in order to promote understanding and enhance re-use of the applicable concepts namely JWS and JWE.</t>
+          <t>In the spirit of specification re-use and promoting ease of understanding, this specifications structure is inspired by <eref target="https://tools.ietf.org/html/rfc7519">JWT</eref>.</t>
       </section>
       
       <section anchor="example-jwm" title="Example JWM">
@@ -151,7 +153,7 @@
 
       <t>There are three classes of JWM Attribute Names: Registered Attribute Names, Public Attribute Names, and Private Attribute Names.</t>
 
-        <section anchor="registered-attribute-names" title="Registed Attribute Names">
+        <section anchor="registered-attribute-names" title="Registered Attribute Names">
           <t>The following Attribute Names are registered in the IANA "JSON Web Message
           Attributes" registry established by Section 10.1.  None of the attributes
           defined below are intended to be mandatory to use or implement in all
@@ -189,13 +191,14 @@
         </section>
 
         <section anchor="attributes-thread-id" title="&quot;thread_id&quot; Attribute">
-          <t>The "thread_id" attribute is used to define a unique identifier for the message thread (link) that the JWM is associated to. Use of this attribute 
-          is OPTIONAL. However the "thread_id" attribute is required if the "referent_id" attribute is being used.</t>
+          <t>The "thread_id" attribute is used to associate the JWM to a group of related messages often refered to as a thread. The "thread_id" attribute value 
+          is a case-sensitive string containing a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute 
+          is OPTIONAL.</t>
         </section>
 
         <section anchor="attributes-referent-id" title="&quot;referent_id&quot; Attribute">
-          <t>The "referent_id" attribute is used to associated the JWM directly to another JWM that is also a member of the current message thread (link), indicated 
-          by the "thread_id" attribute. Use of this attribute is OPTIONAL.</t>
+          <t>The "referent_id" attribute is used to associated the JWM directly to another JWM. The "referent_id" attribute value is a case-sensitive string containing 
+          a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
 
         <section anchor="attributes-time-stamp" title="&quot;time_stamp&quot; Attribute">
@@ -219,7 +222,7 @@
         </section>
 
         <section anchor="public-attribute-names" title="Public Attribute Names">
-          <t>Attribute Names can be defined at will by those using JWM's.  However, in order to prevent collisions, any new Attribute Name should either be 
+          <t>Attribute Names can be defined at will by those using JWMs.  However, in order to prevent collisions, any new Attribute Name should either be 
           registered in the IANA "JSON Web Message Attributes" registry established by Section 10.1 or be a Public Name: a value that contains a Collision-Resistant Name. 
           In each case, the definer of the name or value needs to take reasonable precautions to make sure they are in control of the part of the namespace they use to 
           define the Attribute Name.</t>
@@ -501,60 +504,60 @@
         </section>
 
         <section anchor="initial-registry-contents-registration-template" title="Initial Registry Contents">
-          <t>o  Attribute Name: "id"</t>
-          <t>o  Attribute Description: Message ID</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "id"<vspace/>
+          o  Attribute Description: Message ID<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "type"</t>
-          <t>o  Attribute Description: Message Type</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "type"<vspace/>
+          o  Attribute Description: Message Type<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "body"</t>
-          <t>o  Attribute Description: Message Body</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "body"<vspace/>
+          o  Attribute Description: Message Body<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "to"</t>
-          <t>o  Attribute Description: Message Recipients</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "to"<vspace/>
+          o  Attribute Description: Message Recipients<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "from"</t>
-          <t>o  Attribute Description: Message From</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "from"<vspace/>
+          o  Attribute Description: Message From<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "thread_id"</t>
-          <t>o  Attribute Description: Message Thread ID</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "thread_id"<vspace/>
+          o  Attribute Description: Message Thread ID<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "referent_id"</t>
-          <t>o  Attribute Description: Message Referent ID</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "referent_id"<vspace/>
+          o  Attribute Description: Message Referent ID<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "time_stamp"</t>
-          <t>o  Attribute Description: Message Timestamp</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "time_stamp"<vspace/>
+          o  Attribute Description: Message Timestamp<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "expiry"</t>
-          <t>o  Attribute Description: Message Expiry</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "expiry"<vspace/>
+          o  Attribute Description: Message Expiry<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "reply_url"</t>
-          <t>o  Attribute Description: Message Reply URL</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "reply_url"<vspace/>
+          o  Attribute Description: Message Reply URL<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "reply_to"</t>
-          <t>o  Attribute Description: Message Reply To</t>
-          <t>o  Change Controller:</t>
-          <t>o  Specification Document(s):</t>
+          <t>o  Attribute Name: "reply_to"<vspace/>
+          o  Attribute Description: Message Reply To<vspace/>
+          o  Change Controller:<vspace/>
+          o  Specification Document(s):</t>
         </section>
       </section>
     </section>
@@ -634,6 +637,7 @@
       <?rfc include='reference.RFC.7516.xml'?>
       <?rfc include='reference.RFC.7518.xml'?>
       <?rfc include='reference.RFC.7159.xml'?>
+      <?rfc include='reference.RFC.8174.xml'?>
     </references>
   </back>
 </rfc>

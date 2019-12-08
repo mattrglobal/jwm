@@ -14,12 +14,11 @@ Expires: June 8, 2020
 Abstract
 
    JSON Web Message (JWM) is a flexible way of describing an
-   application-level message encoded in JSON that are suitable for
-   transfer over a variety of transport protocols.  JWM's through
-   appropriate application of the JOSE specifications have the ability
-   to achieve properties such as integrity protection and or audience
-   protection, this specification defines how the protected formats
-   defined by JOSE can be leveraged.
+   application-level message encoded in JSON that is suitable for
+   transfer over a variety of transport protocols.  JWMs through the
+   application of JSON Web Signature (JWS) and JSON Web Encryption (JWE)
+   can be digitally signed, integrity protected and or audience
+   protected via encryption.
 
 Status of This Memo
 
@@ -53,6 +52,7 @@ Copyright Notice
 
 
 
+
 Looker                    Expires June 8, 2020                  [Page 1]
 
 Internet-Draft                     jwm                     December 2019
@@ -70,7 +70,7 @@ Table of Contents
      2.1.  Relationship to JWT . . . . . . . . . . . . . . . . . . .   4
      2.2.  Example JWM . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  JWM Attributes  . . . . . . . . . . . . . . . . . . . . . . .   5
-     3.1.  Registed Attribute Names  . . . . . . . . . . . . . . . .   6
+     3.1.  Registered Attribute Names  . . . . . . . . . . . . . . .   6
      3.2.  "id" Attribute  . . . . . . . . . . . . . . . . . . . . .   6
      3.3.  "type" Attribute  . . . . . . . . . . . . . . . . . . . .   6
      3.4.  "body" Attribute  . . . . . . . . . . . . . . . . . . . .   6
@@ -88,11 +88,11 @@ Table of Contents
      4.1.  "typ" (Type) Header Parameter . . . . . . . . . . . . . .   8
      4.2.  "cty" (Content Type) Header Parameter . . . . . . . . . .   9
      4.3.  Replicating Attributes as Header Parameters . . . . . . .   9
-   5.  Unsecured JWMs  . . . . . . . . . . . . . . . . . . . . . . .   9
+   5.  Unsecured JWMs  . . . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  Example Unsecured JWM . . . . . . . . . . . . . . . . . .  10
-   6.  Creating and Validating JWMs  . . . . . . . . . . . . . . . .  10
-     6.1.  Creating a JWM  . . . . . . . . . . . . . . . . . . . . .  10
-     6.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  11
+   6.  Creating and Validating JWMs  . . . . . . . . . . . . . . . .  11
+     6.1.  Creating a JWM  . . . . . . . . . . . . . . . . . . . . .  11
+     6.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  12
      6.3.  String Comparison Rules . . . . . . . . . . . . . . . . .  13
    7.  Implementation Requirements . . . . . . . . . . . . . . . . .  13
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
@@ -114,7 +114,7 @@ Looker                    Expires June 8, 2020                  [Page 2]
 Internet-Draft                     jwm                     December 2019
 
 
-     10.2.  Signing and Encryption Order . . . . . . . . . . . . . .  17
+     10.2.  Signing and Encryption Order . . . . . . . . . . . . . .  16
    11. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  17
    12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
@@ -125,22 +125,21 @@ Internet-Draft                     jwm                     December 2019
 1.  Introduction
 
    JSON Web Message (JWM) is a flexible way of describing an
-   application-level message encoded in JSON that are suitable for
-   transfer over a variety of transport protocols.  JWM's through
-   appropriate application of the JOSE specifications have the ability
-   to achieve properties such as integrity protection and or audience
-   protection, this specification defines how the protected formats
-   defined by JOSE can be leveraged.  JWM's are inspired by JWT's
-   [RFC7519], more details about this relationship is documented in the
-   section "Relationship to JWT".
+   application-level message encoded in JSON that is suitable for
+   transfer over a variety of transport protocols.  JWMs through the
+   application of JSON Web Signature (JWS) and JSON Web Encryption (JWE)
+   can be digitally signed, integrity protected and or audience
+   protected via encryption.  JWMs are inspired by JWTs [RFC7519], more
+   details about this relationship is documented in the section
+   "Relationship to JWT".
 
 1.1.  Notational Conventions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119, BCP 14
-   [RFC2119] and indicate requirement levels for compliant CoAP
-   implementations.
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 RFC 2119 [RFC2119] RFC 8174 [RFC8174] when, and only when, they
+   appear in all capitals, as shown here.
 
 1.2.  Terminology
 
@@ -154,14 +153,15 @@ Internet-Draft                     jwm                     December 2019
    The terms "StringOrURI", "NumericDate" are defined by the JWT
    specification [RFC7519].
 
-   The follwing terms are defined by this specification:
+   The following terms are defined by this specification:
 
-   Attribute  A piece of information contained inside a message from a
-      sender intended for a recipient or.  An attribute is represented
-      as a name/value pair consisting of an Attribute Name and an
-      Attribute Value.
+   Attribute  A piece of information contained inside a message sent
+      from a sender intended for a recipient or recipients.  An
+      attribute is represented as a name/value pair consisting of an
+      Attribute Name and an Attribute Value.
 
-
+   Attribute Name  The name portion of an attribute representation.  An
+      attribute name is always a string.
 
 
 
@@ -170,14 +170,11 @@ Looker                    Expires June 8, 2020                  [Page 3]
 Internet-Draft                     jwm                     December 2019
 
 
-   Attribute Name  The name portion of an attribute representation.  An
-      Attribute Name is always a string.
-
    Attribute Value  The value portion of an attribute representation.
-      An Attribute Value can be any JSON value.
+      An attribute value can be any JSON value.
 
    Nested JWM  A JWM in which nested signing and/or encryption are
-      employed.  In Nested JWM's, a JWM is used as the payload or
+      employed.  In Nested JWMs, a JWM is used as the payload or
       plaintext value of an enclosing JWS or JWE structure,
       respectively.
 
@@ -188,36 +185,39 @@ Internet-Draft                     jwm                     December 2019
 
 2.1.  Relationship to JWT
 
-   JWM's conceptually share many parallels to JWT's, these similarities
-   can be sumarized in the following way.
+   JWMs conceptually share many parallels to JWTs, these similarities
+   can be summarized in the following way.
 
-   o  A JWM contains a JSON based payload, where public attributes are
-      defined in a JOSE IANA registry, similar in nature to public JWT
-      claims and the JWT claims registry.
+   o  A JWM contains a JSON based payload comprised of attributes, where
+      public attributes are defined in a JOSE IANA registry, similar in
+      nature to public JWT claims and the JWT claims registry.
 
    o  A JWM leverages the JOSE formats of JWS and JWE in a similar
-      manner to acheive a confidential and integrity protected payload
+      manner to achieve a confidential and integrity protected payload
       when required.
 
-   JWM's also deviate in several important ways from JWT's which
-   prevents the ability of a JWM to simply use and extended the JWT
+   JWMs also deviate in several important ways from JWTs which prevents
+   the ability of a JWM to simply use and extended the JWT
    specification.
 
-   o  JWT's in their pursuit for compactness require the usage of
-      compact serialization for both JWS and JWE representations, this
-      compact serialization requirement for JWE limits JWT's to only
-      being able to encrypt a payload to one logical recipient.
+   o  JWTs in their pursuit for compactness require the usage of compact
+      serialization for both JWS and JWE representations, this compact
+      serialization requirement for JWE limits JWTs to only being able
+      to encrypt a payload to one logical recipient.
 
-   o  JWM's do not use the compact serialization of JWE, instead they
-      use the JSON based serialization of JWE, which allows for a JWM to
-      be prepared for multiple recipients.
+   o  JWMs do not use the compact serialization of JWE, instead they use
+      the JSON based serialization of JWE, which allows for a JWM to be
+      prepared for multiple recipients.
 
    o  The intent of a JWM is different to a JWT.  A JWM is about a
       sender creating a message composed of attributes that are destined
       for a recipient or recipients.  Whereas a JWT is about an issuer
       expressing claims about a subject to an audience.  This difference
-      in language means a meaningful seperation of the terminology is
+      in language means a meaningful separation of the terminology is
       required to limit confusion.
+
+   o  Brevity - JWTs driven by the use cases they are designed for, made
+      choices around keeping their representation as concise as
 
 
 
@@ -226,14 +226,11 @@ Looker                    Expires June 8, 2020                  [Page 4]
 Internet-Draft                     jwm                     December 2019
 
 
-   o  Breavity - JWT's driven by the usecases they are designed for,
-      made choices around keeping their representation as concise as
-      possible.  JWM's on the other hand do not operate with the same
+      possible.  JWMs on the other hand do not operate with the same
       constraints. ..?TODO
 
-   In the spirit of specification re-use, this specification is inspired
-   by the work of the JWT [1] RFC in order to promote understanding and
-   enhance re-use of the applicable concepts namely JWS and JWE.
+   In the spirit of specification re-use and promoting ease of
+   understanding, this specifications structure is inspired by JWT [1].
 
 2.2.  Example JWM
 
@@ -273,6 +270,9 @@ Internet-Draft                     jwm                     December 2019
    in the absence of such requirements, all attributes that are not
    understood by implementations MUST be ignored.
 
+   There are three classes of JWM Attribute Names: Registered Attribute
+   Names, Public Attribute Names, and Private Attribute Names.
+
 
 
 
@@ -282,10 +282,7 @@ Looker                    Expires June 8, 2020                  [Page 5]
 Internet-Draft                     jwm                     December 2019
 
 
-   There are three classes of JWM Attribute Names: Registered Attribute
-   Names, Public Attribute Names, and Private Attribute Names.
-
-3.1.  Registed Attribute Names
+3.1.  Registered Attribute Names
 
    The following Attribute Names are registered in the IANA "JSON Web
    Message Attributes" registry established by Section 10.1.  None of
@@ -333,6 +330,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
+
+
+
 Looker                    Expires June 8, 2020                  [Page 6]
 
 Internet-Draft                     jwm                     December 2019
@@ -347,17 +347,19 @@ Internet-Draft                     jwm                     December 2019
 
 3.7.  "thread_id" Attribute
 
-   The "thread_id" attribute is used to define a unique identifier for
-   the message thread (link) that the JWM is associated to.  Use of this
-   attribute is OPTIONAL.  However the "thread_id" attribute is required
-   if the "referent_id" attribute is being used.
+   The "thread_id" attribute is used to associate the JWM to a group of
+   related messages often refered to as a thread.  The "thread_id"
+   attribute value is a case-sensitive string containing a StringOrURI
+   value.  The processing of this attribute is generally application
+   specific.  Use of this attribute is OPTIONAL.
 
 3.8.  "referent_id" Attribute
 
    The "referent_id" attribute is used to associated the JWM directly to
-   another JWM that is also a member of the current message thread
-   (link), indicated by the "thread_id" attribute.  Use of this
-   attribute is OPTIONAL.
+   another JWM.  The "referent_id" attribute value is a case-sensitive
+   string containing a StringOrURI value.  The processing of this
+   attribute is generally application specific.  Use of this attribute
+   is OPTIONAL.
 
 3.9.  "time_stamp" Attribute
 
@@ -384,8 +386,6 @@ Internet-Draft                     jwm                     December 2019
    The "reply_to" attribute is used to define who a response to the
    message should be sent to.  The "reply_to" attribute value is a case-
    sensitive string containing a StringOrURI value OR an array of case-
-   sensitive strings containing StringOrURI values.  Use of this
-   attribute is OPTIONAL.
 
 
 
@@ -394,16 +394,19 @@ Looker                    Expires June 8, 2020                  [Page 7]
 Internet-Draft                     jwm                     December 2019
 
 
+   sensitive strings containing StringOrURI values.  Use of this
+   attribute is OPTIONAL.
+
 3.13.  Public Attribute Names
 
-   Attribute Names can be defined at will by those using JWM's.
-   However, in order to prevent collisions, any new Attribute Name
-   should either be registered in the IANA "JSON Web Message Attributes"
-   registry established by Section 10.1 or be a Public Name: a value
-   that contains a Collision-Resistant Name.  In each case, the definer
-   of the name or value needs to take reasonable precautions to make
-   sure they are in control of the part of the namespace they use to
-   define the Attribute Name.
+   Attribute Names can be defined at will by those using JWMs.  However,
+   in order to prevent collisions, any new Attribute Name should either
+   be registered in the IANA "JSON Web Message Attributes" registry
+   established by Section 10.1 or be a Public Name: a value that
+   contains a Collision-Resistant Name.  In each case, the definer of
+   the name or value needs to take reasonable precautions to make sure
+   they are in control of the part of the namespace they use to define
+   the Attribute Name.
 
 3.14.  Private Attribute Names
 
@@ -439,9 +442,6 @@ Internet-Draft                     jwm                     December 2019
    processing of this parameter is performed by the JWM application.  If
    present, it is RECOMMENDED that its value be "JWM" to indicate that
    this object is a JWM.  While media type names are not case sensitive,
-   it is RECOMMENDED that "JWM" always be spelled using uppercase
-   characters for compatibility with legacy implementations.  Use of
-   this Header Parameter is OPTIONAL.
 
 
 
@@ -449,6 +449,10 @@ Looker                    Expires June 8, 2020                  [Page 8]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   it is RECOMMENDED that "JWM" always be spelled using uppercase
+   characters for compatibility with legacy implementations.  Use of
+   this Header Parameter is OPTIONAL.
 
 4.2.  "cty" (Content Type) Header Parameter
 
@@ -490,14 +494,10 @@ Internet-Draft                     jwm                     December 2019
    MAY similarly register other names that are registered Attribute
    Names as Header Parameter names, as needed.
 
-5.  Unsecured JWMs
 
-   To support use cases in which the JWM content is secured by a means
-   other than a signature and/or encryption contained within the JWM
-   (such as a signature on a data structure containing the JWM), JWMs
-   MAY also be created without a signature or encryption.  An Unsecured
-   JWM is a JWS using the "alg" Header Parameter value "none" and with
-   the empty string for its JWS Signature value, as defined in the JWA
+
+
+
 
 
 
@@ -506,6 +506,14 @@ Looker                    Expires June 8, 2020                  [Page 9]
 Internet-Draft                     jwm                     December 2019
 
 
+5.  Unsecured JWMs
+
+   To support use cases in which the JWM content is secured by a means
+   other than a signature and/or encryption contained within the JWM
+   (such as a signature on a data structure containing the JWM), JWMs
+   MAY also be created without a signature or encryption.  An Unsecured
+   JWM is a JWS using the "alg" Header Parameter value "none" and with
+   the empty string for its JWS Signature value, as defined in the JWA
    specification [RFC7518]; it is an Unsecured JWS with the JWM
    Attributes Set as its JWS Payload.
 
@@ -543,6 +551,17 @@ Internet-Draft                     jwm                     December 2019
    eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
    cGxlLmNvbS9pc19yb290Ijp0cnVlfQ .
 
+
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 10]
+
+Internet-Draft                     jwm                     December 2019
+
+
 6.  Creating and Validating JWMs
 
 6.1.  Creating a JWM
@@ -554,13 +573,6 @@ Internet-Draft                     jwm                     December 2019
    1.  Create a JWM Attribute Set containing the desired attributes.
        Note that whitespace is explicitly allowed in the representation
        and no canonicalization need be performed before encoding.
-
-
-
-Looker                    Expires June 8, 2020                 [Page 10]
-
-Internet-Draft                     jwm                     December 2019
-
 
    2.  Let the Message be the octets of the UTF-8 representation of the
        JWM Attributes Set.
@@ -599,6 +611,13 @@ Internet-Draft                     jwm                     December 2019
    OPTIONS - Only support JSON serialization - Define new multi-
    recipient version of JWE
 
+
+
+Looker                    Expires June 8, 2020                 [Page 11]
+
+Internet-Draft                     jwm                     December 2019
+
+
    If we are doing an embedded signature should we avoid using compact
    serialization?  Always have a JSON payload?
 
@@ -609,15 +628,6 @@ Internet-Draft                     jwm                     December 2019
    When validating a JWM, the following steps are performed.  The order
    of the steps is not significant in cases where there are no
    dependencies between the inputs and outputs of the steps.  If any of
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 11]
-
-Internet-Draft                     jwm                     December 2019
-
-
    the listed steps fail, then the JWM MUST be rejected - that is,
    treated by the application as an invalid input.
 
@@ -655,6 +665,15 @@ Internet-Draft                     jwm                     December 2019
 
    1.  If the JOSE Header contains a "cty" (content type) value of
        "JWM", then the Message is a JWM that was the subject of nested
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 12]
+
+Internet-Draft                     jwm                     December 2019
+
+
        signing or encryption operations.  In this case, return to Step
        1, using the Message as the JWM.
 
@@ -666,13 +685,6 @@ Internet-Draft                     jwm                     December 2019
        representation of a completely valid JSON object conforming to
        RFC 7159 [RFC7159]; let the JWM Attributes Set be this JSON
        object.
-
-
-
-Looker                    Expires June 8, 2020                 [Page 12]
-
-Internet-Draft                     jwm                     December 2019
-
 
    Finally, note that it is an application decision which algorithms may
    be used in a given context.  Even if a JWM can be successfully
@@ -710,6 +722,14 @@ Internet-Draft                     jwm                     December 2019
    "A256KW"), and the composite authenticated encryption algorithm using
    AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
    implemented by conforming implementations.  It is RECOMMENDED that
+
+
+
+Looker                    Expires June 8, 2020                 [Page 13]
+
+Internet-Draft                     jwm                     December 2019
+
+
    implementations also support using Elliptic Curve Diffie-Hellman
    Ephemeral Static (ECDH-ES) to agree upon a key used to wrap the
    Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") and
@@ -718,17 +738,6 @@ Internet-Draft                     jwm                     December 2019
    sizes is OPTIONAL.
 
    Support for Nested JWMs is OPTIONAL. //TODO REVIEW this
-
-
-
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 13]
-
-Internet-Draft                     jwm                     December 2019
-
 
 8.  IANA Considerations
 
@@ -764,20 +773,11 @@ Internet-Draft                     jwm                     December 2019
 8.1.5.  Initial Registry Contents
 
    o Attribute Name: "id"
-
    o Attribute Description: Message ID
-
    o Change Controller:
-
    o Specification Document(s):
 
    o Attribute Name: "type"
-
-   o Attribute Description: Message Type
-
-   o Change Controller:
-
-   o Specification Document(s):
 
 
 
@@ -786,54 +786,54 @@ Looker                    Expires June 8, 2020                 [Page 14]
 Internet-Draft                     jwm                     December 2019
 
 
-   o Attribute Name: "body"
-
-   o Attribute Description: Message Body
-
+   o Attribute Description: Message Type
    o Change Controller:
+   o Specification Document(s):
 
+   o Attribute Name: "body"
+   o Attribute Description: Message Body
+   o Change Controller:
    o Specification Document(s):
 
    o Attribute Name: "to"
-
    o Attribute Description: Message Recipients
-
    o Change Controller:
-
    o Specification Document(s):
 
    o Attribute Name: "from"
-
    o Attribute Description: Message From
-
    o Change Controller:
-
    o Specification Document(s):
 
    o Attribute Name: "thread_id"
-
    o Attribute Description: Message Thread ID
-
    o Change Controller:
-
    o Specification Document(s):
 
    o Attribute Name: "referent_id"
-
    o Attribute Description: Message Referent ID
-
    o Change Controller:
-
    o Specification Document(s):
 
    o Attribute Name: "time_stamp"
-
    o Attribute Description: Message Timestamp
-
    o Change Controller:
-
    o Specification Document(s):
 
+   o Attribute Name: "expiry"
+   o Attribute Description: Message Expiry
+   o Change Controller:
+   o Specification Document(s):
+
+   o Attribute Name: "reply_url"
+   o Attribute Description: Message Reply URL
+   o Change Controller:
+   o Specification Document(s):
+
+   o Attribute Name: "reply_to"
+   o Attribute Description: Message Reply To
+   o Change Controller:
+   o Specification Document(s):
 
 
 
@@ -841,30 +841,6 @@ Looker                    Expires June 8, 2020                 [Page 15]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   o Attribute Name: "expiry"
-
-   o Attribute Description: Message Expiry
-
-   o Change Controller:
-
-   o Specification Document(s):
-
-   o Attribute Name: "reply_url"
-
-   o Attribute Description: Message Reply URL
-
-   o Change Controller:
-
-   o Specification Document(s):
-
-   o Attribute Name: "reply_to"
-
-   o Attribute Description: Message Reply To
-
-   o Change Controller:
-
-   o Specification Document(s):
 
 9.  Media Type Registration
 
@@ -890,14 +866,6 @@ Internet-Draft                     jwm                     December 2019
    unless its contents have been cryptographically secured and bound to
    the context necessary for the trust decision.  In particular, the
    key(s) used to sign and/or encrypt the JWM will typically need to
-
-
-
-Looker                    Expires June 8, 2020                 [Page 16]
-
-Internet-Draft                     jwm                     December 2019
-
-
    verifiably be under the control of the party identified by the
    associated cryptographic operation.
 
@@ -923,6 +891,13 @@ Internet-Draft                     jwm                     December 2019
    encryption that apply in many contexts do not apply to this
    specification.
 
+
+
+Looker                    Expires June 8, 2020                 [Page 16]
+
+Internet-Draft                     jwm                     December 2019
+
+
 11.  Privacy Considerations
 
    A JWM may contain privacy-sensitive information.  When this is the
@@ -942,17 +917,6 @@ Internet-Draft                     jwm                     December 2019
 13.  References
 
 13.1.  Normative References
-
-
-
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 17]
-
-Internet-Draft                     jwm                     December 2019
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -979,6 +943,17 @@ Internet-Draft                     jwm                     December 2019
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/info/rfc7519>.
 
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+Looker                    Expires June 8, 2020                 [Page 17]
+
+Internet-Draft                     jwm                     December 2019
+
+
 13.2.  URIs
 
    [1] https://tools.ietf.org/html/rfc7519
@@ -989,6 +964,31 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
