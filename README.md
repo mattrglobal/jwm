@@ -4,7 +4,7 @@ This is a draft RFC outline the definition of JSON Web Messages.
 
 ## Contributing
 
-The main specification is written in the XML format outlined by [](RFC), however to preview the changes you have made in
+The main specification is written in the XML format outlined by [RFC7991](https://tools.ietf.org/html/rfc7991), however to preview the changes you have made in
 the final format, the following steps can be followed.
 
 ### Setup
