@@ -52,13 +52,11 @@
 
       <section anchor="terminology" title="Terminology">
         <t>The terms "JSON Web Signature (JWS)", "Base64url Encoding", "Header Parameter", "JOSE Header", 
-        "JWS Payload", "JWS Signature", are defined by the JWS specification <xref target="RFC7515"/>.</t>
+        "JWS Payload", "JWS Signature", "JWS Compact Serialization" and "JWS JSON Serialization" are defined by the JWS specification <xref target="RFC7515"/>.</t>
 
-        <t>The term "JSON Web Encryption (JWE)" is defined by the JWE specification <xref target="RFC7516"/>.</t>
+        <t>The terms "JSON Web Encryption (JWE)", "JWE Compact Serialization" and "JWE JSON Serialization" are defined by the JWE specification <xref target="RFC7516"/>.</t>
 
         <t>The terms "StringOrURI", "NumericDate" are defined by the JWT specification <xref target="RFC7519"/>.</t>
-
-        <t>//TODO should we add term definitions for Compact serialization from the relivant specifications?</t>
 
         <t>The following terms are defined by this specification:</t>
 
