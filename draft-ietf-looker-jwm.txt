@@ -578,38 +578,38 @@ Internet-Draft                     jwm                     December 2019
        JWM Attributes Set.
 
    3.  Create a JOSE Header containing the desired set of Header
-       Parameters.  The JWM MUST conform to either the JWS or JWE //TODO
-       specification.  Note that whitespace is explicitly allowed in the
-       representation and no canonicalization need be performed before
-       encoding.  THE JOSE "typ" header must be set to "JWM".
+       Parameters.  The JWM MUST conform to either the JWS {{RFC7515}}
+       or JWE {{RFC7516}} specification.  Note that whitespace is
+       explicitly allowed in the representation and no canonicalization
+       need be performed before encoding.  THE JOSE "typ" header must be
+       set to "JWM".
 
-   4.  Depending upon whether the JWM is a JWS, JWE or nested JWM, there
-       are three cases:
+   4.  Depending upon whether the JWM is a JWS or JWE, there are two
+       cases:
 
-   o  If the JWM only requires a signature, create a JWS using the JWM
-      Attribute Set as the JWS Payload; all steps specified in JWS for
-      creating a JWS MUST be followed.
+   o  If the JWM is a JWS, create a JWS using the JWM Attribute Set as
+      the JWS Payload; all steps specified in JWS {{RFC7515}} for
+      creating a JWS MUST be followed.  If the resulting JWS features
+      only a single signature, it can then optionally be formated into
+      JWS compact serialization format allowing the message to be URL
+      safe.  If however, the resulting JWS features multiple signatures
+      and URL safety is required, the entire JWS in JSON serialization
+      format MUST be encoded to base64url format.  Otherwise the output
+      format for the JWS MUST be JWS JSON serialization format.
 
    o  Else, if the JWM is a JWE, create a JWE using the JWM Attribute
-      Set as the plaintext for the JWE; all steps specified in JWE for
-      creating a JWE MUST be followed.
+      Set as the plaintext for the JWE; all steps specified in JWE
+      {{RFC7516}} for creating a JWE MUST be followed.  If the resulting
+      JWE features only a single recipient, it can then optionally be
+      formated into a JWE compact serialization format allowing the
+      message to be URL safe.  If however, the resulting JWE features
+      multiple recipients and URL safety is required the entire JWE in
+      JSON serialization format MUST be encoded to base64url format.
+      Otherwise the output format for the JWE MUST be JWE JSON
+      serialization format.
 
-   1.  If A JWS being nested in a JWE is necessary, first create a
-       compact serialization JWS using the message as the JWS payload;
-       all steps specified in JWS for creating a JWS MUST be followed.
-       Then create a JWE using the Compact Serialization JWS as the
-       plaintext for the JWE; all steps specified in JWE for creating a
-       JWE MUST be followed.
 
-   2.  Otherwise, let the resulting JWM be the JWS or JWE.
 
-   Outstanding Question: Should we be requiring a compact serialization
-   JWS -If we dont allow compact serialization of JWS, then when we want
-   to construct a message URL, we will end up double base64 encoding the
-   payload and signature portions.
-
-   OPTIONS - Only support JSON serialization - Define new multi-
-   recipient version of JWE
 
 
 
@@ -618,8 +618,11 @@ Looker                    Expires June 8, 2020                 [Page 11]
 Internet-Draft                     jwm                     December 2019
 
 
-   If we are doing an embedded signature should we avoid using compact
-   serialization?  Always have a JSON payload?
+   1.  If a nested JWM is desired, let the Message be the JWS or JWE,
+       and return to Step 3, using a "cty" (content type) value of "JWT"
+       in the new JOSE Header created in that step.
+
+   2.  Otherwise, let the resulting JWM be the JWS or JWE.
 
 6.2.  Validating a JWM
 
@@ -663,9 +666,6 @@ Internet-Draft                     jwm                     December 2019
             {{RFC7516}} for validating a JWE.  Let the Message be the resulting
             plaintext.
 
-   1.  If the JOSE Header contains a "cty" (content type) value of
-       "JWM", then the Message is a JWM that was the subject of nested
-
 
 
 
@@ -674,6 +674,8 @@ Looker                    Expires June 8, 2020                 [Page 12]
 Internet-Draft                     jwm                     December 2019
 
 
+   1.  If the JOSE Header contains a "cty" (content type) value of
+       "JWM", then the Message is a JWM that was the subject of nested
        signing or encryption operations.  In this case, return to Step
        1, using the Message as the JWM.
 
@@ -720,8 +722,6 @@ Internet-Draft                     jwm                     December 2019
    specified in [RFC7518], only RSAES-PKCS1-v1_5 with 2048-bit keys
    ("RSA1_5"), AES Key Wrap with 128- and 256-bit keys ("A128KW" and
    "A256KW"), and the composite authenticated encryption algorithm using
-   AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
-   implemented by conforming implementations.  It is RECOMMENDED that
 
 
 
@@ -730,6 +730,8 @@ Looker                    Expires June 8, 2020                 [Page 13]
 Internet-Draft                     jwm                     December 2019
 
 
+   AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
+   implemented by conforming implementations.  It is RECOMMENDED that
    implementations also support using Elliptic Curve Diffie-Hellman
    Ephemeral Static (ECDH-ES) to agree upon a key used to wrap the
    Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") and
@@ -777,8 +779,6 @@ Internet-Draft                     jwm                     December 2019
    o Change Controller:
    o Specification Document(s):
 
-   o Attribute Name: "type"
-
 
 
 Looker                    Expires June 8, 2020                 [Page 14]
@@ -786,6 +786,7 @@ Looker                    Expires June 8, 2020                 [Page 14]
 Internet-Draft                     jwm                     December 2019
 
 
+   o Attribute Name: "type"
    o Attribute Description: Message Type
    o Change Controller:
    o Specification Document(s):
@@ -833,7 +834,6 @@ Internet-Draft                     jwm                     December 2019
    o Attribute Name: "reply_to"
    o Attribute Description: Message Reply To
    o Change Controller:
-   o Specification Document(s):
 
 
 
@@ -841,6 +841,8 @@ Looker                    Expires June 8, 2020                 [Page 15]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   o Specification Document(s):
 
 9.  Media Type Registration
 
@@ -888,8 +890,6 @@ Internet-Draft                     jwm                     December 2019
    the underlying JWS and JWE specifications; in particular, because JWE
    only supports the use of authenticated encryption algorithms,
    cryptographic concerns about the potential need to sign after
-   encryption that apply in many contexts do not apply to this
-   specification.
 
 
 
@@ -897,6 +897,9 @@ Looker                    Expires June 8, 2020                 [Page 16]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   encryption that apply in many contexts do not apply to this
+   specification.
 
 11.  Privacy Considerations
 
@@ -943,9 +946,6 @@ Internet-Draft                     jwm                     December 2019
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/info/rfc7519>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 
 
@@ -953,6 +953,10 @@ Looker                    Expires June 8, 2020                 [Page 17]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 13.2.  URIs
 
@@ -964,10 +968,6 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
-
-
-
-
 
 
 
