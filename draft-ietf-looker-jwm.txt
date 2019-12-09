@@ -102,8 +102,8 @@ Table of Contents
        8.1.3.  Change Controller . . . . . . . . . . . . . . . . . .  14
        8.1.4.  Specification Document(s) . . . . . . . . . . . . . .  14
        8.1.5.  Initial Registry Contents . . . . . . . . . . . . . .  14
-   9.  Media Type Registration . . . . . . . . . . . . . . . . . . .  16
-     9.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  16
+   9.  Media Type Registration . . . . . . . . . . . . . . . . . . .  15
+     9.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  15
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  16
      10.1.  Trust Decisions  . . . . . . . . . . . . . . . . . . . .  16
 
@@ -701,27 +701,27 @@ Internet-Draft                     jwm                     December 2019
    This section defines which algorithms and features of this
    specification are mandatory to implement.  Applications using this
    specification can impose additional requirements upon implementations
-   that they use.  For instance, one application might require support
-   for encrypted JWMs and Nested JWMs, while another might require
-   support for signing JWMs with the Elliptic Curve Digital Signature
-   Algorithm (ECDSA) using the P-256 curve and the SHA-256 hash
-   algorithm ("ES256").
+   that they use.
 
-   Of the signature and MAC algorithms specified in JSON Web Algorithms
-   [RFC7518], only HMAC SHA-256 ("HS256") and "none" MUST be implemented
-   by conforming JWM implementations.  It is RECOMMENDED that
-   implementations also support RSASSA-PKCS1-v1_5 with the SHA-256 hash
-   algorithm ("RS256") and ECDSA using the P-256 curve and the SHA-256
-   hash algorithm ("ES256").  Support for other algorithms and key sizes
-   is OPTIONAL.
+   Supported for digitally signed JWMs using JWS is REQUIRED.  Of the
+   signature and MAC algorithms specified in JSON Web Algorithms
+   [RFC7518], only ECDSA using the P-256 curve and SHA-256 hash
+   algorithm ("ES256") and "none" MUST be implemented by conforming JWM
+   implementations.  It is RECOMMENDED that implementations also support
+   ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512")
+   and EdDSA using the Ed25519 curve and SHA-512 hash algorithm.
+   Support for other algorithms and key sizes is OPTIONAL.
 
-   Support for encrypted JWMs is OPTIONAL.  If an implementation
-   provides encryption capabilities, of the encryption algorithms
-   specified in [RFC7518], only RSAES-PKCS1-v1_5 with 2048-bit keys
-   ("RSA1_5"), AES Key Wrap with 128- and 256-bit keys ("A128KW" and
-   "A256KW"), and the composite authenticated encryption algorithm using
-   AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
-   implemented by conforming implementations.  It is RECOMMENDED that
+   Support for encrypted JWMs using JWE is also REQUIRED.  Of the
+   encryption algorithms specified in [RFC7518], using Elliptic Curve
+   Diffie-Hellman Ephemeral Static (ECDH-ES) to agree upon a key and
+   using this key to to perform key wrapping of a Content Encryption Key
+   ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported.  With
+   regards to content encryption, AES in Galois/Counter Mode (GCM) with
+   128-bit and 256-bit keys ("A128GCM" and "A256GCM") MUST also be
+   supported.
+
+   Support for Nested JWMs is also REQUIRED.
 
 
 
@@ -729,15 +729,6 @@ Looker                    Expires June 8, 2020                 [Page 13]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   implementations also support using Elliptic Curve Diffie-Hellman
-   Ephemeral Static (ECDH-ES) to agree upon a key used to wrap the
-   Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") and
-   AES in Galois/Counter Mode (GCM) with 128- and 256-bit keys
-   ("A128GCM" and "A256GCM").  Support for other algorithms and key
-   sizes is OPTIONAL.
-
-   Support for Nested JWMs is OPTIONAL. //TODO REVIEW this
 
 8.  IANA Considerations
 
@@ -778,14 +769,6 @@ Internet-Draft                     jwm                     December 2019
    o Specification Document(s):
 
    o Attribute Name: "type"
-
-
-
-Looker                    Expires June 8, 2020                 [Page 14]
-
-Internet-Draft                     jwm                     December 2019
-
-
    o Attribute Description: Message Type
    o Change Controller:
    o Specification Document(s):
@@ -794,6 +777,14 @@ Internet-Draft                     jwm                     December 2019
    o Attribute Description: Message Body
    o Change Controller:
    o Specification Document(s):
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 14]
+
+Internet-Draft                     jwm                     December 2019
+
 
    o Attribute Name: "to"
    o Attribute Description: Message Recipients
@@ -835,16 +826,21 @@ Internet-Draft                     jwm                     December 2019
    o Change Controller:
    o Specification Document(s):
 
+9.  Media Type Registration
+
+9.1.  Registry Contents
+
+
+
+
+
+
 
 
 Looker                    Expires June 8, 2020                 [Page 15]
 
 Internet-Draft                     jwm                     December 2019
 
-
-9.  Media Type Registration
-
-9.1.  Registry Contents
 
 10.  Security Considerations
 
@@ -890,6 +886,10 @@ Internet-Draft                     jwm                     December 2019
    cryptographic concerns about the potential need to sign after
    encryption that apply in many contexts do not apply to this
    specification.
+
+
+
+
 
 
 
