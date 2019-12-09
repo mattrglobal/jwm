@@ -277,27 +277,20 @@
       </section>
 
       <section anchor="replicating-attributes-as-header-parameters" title="Replicating Attributes as Header Parameters">
-        <t>In some applications using encrypted JWMs, it is useful to have an
-        unencrypted representation of some attributes.  This might be used, for
-        instance, in application processing rules to determine whether and
-        how to process the JWM before it is decrypted.</t>
+        <t>As is also the case with JWTs, in some applications using encrypted JWMs,
+        it is useful to have an unencrypted representation of some attributes. 
+        This might be used, for instance, in application processing rules to 
+        determine whether and how to process the JWM before it is decrypted.</t>
 
         <t>This specification allows Attributes present in the JWM Attributes Set to be
-        replicated as Header Parameters in a JWM that is a JWE, as needed by
+        replicated as JOSE Header Parameters in a JWM that is a JWE, as needed by
         the application.  If such replicated attributes are present, the
         application receiving them SHOULD verify that their values are
         identical, unless the application defines other specific processing
         rules for these attributes.  It is the responsibility of the application
         to ensure that only attributes that are safe to be transmitted in an
-        unencrypted manner are replicated as Header Parameter values in the
+        unencrypted manner are replicated as JOSE Header Parameter values in the
         JWM.</t>
-
-        <t>Section 10.4.1 of this specification registers the "iss" (issuer),
-        "sub" (subject), and "aud" (audience) Header Parameter names for the
-        purpose of providing unencrypted replicas of these Attributes in
-        encrypted JWMs for applications that need them.  Other specifications
-        MAY similarly register other names that are registered Attribute Names as
-        Header Parameter names, as needed.</t>
       </section>
     </section>
 
