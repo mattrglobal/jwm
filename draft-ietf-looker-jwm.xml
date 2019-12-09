@@ -30,7 +30,7 @@
     <abstract>
       <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
       for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
-      Encryption (JWE) can be digitally signed, integrity protected and or confidentiality via encryption.</t>
+      Encryption (JWE) can be digitally signed, integrity protected and or acheive confidentiality via encryption.</t>
     </abstract>
   </front>
 
@@ -38,7 +38,7 @@
     <section anchor="introduction" title="Introduction">
       <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
       for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
-      Encryption (JWE) can be digitally signed, integrity protected and or confidentiality via encryption. JWMs are inspired 
+      Encryption (JWE) can be digitally signed, integrity protected and or acheive confidentiality via encryption. JWMs are inspired 
       by JWTs <xref target="RFC7519"/>, more details about this relationship is documented in the section "Relationship to JWT".</t>
 
       <section anchor="notational-conventions" title="Notational Conventions">
@@ -57,6 +57,8 @@
         <t>The term "JSON Web Encryption (JWE)" is defined by the JWE specification <xref target="RFC7516"/>.</t>
 
         <t>The terms "StringOrURI", "NumericDate" are defined by the JWT specification <xref target="RFC7519"/>.</t>
+
+        <t>//TODO should we add term definitions for Compact serialization from the relivant specifications?</t>
 
         <t>The following terms are defined by this specification:</t>
 
@@ -174,8 +176,8 @@
         </section>
 
         <section anchor="attributes-body" title="&quot;body&quot; Attribute">
-          <t>The "body" attribute is used to define a location for application level message content. The "body" attribute value is a JSON object (link).
-          The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
+          <t>The "body" attribute is used to define a location for application level message content. The "body" attribute value is a JSON object conforming
+          to RFC 7159 <xref target="RFC7159"/>. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
 
         <section anchor="attributes-to" title="&quot;to&quot; Attribute">
@@ -382,57 +384,65 @@
       </section>
       
       <section anchor="validating-a-jwm" title="Validating a JWM">
-
-        <t>//TODO modify this</t>
-
-        <t>When validating a JWM, the following steps are performed.  The order
+        <t>When validating a JWM, the following steps are performed. The order
         of the steps is not significant in cases where there are no
-        dependencies between the inputs and outputs of the steps.  If any of
-        the listed steps fail, then the JWM MUST be rejected &#8211; that is,
+        dependencies between the inputs and outputs of the steps. If any of
+        the listed steps fail, then the JWM MUST be rejected; that is,
         treated by the application as an invalid input.</t>
-
         <t><list style="numbers">
-          <t>Verify that the JWM contains at least one period ('.')
-            character.</t>
-          <t>Let the Encoded JOSE Header be the portion of the JWM before the
-            first period ('.') character.</t>
-          <t>Base64url decode the Encoded JOSE Header following the
-            restriction that no line breaks, whitespace, or other additional
-            characters have been used.</t>
-          <t>Verify that the resulting octet sequence is a UTF-8-encoded
-            representation of a completely valid JSON object conforming to
-            RFC 7159 <xref target="RFC7159"/>; let the JOSE Header be this JSON object.</t>
+          <t>If the JWM is a valid base64 string containing at least one period ('.') character.
+            <list style="numbers">
+              <t>Let the Encoded JOSE Header be the portion of the JWM before the
+              first period ('.') character.</t>
+              <t>Base64url decode the Encoded JOSE Header following the
+              restriction that no line breaks, whitespace, or other additional
+              characters have been used.</t>
+              <t>Verify that the resulting octet sequence is a UTF-8-encoded
+              representation of a completely valid JSON object conforming to
+              RFC 7159 <xref target="RFC7159"/>; let the JOSE Header be this JSON object.</t>
+            </list>
+          </t>
+          <t>Else, if the JWM is a valid base64 string containing no period ('.') characters.
+            <list style="numbers">
+              <t>Let the Encoded JWS or JWE be the entire base64 string.</t>
+              <t>Base64url decode the Encoded JWS or JWE following the
+              restriction that no line breaks, whitespace, or other additional
+              characters have been used.</t>
+              <t>Verify that the resulting octet sequence is a UTF-8-encoded
+              representation of a completely valid JSON object conforming to
+              RFC 7159 <xref target="RFC7159"/>; let the JWS or JWE be this JSON object.</t>
+            </list>
+          </t>
+          <t>Else, if the JWM is a UTF-8-encoded representation of a 
+          completely valid JSON object conforming to RFC 7159 <xref target="RFC7159"/>; 
+          let the JWS or JWE be this JSON object.</t>
           <t>Verify that the resulting JOSE Header includes only parameters
-            and values whose syntax and semantics are both understood and
-            supported or that are specified as being ignored when not
-            understood.</t>
+          and values whose syntax and semantics are both understood and
+          supported or that are specified as being ignored when not
+          understood.</t>
           <t>Determine whether the JWM is a JWS or a JWE using any of the
-            methods described in Section 9 of <xref target="RFC7516"/>.</t>
+          methods described in Section 9 of <xref target="RFC7516"/>.</t>
           <t>Depending upon whether the JWM is a JWS or JWE, there are two
-            cases:</t>
-        </list></t>
-
-        <figure><artwork><![CDATA[
-        *  If the JWM is a JWS, follow the steps specified in {{RFC7515}} for
+          cases:
+            <list style="symbols">
+            <t>If the JWM is a JWS, follow the steps specified in <xref target="RFC7515"/> for
             validating a JWS.  Let the Message be the result of base64url
-            decoding the JWS Payload.
-
-        *  Else, if the JWM is a JWE, follow the steps specified in
-            {{RFC7516}} for validating a JWE.  Let the Message be the resulting
-            plaintext.
-        ]]></artwork></figure>
-
-        <t><list style="numbers">
+            decoding the JWS Payload.</t>
+            <t>Else, if the JWM is a JWE, follow the steps specified in
+             <xref target="RFC7516"/> for validating a JWE.  Let the Message be the resulting
+            plaintext.</t>
+            </list>
+          </t>
           <t>If the JOSE Header contains a "cty" (content type) value of
-            "JWM", then the Message is a JWM that was the subject of nested
-            signing or encryption operations.  In this case, return to Step
-            1, using the Message as the JWM.</t>
+          "JWM", then the Message is a JWM that was the subject of nested
+          signing or encryption operations.  In this case, return to Step
+          1, using the Message as the JWM.</t>
           <t>Otherwise, base64url decode the Message following the
-            restriction that no line breaks, whitespace, or other additional
-            characters have been used.</t>
+          restriction that no line breaks, whitespace, or other additional
+          characters have been used.</t>
           <t>Verify that the resulting octet sequence is a UTF-8-encoded
-            representation of a completely valid JSON object conforming to
-            RFC 7159 <xref target="RFC7159"/>; let the JWM Attributes Set be this JSON object.</t>
+          representation of a completely valid JSON object conforming to
+          RFC 7159 <xref target="RFC7159"/>; let the JWM Attributes Set be this JSON object.</t>
         </list></t>
 
         <t>Finally, note that it is an application decision which algorithms may
