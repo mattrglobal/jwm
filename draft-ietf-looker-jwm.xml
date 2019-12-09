@@ -373,7 +373,7 @@
         </list></t>
 
         <t><list style="numbers">
-          <t>If a nested JWM is desired, let the Message be the JWS or JWE, and return to Step 3, using a "cty" (content type) value of "JWT" in the new JOSE Header
+          <t>If a nested JWM is desired, let the Message be the JWS or JWE, and return to Step 3, using a "cty" (content type) value of "JWM" in the new JOSE Header
           created in that step.</t>
           <t>Otherwise, let the resulting JWM be the JWS or JWE.</t>
         </list></t>

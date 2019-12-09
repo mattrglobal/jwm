@@ -619,7 +619,7 @@ Internet-Draft                     jwm                     December 2019
 
 
    1.  If a nested JWM is desired, let the Message be the JWS or JWE,
-       and return to Step 3, using a "cty" (content type) value of "JWT"
+       and return to Step 3, using a "cty" (content type) value of "JWM"
        in the new JOSE Header created in that step.
 
    2.  Otherwise, let the resulting JWM be the JWS or JWE.
