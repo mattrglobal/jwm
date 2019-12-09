@@ -30,7 +30,7 @@
     <abstract>
       <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
       for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
-      Encryption (JWE) can be digitally signed, integrity protected and or acheive confidentiality via encryption.</t>
+      Encryption (JWE) can be digitally signed, integrity protected and or achieve confidentiality via encryption.</t>
     </abstract>
   </front>
 
@@ -38,7 +38,7 @@
     <section anchor="introduction" title="Introduction">
       <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
       for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
-      Encryption (JWE) can be digitally signed, integrity protected and or acheive confidentiality via encryption. JWMs are inspired 
+      Encryption (JWE) can be digitally signed, integrity protected and or achieve confidentiality via encryption. JWMs are inspired 
       by JWTs <xref target="RFC7519"/>, more details about this relationship is documented in the section "Relationship to JWT".</t>
 
       <section anchor="notational-conventions" title="Notational Conventions">
