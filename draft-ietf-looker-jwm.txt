@@ -653,8 +653,7 @@ Internet-Draft                     jwm                     December 2019
        understood.
 
    6.  Determine whether the JWM is a JWS or a JWE using any of the
-       methods described in Section 9 of JSON Canonicalization Scheme
-       (JCS) .
+       methods described in Section 9 of [RFC7516].
 
    7.  Depending upon whether the JWM is a JWS or JWE, there are two
        cases:
@@ -666,6 +665,7 @@ Internet-Draft                     jwm                     December 2019
         *  Else, if the JWM is a JWE, follow the steps specified in
             {{RFC7516}} for validating a JWE.  Let the Message be the resulting
             plaintext.
+
 
 
 

@@ -405,8 +405,7 @@
             supported or that are specified as being ignored when not
             understood.</t>
           <t>Determine whether the JWM is a JWS or a JWE using any of the
-            methods described in Section 9 of JSON Canonicalization Scheme (JCS)
- .</t>
+            methods described in Section 9 of <xref target="RFC7516"/>.</t>
           <t>Depending upon whether the JWM is a JWS or JWE, there are two
             cases:</t>
         </list></t>
