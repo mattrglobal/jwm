@@ -357,16 +357,16 @@
         <t><list style="numbers">
           <t>Create a JWM Attribute Set containing the desired attributes. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding.</t>
           <t>Let the Message be the octets of the UTF-8 representation of the JWM Attributes Set.</t>
-          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS {{RFC7515}} or JWE {{RFC7516}} specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
+          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS <xref target="RFC7515"/> or JWE <xref target="RFC7516"/> specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
           <t>Depending upon whether the JWM is a JWS or JWE, there are two cases:</t>
         </list></t>
 
         <t><list style="symbols">
-          <t>If the JWM is a JWS, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS {{RFC7515}} for creating a JWS MUST be followed. 
+          <t>If the JWM is a JWS, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS <xref target="RFC7515"/> for creating a JWS MUST be followed. 
            If the resulting JWS features only a single signature, it can then optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
            the resulting JWS features multiple signatures and URL safety is required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
            for the JWS MUST be JWS JSON serialization format.</t>
-          <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE {{RFC7516}} for creating a JWE MUST be followed. 
+          <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE <xref target="RFC7516"/> for creating a JWE MUST be followed. 
           If the resulting JWE features only a single recipient, it can then optionally be formated into a JWE compact serialization format allowing the message to be URL safe. If however, the 
           resulting JWE features multiple recipients and URL safety is required the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
           the JWE MUST be JWE JSON serialization format.</t>
@@ -405,7 +405,8 @@
             supported or that are specified as being ignored when not
             understood.</t>
           <t>Determine whether the JWM is a JWS or a JWE using any of the
-            methods described in Section 9 of <xref target="RFC7516"/>.</t>
+            methods described in Section 9 of JSON Canonicalization Scheme (JCS)
+ .</t>
           <t>Depending upon whether the JWM is a JWS or JWE, there are two
             cases:</t>
         </list></t>
