@@ -143,7 +143,7 @@
     <section anchor="jwm-attributes" title="JWM Attributes">
       <t>The JWM Attributes Set represents a JSON object whose members are the attributes conveyed by the JWM. The Attribute Names 
       within a JWM Attributes Set MUST be unique; JWM parsers MUST either reject JWMs with duplicate Attribute Names or use a JSON parser 
-      that returns only the lexically last duplicate member name, as specified in Section 15.12 ("The JSON Object") of ECMAScript 5.1 ECMAScript. //TODO</t>
+      that returns only the lexically last duplicate member name, as specified in Section 15.12 ("The JSON Object") of ECMAScript 5.1 <xref target="ECMAScript"/>.</t>
 
       <t>The set of attributes that a JWM must contain to be considered valid is context dependent and is outside the scope of this specification. 
       Specific applications of JWMs will require implementations to understand and process some attributes in particular ways.  However, in the absence 
@@ -245,7 +245,7 @@
 
       <section anchor="typ-type-header-parameter" title="&quot;typ&quot; (Type) Header Parameter">
         <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used
-        by JWM applications to declare the media type IANA.MediaTypes //TODO of
+        by JWM applications to declare the media type <xref target="IANA.MediaTypes"/> of
         this complete JWM.  This is intended for use by the JWM application
         when values that are not JWMs could also be present in an application
         data structure that can contain a JWM object; the application can use
@@ -350,28 +350,26 @@
         <t><list style="numbers">
           <t>Create a JWM Attribute Set containing the desired attributes. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding.</t>
           <t>Let the Message be the octets of the UTF-8 representation of the JWM Attributes Set.</t>
-          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS or JWE //TODO specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
-          <t>Depending upon whether the JWM is a JWS, JWE or nested JWM, there are three cases:</t>
+          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS <xref target="RFC7515"/> or JWE <xref target="RFC7516"/> specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
+          <t>Depending upon whether the JWM is a JWS or JWE, there are two cases:</t>
         </list></t>
 
         <t><list style="symbols">
-          <t>If the JWM only requires a signature, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS for creating a JWS MUST be followed.</t>
-          <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE for creating a JWE MUST be followed.</t>
+          <t>If the JWM is a JWS, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS <xref target="RFC7515"/> for creating a JWS MUST be followed. 
+           If the resulting JWS features only a single signature, it can then optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
+           the resulting JWS features multiple signatures and URL safety is required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
+           for the JWS MUST be JWS JSON serialization format.</t>
+          <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE <xref target="RFC7516"/> for creating a JWE MUST be followed. 
+          If the resulting JWE features only a single recipient, it can then optionally be formated into a JWE compact serialization format allowing the message to be URL safe. If however, the 
+          resulting JWE features multiple recipients and URL safety is required the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
+          the JWE MUST be JWE JSON serialization format.</t>
         </list></t>
 
         <t><list style="numbers">
-          <t>If A JWS being nested in a JWE is necessary, first create a compact serialization JWS using the message as the JWS payload; all steps specified in JWS for creating a JWS MUST be followed. Then create a JWE using the Compact Serialization JWS as the plaintext for the JWE; all steps specified in JWE for creating a JWE MUST be followed.</t>
+          <t>If a nested JWM is desired, let the Message be the JWS or JWE, and return to Step 3, using a "cty" (content type) value of "JWM" in the new JOSE Header
+          created in that step.</t>
           <t>Otherwise, let the resulting JWM be the JWS or JWE.</t>
         </list></t>
-
-        <t>Outstanding Question: Should we be requiring a compact serialization JWS
-        -If we dont allow compact serialization of JWS, then when we want to construct a message URL, we will end up double base64 encoding the payload and signature portions.</t>
-
-        <t>OPTIONS
-        - Only support JSON serialization
-        - Define new multi-recipient version of JWE</t>
-
-        <t>If we are doing an embedded signature should we avoid using compact serialization? Always have a JSON payload?</t>
       </section>
       
       <section anchor="validating-a-jwm" title="Validating a JWM">
@@ -629,6 +627,25 @@
       <?rfc include='reference.RFC.7518.xml'?>
       <?rfc include='reference.RFC.7159.xml'?>
       <?rfc include='reference.RFC.8174.xml'?>
+      <reference anchor="IANA.MediaTypes" target="http://www.iana.org/assignments/media-types">
+        <front>
+          <title>Media Types</title>
+          <author>
+            <organization>IANA</organization>
+          </author>
+          <date/>
+        </front>
+      </reference>
+      <reference anchor="ECMAScript" target="http://www.ecma-international.org/ecma-262/5.1/ECMA-262.pdf">
+        <front>
+          <title>ECMAScript Language Specification, 5.1 Edition</title>
+          <author>
+            <organization>Ecma International</organization>
+          </author>
+          <date month="June" year="2011"/>
+        </front>
+	      <seriesInfo name="ECMA Standard" value="262"/>
+      </reference>
     </references>
   </back>
 </rfc>
