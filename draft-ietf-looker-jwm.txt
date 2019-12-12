@@ -95,8 +95,8 @@ Table of Contents
      6.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  11
      6.3.  String Comparison Rules . . . . . . . . . . . . . . . . .  13
    7.  Implementation Requirements . . . . . . . . . . . . . . . . .  13
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
-     8.1.  Registration Template . . . . . . . . . . . . . . . . . .  14
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+     8.1.  Registration Template . . . . . . . . . . . . . . . . . .  13
        8.1.1.  Attribute Name: . . . . . . . . . . . . . . . . . . .  14
        8.1.2.  Attribute Description . . . . . . . . . . . . . . . .  14
        8.1.3.  Change Controller . . . . . . . . . . . . . . . . . .  14
@@ -104,7 +104,7 @@ Table of Contents
        8.1.5.  Initial Registry Contents . . . . . . . . . . . . . .  14
    9.  Media Type Registration . . . . . . . . . . . . . . . . . . .  15
      9.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  15
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  16
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  15
      10.1.  Trust Decisions  . . . . . . . . . . . . . . . . . . . .  16
 
 
@@ -115,7 +115,7 @@ Internet-Draft                     jwm                     December 2019
 
 
      10.2.  Signing and Encryption Order . . . . . . . . . . . . . .  16
-   11. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  17
+   11. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  16
    12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  17
@@ -468,27 +468,21 @@ Internet-Draft                     jwm                     December 2019
 
 4.3.  Replicating Attributes as Header Parameters
 
-   In some applications using encrypted JWMs, it is useful to have an
-   unencrypted representation of some attributes.  This might be used,
-   for instance, in application processing rules to determine whether
-   and how to process the JWM before it is decrypted.
+   As is also the case with JWTs, in some applications using encrypted
+   JWMs, it is useful to have an unencrypted representation of some
+   attributes.  This might be used, for instance, in application
+   processing rules to determine whether and how to process the JWM
+   before it is decrypted.
 
    This specification allows Attributes present in the JWM Attributes
-   Set to be replicated as Header Parameters in a JWM that is a JWE, as
-   needed by the application.  If such replicated attributes are
+   Set to be replicated as JOSE Header Parameters in a JWM that is a
+   JWE, as needed by the application.  If such replicated attributes are
    present, the application receiving them SHOULD verify that their
    values are identical, unless the application defines other specific
    processing rules for these attributes.  It is the responsibility of
    the application to ensure that only attributes that are safe to be
-   transmitted in an unencrypted manner are replicated as Header
+   transmitted in an unencrypted manner are replicated as JOSE Header
    Parameter values in the JWM.
-
-   Section 10.4.1 of this specification registers the "iss" (issuer),
-   "sub" (subject), and "aud" (audience) Header Parameter names for the
-   purpose of providing unencrypted replicas of these Attributes in
-   encrypted JWMs for applications that need them.  Other specifications
-   MAY similarly register other names that are registered Attribute
-   Names as Header Parameter names, as needed.
 
 5.  Unsecured JWMs
 
@@ -498,6 +492,12 @@ Internet-Draft                     jwm                     December 2019
    MAY also be created without a signature or encryption.  An Unsecured
    JWM is a JWS using the "alg" Header Parameter value "none" and with
    the empty string for its JWS Signature value, as defined in the JWA
+   specification [RFC7518]; it is an Unsecured JWS with the JWM
+   Attributes Set as its JWS Payload.
+
+
+
+
 
 
 
@@ -505,9 +505,6 @@ Looker                    Expires June 8, 2020                  [Page 9]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   specification [RFC7518]; it is an Unsecured JWS with the JWM
-   Attributes Set as its JWS Payload.
 
 5.1.  Example Unsecured JWM
 
@@ -555,15 +552,15 @@ Internet-Draft                     jwm                     December 2019
        Note that whitespace is explicitly allowed in the representation
        and no canonicalization need be performed before encoding.
 
+   2.  Let the Message be the octets of the UTF-8 representation of the
+       JWM Attributes Set.
+
 
 
 Looker                    Expires June 8, 2020                 [Page 10]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   2.  Let the Message be the octets of the UTF-8 representation of the
-       JWM Attributes Set.
 
    3.  Create a JOSE Header containing the desired set of Header
        Parameters.  The JWM MUST conform to either the JWS [RFC7515] or
@@ -609,7 +606,10 @@ Internet-Draft                     jwm                     December 2019
    When validating a JWM, the following steps are performed.  The order
    of the steps is not significant in cases where there are no
    dependencies between the inputs and outputs of the steps.  If any of
+   the listed steps fail, then the JWM MUST be rejected - that is,
+   treated by the application as an invalid input.
 
+   1.  Verify that the JWM contains at least one period ('.') character.
 
 
 
@@ -617,11 +617,6 @@ Looker                    Expires June 8, 2020                 [Page 11]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   the listed steps fail, then the JWM MUST be rejected - that is,
-   treated by the application as an invalid input.
-
-   1.  Verify that the JWM contains at least one period ('.') character.
 
    2.  Let the Encoded JOSE Header be the portion of the JWM before the
        first period ('.') character.
@@ -667,17 +662,17 @@ Internet-Draft                     jwm                     December 2019
        RFC 7159 [RFC7159]; let the JWM Attributes Set be this JSON
        object.
 
+   Finally, note that it is an application decision which algorithms may
+   be used in a given context.  Even if a JWM can be successfully
+   validated, unless the algorithms used in the JWM are acceptable to
+   the application, it SHOULD reject the JWM.
+
 
 
 Looker                    Expires June 8, 2020                 [Page 12]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   Finally, note that it is an application decision which algorithms may
-   be used in a given context.  Even if a JWM can be successfully
-   validated, unless the algorithms used in the JWM are acceptable to
-   the application, it SHOULD reject the JWM.
 
 6.3.  String Comparison Rules
 
@@ -719,6 +714,11 @@ Internet-Draft                     jwm                     December 2019
 
    Support for Nested JWMs is OPTIONAL. //TODO REVIEW this
 
+8.  IANA Considerations
+
+8.1.  Registration Template
+
+
 
 
 
@@ -729,10 +729,6 @@ Looker                    Expires June 8, 2020                 [Page 13]
 
 Internet-Draft                     jwm                     December 2019
 
-
-8.  IANA Considerations
-
-8.1.  Registration Template
 
 8.1.1.  Attribute Name:
 
@@ -778,6 +774,10 @@ Internet-Draft                     jwm                     December 2019
    o Change Controller:
    o Specification Document(s):
 
+   o Attribute Name: "to"
+   o Attribute Description: Message Recipients
+   o Change Controller:
+   o Specification Document(s):
 
 
 
@@ -785,11 +785,6 @@ Looker                    Expires June 8, 2020                 [Page 14]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   o Attribute Name: "to"
-   o Attribute Description: Message Recipients
-   o Change Controller:
-   o Specification Document(s):
 
    o Attribute Name: "from"
    o Attribute Description: Message From
@@ -830,18 +825,6 @@ Internet-Draft                     jwm                     December 2019
 
 9.1.  Registry Contents
 
-
-
-
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 15]
-
-Internet-Draft                     jwm                     December 2019
-
-
 10.  Security Considerations
 
    All of the security issues that are pertinent to any cryptographic
@@ -851,6 +834,14 @@ Internet-Draft                     jwm                     December 2019
 
    All the security considerations in the JWS specification also apply
    to JWM, as do the JWE security considerations when encryption is
+
+
+
+Looker                    Expires June 8, 2020                 [Page 15]
+
+Internet-Draft                     jwm                     December 2019
+
+
    employed.  In particular, Sections 10.12 ("JSON Security
    Considerations") and 10.13 ("Unicode Comparison Security
    Considerations") of [RFC7515] apply equally to the JWM Attributes Set
@@ -887,17 +878,6 @@ Internet-Draft                     jwm                     December 2019
    encryption that apply in many contexts do not apply to this
    specification.
 
-
-
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 16]
-
-Internet-Draft                     jwm                     December 2019
-
-
 11.  Privacy Considerations
 
    A JWM may contain privacy-sensitive information.  When this is the
@@ -909,6 +889,14 @@ Internet-Draft                     jwm                     December 2019
    support endpoint authentication, such as Transport Layer Security
    (TLS).  Omitting privacy-sensitive information from a JWM is the
    simplest way of minimizing privacy issues.
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 16]
+
+Internet-Draft                     jwm                     December 2019
+
 
 12.  Acknowledgements
 
@@ -945,15 +933,6 @@ Internet-Draft                     jwm                     December 2019
               RFC 7516, DOI 10.17487/RFC7516, May 2015,
               <https://www.rfc-editor.org/info/rfc7516>.
 
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 17]
-
-Internet-Draft                     jwm                     December 2019
-
-
    [RFC7518]  Jones, M., "JSON Web Algorithms (JWA)", RFC 7518,
               DOI 10.17487/RFC7518, May 2015, <https://www.rfc-
               editor.org/info/rfc7518>.
@@ -966,6 +945,15 @@ Internet-Draft                     jwm                     December 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 17]
+
+Internet-Draft                     jwm                     December 2019
+
+
 13.2.  URIs
 
    [1] https://tools.ietf.org/html/rfc7519
@@ -976,6 +964,18 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
