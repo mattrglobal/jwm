@@ -438,39 +438,27 @@
     </section>
 
     <section anchor="implementation-requirements" title="Implementation Requirements">
-
       <t>This section defines which algorithms and features of this
       specification are mandatory to implement.  Applications using this
       specification can impose additional requirements upon implementations
-      that they use.  For instance, one application might require support
-      for encrypted JWMs and Nested JWMs, while another might require
-      support for signing JWMs with the Elliptic Curve Digital Signature
-      Algorithm (ECDSA) using the P-256 curve and the SHA-256 hash
-      algorithm ("ES256").</t>
+      that they use.</t>
 
-      <t>Of the signature and MAC algorithms specified in JSON Web Algorithms
-      <xref target="RFC7518"/>, only HMAC SHA-256 ("HS256") and "none" MUST be implemented by
-      conforming JWM implementations.  It is RECOMMENDED that
-      implementations also support RSASSA-PKCS1-v1_5 with the SHA-256 hash
-      algorithm ("RS256") and ECDSA using the P-256 curve and the SHA-256
-      hash algorithm ("ES256").  Support for other algorithms and key sizes
-      is OPTIONAL.</t>
+      <t>Supported for digitally signed JWMs using JWS is REQUIRED. Of the signature and 
+      MAC algorithms specified in JSON Web Algorithms <xref target="RFC7518"/>, only 
+      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") and "none" MUST be 
+      implemented by conforming JWM implementations. It is RECOMMENDED that implementations
+      also support ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and 
+      EdDSA using the Ed25519 curve and SHA-512 hash algorithm. Support for other 
+      algorithms and key sizes is OPTIONAL.</t>
 
-      <t>Support for encrypted JWMs is OPTIONAL.  If an implementation
-      provides encryption capabilities, of the encryption algorithms
-      specified in <xref target="RFC7518"/>, only RSAES-PKCS1-v1_5 with 2048-bit keys
-      ("RSA1_5"), AES Key Wrap with 128- and 256-bit keys ("A128KW" and
-      "A256KW"), and the composite authenticated encryption algorithm using
-      AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
-      implemented by conforming implementations.  It is RECOMMENDED that
-      implementations also support using Elliptic Curve Diffie-Hellman
-      Ephemeral Static (ECDH-ES) to agree upon a key used to wrap the
-      Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") and
-      AES in Galois/Counter Mode (GCM) with 128- and 256-bit keys
-      ("A128GCM" and "A256GCM").  Support for other algorithms and key
-      sizes is OPTIONAL.</t>
+      <t>Support for encrypted JWMs using JWE is also REQUIRED. Of the encryption algorithms
+      specified in <xref target="RFC7518"/>, using Elliptic Curve Diffie-Hellman Ephemeral 
+      Static (ECDH-ES) to agree upon a key and using this key to to perform key wrapping
+      of a Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported. 
+      With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
+      keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
 
-      <t>Support for Nested JWMs is OPTIONAL. //TODO REVIEW this</t>
+      <t>Support for Nested JWMs is also REQUIRED.</t>
     </section>
     
     <section anchor="iana-considerations" title="IANA Considerations">

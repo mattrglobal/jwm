@@ -97,7 +97,7 @@ Table of Contents
    7.  Implementation Requirements . . . . . . . . . . . . . . . . .  13
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
      8.1.  Registration Template . . . . . . . . . . . . . . . . . .  13
-       8.1.1.  Attribute Name: . . . . . . . . . . . . . . . . . . .  14
+       8.1.1.  Attribute Name: . . . . . . . . . . . . . . . . . . .  13
        8.1.2.  Attribute Description . . . . . . . . . . . . . . . .  14
        8.1.3.  Change Controller . . . . . . . . . . . . . . . . . .  14
        8.1.4.  Specification Document(s) . . . . . . . . . . . . . .  14
@@ -105,7 +105,7 @@ Table of Contents
    9.  Media Type Registration . . . . . . . . . . . . . . . . . . .  15
      9.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  15
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  15
-     10.1.  Trust Decisions  . . . . . . . . . . . . . . . . . . . .  16
+     10.1.  Trust Decisions  . . . . . . . . . . . . . . . . . . . .  15
 
 
 
@@ -116,10 +116,10 @@ Internet-Draft                     jwm                     December 2019
 
      10.2.  Signing and Encryption Order . . . . . . . . . . . . . .  16
    11. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  16
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
-   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  16
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  16
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  17
-     13.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     13.2.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  17
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
@@ -684,51 +684,31 @@ Internet-Draft                     jwm                     December 2019
    This section defines which algorithms and features of this
    specification are mandatory to implement.  Applications using this
    specification can impose additional requirements upon implementations
-   that they use.  For instance, one application might require support
-   for encrypted JWMs and Nested JWMs, while another might require
-   support for signing JWMs with the Elliptic Curve Digital Signature
-   Algorithm (ECDSA) using the P-256 curve and the SHA-256 hash
-   algorithm ("ES256").
+   that they use.
 
-   Of the signature and MAC algorithms specified in JSON Web Algorithms
-   [RFC7518], only HMAC SHA-256 ("HS256") and "none" MUST be implemented
-   by conforming JWM implementations.  It is RECOMMENDED that
-   implementations also support RSASSA-PKCS1-v1_5 with the SHA-256 hash
-   algorithm ("RS256") and ECDSA using the P-256 curve and the SHA-256
-   hash algorithm ("ES256").  Support for other algorithms and key sizes
-   is OPTIONAL.
+   Supported for digitally signed JWMs using JWS is REQUIRED.  Of the
+   signature and MAC algorithms specified in JSON Web Algorithms
+   [RFC7518], only ECDSA using the P-256 curve and SHA-256 hash
+   algorithm ("ES256") and "none" MUST be implemented by conforming JWM
+   implementations.  It is RECOMMENDED that implementations also support
+   ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512")
+   and EdDSA using the Ed25519 curve and SHA-512 hash algorithm.
+   Support for other algorithms and key sizes is OPTIONAL.
 
-   Support for encrypted JWMs is OPTIONAL.  If an implementation
-   provides encryption capabilities, of the encryption algorithms
-   specified in [RFC7518], only RSAES-PKCS1-v1_5 with 2048-bit keys
-   ("RSA1_5"), AES Key Wrap with 128- and 256-bit keys ("A128KW" and
-   "A256KW"), and the composite authenticated encryption algorithm using
-   AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
-   implemented by conforming implementations.  It is RECOMMENDED that
-   implementations also support using Elliptic Curve Diffie-Hellman
-   Ephemeral Static (ECDH-ES) to agree upon a key used to wrap the
-   Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") and
-   AES in Galois/Counter Mode (GCM) with 128- and 256-bit keys
-   ("A128GCM" and "A256GCM").  Support for other algorithms and key
-   sizes is OPTIONAL.
+   Support for encrypted JWMs using JWE is also REQUIRED.  Of the
+   encryption algorithms specified in [RFC7518], using Elliptic Curve
+   Diffie-Hellman Ephemeral Static (ECDH-ES) to agree upon a key and
+   using this key to to perform key wrapping of a Content Encryption Key
+   ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported.  With
+   regards to content encryption, AES in Galois/Counter Mode (GCM) with
+   128-bit and 256-bit keys ("A128GCM" and "A256GCM") MUST also be
+   supported.
 
-   Support for Nested JWMs is OPTIONAL. //TODO REVIEW this
+   Support for Nested JWMs is also REQUIRED.
 
 8.  IANA Considerations
 
 8.1.  Registration Template
-
-
-
-
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 13]
-
-Internet-Draft                     jwm                     December 2019
-
 
 8.1.1.  Attribute Name:
 
@@ -739,6 +719,16 @@ Internet-Draft                     jwm                     December 2019
    sensitive.  Names may not match other registered names in a case-
    insensitive manner unless the Designated Experts state that there is
    a compelling reason to allow an exception.
+
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 13]
+
+Internet-Draft                     jwm                     December 2019
+
 
 8.1.2.  Attribute Description
 
@@ -779,13 +769,6 @@ Internet-Draft                     jwm                     December 2019
    o Change Controller:
    o Specification Document(s):
 
-
-
-Looker                    Expires June 8, 2020                 [Page 14]
-
-Internet-Draft                     jwm                     December 2019
-
-
    o Attribute Name: "from"
    o Attribute Description: Message From
    o Change Controller:
@@ -795,6 +778,13 @@ Internet-Draft                     jwm                     December 2019
    o Attribute Description: Message Thread ID
    o Change Controller:
    o Specification Document(s):
+
+
+
+Looker                    Expires June 8, 2020                 [Page 14]
+
+Internet-Draft                     jwm                     December 2019
+
 
    o Attribute Name: "referent_id"
    o Attribute Description: Message Referent ID
@@ -834,14 +824,6 @@ Internet-Draft                     jwm                     December 2019
 
    All the security considerations in the JWS specification also apply
    to JWM, as do the JWE security considerations when encryption is
-
-
-
-Looker                    Expires June 8, 2020                 [Page 15]
-
-Internet-Draft                     jwm                     December 2019
-
-
    employed.  In particular, Sections 10.12 ("JSON Security
    Considerations") and 10.13 ("Unicode Comparison Security
    Considerations") of [RFC7515] apply equally to the JWM Attributes Set
@@ -852,6 +834,14 @@ Internet-Draft                     jwm                     December 2019
    The contents of a JWM cannot be relied upon in a trust decision
    unless its contents have been cryptographically secured and bound to
    the context necessary for the trust decision.  In particular, the
+
+
+
+Looker                    Expires June 8, 2020                 [Page 15]
+
+Internet-Draft                     jwm                     December 2019
+
+
    key(s) used to sign and/or encrypt the JWM will typically need to
    verifiably be under the control of the party identified by the
    associated cryptographic operation.
@@ -890,6 +880,16 @@ Internet-Draft                     jwm                     December 2019
    (TLS).  Omitting privacy-sensitive information from a JWM is the
    simplest way of minimizing privacy issues.
 
+12.  Acknowledgements
+
+   //TODO
+
+13.  References
+
+
+
+
+
 
 
 
@@ -897,12 +897,6 @@ Looker                    Expires June 8, 2020                 [Page 16]
 
 Internet-Draft                     jwm                     December 2019
 
-
-12.  Acknowledgements
-
-   //TODO
-
-13.  References
 
 13.1.  Normative References
 
@@ -945,6 +939,12 @@ Internet-Draft                     jwm                     December 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+13.2.  URIs
+
+   [1] https://tools.ietf.org/html/rfc7519
+
+
+
 
 
 
@@ -954,16 +954,16 @@ Looker                    Expires June 8, 2020                 [Page 17]
 Internet-Draft                     jwm                     December 2019
 
 
-13.2.  URIs
-
-   [1] https://tools.ietf.org/html/rfc7519
-
 Author's Address
 
    Tobias Looker (editor)
    Mattr
 
    Email: tobias.looker@mattr.global
+
+
+
+
 
 
 
