@@ -143,7 +143,7 @@
     <section anchor="jwm-attributes" title="JWM Attributes">
       <t>The JWM Attributes Set represents a JSON object whose members are the attributes conveyed by the JWM. The Attribute Names 
       within a JWM Attributes Set MUST be unique; JWM parsers MUST either reject JWMs with duplicate Attribute Names or use a JSON parser 
-      that returns only the lexically last duplicate member name, as specified in Section 15.12 ("The JSON Object") of ECMAScript 5.1 ECMAScript. //TODO</t>
+      that returns only the lexically last duplicate member name, as specified in Section 15.12 ("The JSON Object") of ECMAScript 5.1 <xref target="ECMAScript"/>.</t>
 
       <t>The set of attributes that a JWM must contain to be considered valid is context dependent and is outside the scope of this specification. 
       Specific applications of JWMs will require implementations to understand and process some attributes in particular ways.  However, in the absence 
@@ -245,7 +245,7 @@
 
       <section anchor="typ-type-header-parameter" title="&quot;typ&quot; (Type) Header Parameter">
         <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used
-        by JWM applications to declare the media type IANA.MediaTypes //TODO of
+        by JWM applications to declare the media type <xref target="IANA.MediaTypes"/> of
         this complete JWM.  This is intended for use by the JWM application
         when values that are not JWMs could also be present in an application
         data structure that can contain a JWM object; the application can use
@@ -634,6 +634,25 @@
       <?rfc include='reference.RFC.7518.xml'?>
       <?rfc include='reference.RFC.7159.xml'?>
       <?rfc include='reference.RFC.8174.xml'?>
+      <reference anchor="IANA.MediaTypes" target="http://www.iana.org/assignments/media-types">
+        <front>
+          <title>Media Types</title>
+          <author>
+            <organization>IANA</organization>
+          </author>
+          <date/>
+        </front>
+      </reference>
+      <reference anchor="ECMAScript" target="http://www.ecma-international.org/ecma-262/5.1/ECMA-262.pdf">
+        <front>
+          <title>ECMAScript Language Specification, 5.1 Edition</title>
+          <author>
+            <organization>Ecma International</organization>
+          </author>
+          <date month="June" year="2011"/>
+        </front>
+	      <seriesInfo name="ECMA Standard" value="262"/>
+      </reference>
     </references>
   </back>
 </rfc>
