@@ -143,7 +143,7 @@
     <section anchor="jwm-attributes" title="JWM Attributes">
       <t>The JWM Attributes Set represents a JSON object whose members are the attributes conveyed by the JWM. The Attribute Names 
       within a JWM Attributes Set MUST be unique; JWM parsers MUST either reject JWMs with duplicate Attribute Names or use a JSON parser 
-      that returns only the lexically last duplicate member name, as specified in Section 15.12 ("The JSON Object") of ECMAScript 5.1 ECMAScript. //TODO</t>
+      that returns only the lexically last duplicate member name, as specified in Section 15.12 ("The JSON Object") of ECMAScript 5.1 <xref target="ECMAScript"/>.</t>
 
       <t>The set of attributes that a JWM must contain to be considered valid is context dependent and is outside the scope of this specification. 
       Specific applications of JWMs will require implementations to understand and process some attributes in particular ways.  However, in the absence 
@@ -245,7 +245,7 @@
 
       <section anchor="typ-type-header-parameter" title="&quot;typ&quot; (Type) Header Parameter">
         <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used
-        by JWM applications to declare the media type IANA.MediaTypes //TODO of
+        by JWM applications to declare the media type <xref target="IANA.MediaTypes"/> of
         this complete JWM.  This is intended for use by the JWM application
         when values that are not JWMs could also be present in an application
         data structure that can contain a JWM object; the application can use
@@ -277,27 +277,20 @@
       </section>
 
       <section anchor="replicating-attributes-as-header-parameters" title="Replicating Attributes as Header Parameters">
-        <t>In some applications using encrypted JWMs, it is useful to have an
-        unencrypted representation of some attributes.  This might be used, for
-        instance, in application processing rules to determine whether and
-        how to process the JWM before it is decrypted.</t>
+        <t>As is also the case with JWTs, in some applications using encrypted JWMs,
+        it is useful to have an unencrypted representation of some attributes. 
+        This might be used, for instance, in application processing rules to 
+        determine whether and how to process the JWM before it is decrypted.</t>
 
         <t>This specification allows Attributes present in the JWM Attributes Set to be
-        replicated as Header Parameters in a JWM that is a JWE, as needed by
+        replicated as JOSE Header Parameters in a JWM that is a JWE, as needed by
         the application.  If such replicated attributes are present, the
         application receiving them SHOULD verify that their values are
         identical, unless the application defines other specific processing
         rules for these attributes.  It is the responsibility of the application
         to ensure that only attributes that are safe to be transmitted in an
-        unencrypted manner are replicated as Header Parameter values in the
+        unencrypted manner are replicated as JOSE Header Parameter values in the
         JWM.</t>
-
-        <t>Section 10.4.1 of this specification registers the "iss" (issuer),
-        "sub" (subject), and "aud" (audience) Header Parameter names for the
-        purpose of providing unencrypted replicas of these Attributes in
-        encrypted JWMs for applications that need them.  Other specifications
-        MAY similarly register other names that are registered Attribute Names as
-        Header Parameter names, as needed.</t>
       </section>
     </section>
 
@@ -357,28 +350,26 @@
         <t><list style="numbers">
           <t>Create a JWM Attribute Set containing the desired attributes. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding.</t>
           <t>Let the Message be the octets of the UTF-8 representation of the JWM Attributes Set.</t>
-          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS or JWE //TODO specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
-          <t>Depending upon whether the JWM is a JWS, JWE or nested JWM, there are three cases:</t>
+          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS <xref target="RFC7515"/> or JWE <xref target="RFC7516"/> specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
+          <t>Depending upon whether the JWM is a JWS or JWE, there are two cases:</t>
         </list></t>
 
         <t><list style="symbols">
-          <t>If the JWM only requires a signature, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS for creating a JWS MUST be followed.</t>
-          <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE for creating a JWE MUST be followed.</t>
+          <t>If the JWM is a JWS, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS <xref target="RFC7515"/> for creating a JWS MUST be followed. 
+           If the resulting JWS features only a single signature, it can then optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
+           the resulting JWS features multiple signatures and URL safety is required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
+           for the JWS MUST be JWS JSON serialization format.</t>
+          <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE <xref target="RFC7516"/> for creating a JWE MUST be followed. 
+          If the resulting JWE features only a single recipient, it can then optionally be formated into a JWE compact serialization format allowing the message to be URL safe. If however, the 
+          resulting JWE features multiple recipients and URL safety is required the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
+          the JWE MUST be JWE JSON serialization format.</t>
         </list></t>
 
         <t><list style="numbers">
-          <t>If A JWS being nested in a JWE is necessary, first create a compact serialization JWS using the message as the JWS payload; all steps specified in JWS for creating a JWS MUST be followed. Then create a JWE using the Compact Serialization JWS as the plaintext for the JWE; all steps specified in JWE for creating a JWE MUST be followed.</t>
+          <t>If a nested JWM is desired, let the Message be the JWS or JWE, and return to Step 3, using a "cty" (content type) value of "JWM" in the new JOSE Header
+          created in that step.</t>
           <t>Otherwise, let the resulting JWM be the JWS or JWE.</t>
         </list></t>
-
-        <t>Outstanding Question: Should we be requiring a compact serialization JWS
-        -If we dont allow compact serialization of JWS, then when we want to construct a message URL, we will end up double base64 encoding the payload and signature portions.</t>
-
-        <t>OPTIONS
-        - Only support JSON serialization
-        - Define new multi-recipient version of JWE</t>
-
-        <t>If we are doing an embedded signature should we avoid using compact serialization? Always have a JSON payload?</t>
       </section>
       
       <section anchor="validating-a-jwm" title="Validating a JWM">
@@ -455,39 +446,27 @@
     </section>
 
     <section anchor="implementation-requirements" title="Implementation Requirements">
-
       <t>This section defines which algorithms and features of this
       specification are mandatory to implement.  Applications using this
       specification can impose additional requirements upon implementations
-      that they use.  For instance, one application might require support
-      for encrypted JWMs and Nested JWMs, while another might require
-      support for signing JWMs with the Elliptic Curve Digital Signature
-      Algorithm (ECDSA) using the P-256 curve and the SHA-256 hash
-      algorithm ("ES256").</t>
+      that they use.</t>
 
-      <t>Of the signature and MAC algorithms specified in JSON Web Algorithms
-      <xref target="RFC7518"/>, only HMAC SHA-256 ("HS256") and "none" MUST be implemented by
-      conforming JWM implementations.  It is RECOMMENDED that
-      implementations also support RSASSA-PKCS1-v1_5 with the SHA-256 hash
-      algorithm ("RS256") and ECDSA using the P-256 curve and the SHA-256
-      hash algorithm ("ES256").  Support for other algorithms and key sizes
-      is OPTIONAL.</t>
+      <t>Supported for digitally signed JWMs using JWS is REQUIRED. Of the signature and 
+      MAC algorithms specified in JSON Web Algorithms <xref target="RFC7518"/>, only 
+      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") and "none" MUST be 
+      implemented by conforming JWM implementations. It is RECOMMENDED that implementations
+      also support ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and 
+      EdDSA using the Ed25519 curve and SHA-512 hash algorithm. Support for other 
+      algorithms and key sizes is OPTIONAL.</t>
 
-      <t>Support for encrypted JWMs is OPTIONAL.  If an implementation
-      provides encryption capabilities, of the encryption algorithms
-      specified in <xref target="RFC7518"/>, only RSAES-PKCS1-v1_5 with 2048-bit keys
-      ("RSA1_5"), AES Key Wrap with 128- and 256-bit keys ("A128KW" and
-      "A256KW"), and the composite authenticated encryption algorithm using
-      AES-CBC and HMAC SHA-2 ("A128CBC-HS256" and "A256CBC-HS512") MUST be
-      implemented by conforming implementations.  It is RECOMMENDED that
-      implementations also support using Elliptic Curve Diffie-Hellman
-      Ephemeral Static (ECDH-ES) to agree upon a key used to wrap the
-      Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") and
-      AES in Galois/Counter Mode (GCM) with 128- and 256-bit keys
-      ("A128GCM" and "A256GCM").  Support for other algorithms and key
-      sizes is OPTIONAL.</t>
+      <t>Support for encrypted JWMs using JWE is also REQUIRED. Of the encryption algorithms
+      specified in <xref target="RFC7518"/>, using Elliptic Curve Diffie-Hellman Ephemeral 
+      Static (ECDH-ES) to agree upon a key and using this key to to perform key wrapping
+      of a Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported. 
+      With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
+      keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
 
-      <t>Support for Nested JWMs is OPTIONAL. //TODO REVIEW this</t>
+      <t>Support for Nested JWMs is also REQUIRED.</t>
     </section>
     
     <section anchor="iana-considerations" title="IANA Considerations">
@@ -644,6 +623,25 @@
       <?rfc include='reference.RFC.7518.xml'?>
       <?rfc include='reference.RFC.7159.xml'?>
       <?rfc include='reference.RFC.8174.xml'?>
+      <reference anchor="IANA.MediaTypes" target="http://www.iana.org/assignments/media-types">
+        <front>
+          <title>Media Types</title>
+          <author>
+            <organization>IANA</organization>
+          </author>
+          <date/>
+        </front>
+      </reference>
+      <reference anchor="ECMAScript" target="http://www.ecma-international.org/ecma-262/5.1/ECMA-262.pdf">
+        <front>
+          <title>ECMAScript Language Specification, 5.1 Edition</title>
+          <author>
+            <organization>Ecma International</organization>
+          </author>
+          <date month="June" year="2011"/>
+        </front>
+	      <seriesInfo name="ECMA Standard" value="262"/>
+      </reference>
     </references>
   </back>
 </rfc>
