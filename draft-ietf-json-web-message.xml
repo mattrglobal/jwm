@@ -62,14 +62,18 @@
 
         <t>
           <list style="hanging">
-            <t hangText="Attribute">A piece of information contained inside a message sent from a sender intended for a recipient or recipients. An attribute is represented as a name/value pair 
+            <t hangText="JSON Web Message">A JWM Attribute Set, encoded in a JWS or JWE, enabling it to be digitally signed and/or encrypted.</t>
+
+            <t hangText="JWM Attribute Set">A JSON object of attributes conveyed by the JWM.</t>
+
+            <t hangText="Attribute">A piece of information conveyed in a message, sent from a sender intended for processing by a recipient or recipients. An attribute is represented as a name/value pair 
             consisting of an Attribute Name and an Attribute Value.</t>
 
             <t hangText="Attribute Name">The name portion of an attribute representation. An attribute name is always a string.</t>
 
             <t hangText="Attribute Value">The value portion of an attribute representation. An attribute value can be any JSON value.</t>
 
-            <t hangText="Nested JWM">A JWM in which nested signing and/or encryption are employed. In Nested JWMs, a JWM is used as the payload or plaintext value of an enclosing 
+            <t hangText="Nested JWM">A JWM in which nested signing and/or encryption is employed. In Nested JWMs, a JWM is used as the payload or plaintext value of an enclosing 
             JWS or JWE structure, respectively.</t>
 
             <t hangText="Unsecured JWM">A JWM whose attributes are not integrity protected or encrypted.</t>
