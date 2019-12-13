@@ -588,9 +588,6 @@
         key(s) used to sign and/or encrypt the JWM will typically need to
         verifiably be under the control of the party identified by the associated
         cryptographic operation.</t>
-
-        <t>//TODO the text from the JWT spec I disagreed with, you dont have an issuer
-        //you can verify if it is a JWE</t>
       </section>
 
       <section anchor="signing-and-encryption-order" title="Signing and Encryption Order">
