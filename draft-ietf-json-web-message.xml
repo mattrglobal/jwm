@@ -111,24 +111,26 @@
       </section>
       
       <section anchor="example-jwm" title="Example JWM">
-        <t>The following example JOSE Header declares that the encoded object is
-        a JWM, and the JWM is a JWS that is MACed using the HMAC SHA-256
-        algorithm:</t>
+        <t>The following example JOSE Header declares that the object is
+        a JWM, and the JWM is a JWS that has been digitally signed using 
+        ECDSA with the curve p-256 and SHA-256 as the hashing algorithm 
+        ("ES256"). The signer of the JWM has indicated that the key used
+        to sign the JWM is identified by "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"</t>
 
-        <t>//TODO change this example to not use an HMAC signature</t>
-
-        <t><spanx style="verb">json
-        {"typ":"JWM",
-          "alg":"HS256"}
-        </spanx></t>
+        <figure><artwork><![CDATA[
+        {
+          "typ":"JWM",
+          "kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+          "alg":"ES256"
+        }
+        ]]></artwork></figure>
 
         <t>The following is an example of a JWM Attributes Set:</t>
 
-        <t><spanx style="verb">json
+        <figure><artwork><![CDATA[
         {
           "id": "urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
           "type": "hello-world-message-type",
-          "thread_id": "urn:uuid:66c61afc-037b-4229-ace4-5ec4d788903e",
           "to": [ "urn:uuid:a62237f0-7c4c-4787-aeb7-eaf7fd741e4d" ],
           "from": "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
           "expiry": 1516239022,
@@ -137,7 +139,7 @@
             "message": "Hello world!"
           }
         }
-        </spanx></t>
+        ]]></artwork></figure>
 
         <t>//TODO complete this example</t>
 
@@ -359,12 +361,12 @@
 
         <t><list style="symbols">
           <t>If the JWM is a JWS, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS <xref target="RFC7515"/> for creating a JWS MUST be followed. 
-           If the resulting JWS features only a single signature, it can then optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
-           the resulting JWS features multiple signatures and URL safety is required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
+           If the resulting JWS features only a single signature, it can optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
+           the resulting JWS features multiple signatures and URL safety for the message is still required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
            for the JWS MUST be JWS JSON serialization format.</t>
           <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE <xref target="RFC7516"/> for creating a JWE MUST be followed. 
-          If the resulting JWE features only a single recipient, it can then optionally be formated into a JWE compact serialization format allowing the message to be URL safe. If however, the 
-          resulting JWE features multiple recipients and URL safety is required the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
+          If the resulting JWE features only a single recipient, it can optionally be formated into JWE compact serialization format allowing the message to be URL safe. If however, the 
+          resulting JWE features multiple recipients and URL safety for the message is still required, the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
           the JWE MUST be JWE JSON serialization format.</t>
         </list></t>
 
