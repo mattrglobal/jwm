@@ -156,10 +156,10 @@ Internet-Draft                     jwm                     December 2019
 
    The following terms are defined by this specification:
 
-   Attribute  A piece of information contained inside a message sent
-      from a sender intended for a recipient or recipients.  An
-      attribute is represented as a name/value pair consisting of an
-      Attribute Name and an Attribute Value.
+   JSON Web Message  A JWM Attribute Set, encoded in a JWS or JWE,
+      enabling it to be digitally signed and/or encrypted.
+
+   JWM Attribute Set  A JSON object of attributes conveyed by the JWM.
 
 
 
@@ -170,13 +170,18 @@ Looker                    Expires June 8, 2020                  [Page 3]
 Internet-Draft                     jwm                     December 2019
 
 
+   Attribute  A piece of information conveyed in a message, sent from a
+      sender intended for processing by a recipient or recipients.  An
+      attribute is represented as a name/value pair consisting of an
+      Attribute Name and an Attribute Value.
+
    Attribute Name  The name portion of an attribute representation.  An
       attribute name is always a string.
 
    Attribute Value  The value portion of an attribute representation.
       An attribute value can be any JSON value.
 
-   Nested JWM  A JWM in which nested signing and/or encryption are
+   Nested JWM  A JWM in which nested signing and/or encryption is
       employed.  In Nested JWMs, a JWM is used as the payload or
       plaintext value of an enclosing JWS or JWE structure,
       respectively.
@@ -191,33 +196,28 @@ Internet-Draft                     jwm                     December 2019
    JWMs conceptually share many parallels to JWTs, these similarities
    can be summarized in the following way.
 
-   o  A JWM contains a JSON based payload comprised of JWM attributes,
-      where public attributes are defined in a IANA registry, this is
-      conceptually parallel to JWT claims and the JWT claims IANA
-      registry.
+   o  A JWM contains a JSON based payload comprised of attributes known
+      as a JWM Attribute Set, where public attributes are defined in an
+      IANA registry, this is conceptually parallel to claims, the JWT
+      Claim Set and the JWT claims IANA registry.
 
-   o  A JWM leverages JSON Web Message (JWS) and JSON Web Encryption
+   o  A JWM leverages JSON Web Message (JWS) and or JSON Web Encryption
       (JWE) to achieve digital signing, integrity protection and or
-      confidentiality via encryption over the JWM attribute set when
+      confidentiality via encryption for the JWM attribute set when
       required.
 
    JWMs also deviate in important ways from JWTs which prevents using
    the JWT specification directly to achieve the functionality provided
    by a JWM.
 
-   o  JWTs due to the requirement of them being compact in nature,
-      require the usage of compact serialization for both JWS and JWE
-      representations.  This compact serialization requirement for JWE
-      limits JWTs to only being able to encrypt a payload to one
+   o  JWTs due to the requirement of them being compact in nature and
+      URL safe, require the usage of compact serialization for both JWS
+      and JWE representations.  This compact serialization requirement
+      for JWE limits JWTs to only being able to encrypt a payload to one
       recipient.  Whereas JWMs do not require the use of compact
       serialization of JWE, instead they permit the JSON based
       serialization of JWE, which allows for a JWM to be prepared for
       multiple recipients.
-
-   o  The intent of a JWM is different to a JWT.  A JWM is about a
-      sender creating a message composed of attributes that are destined
-      for a recipient or recipients.  Whereas a JWT is about an issuer
-      expressing claims about a subject to an audience.  This difference
 
 
 
@@ -226,7 +226,11 @@ Looker                    Expires June 8, 2020                  [Page 4]
 Internet-Draft                     jwm                     December 2019
 
 
-      in language means a meaningful separation of the terminology is
+   o  The intent of a JWM is different to a JWT.  A JWM is about a
+      sender creating a message composed of attributes that are destined
+      for a recipient or recipients.  Whereas a JWT is about an issuer
+      expressing claims about a subject to an audience.  This conceptual
+      difference means a meaningful separation of the terminology is
       required to limit confusion for specification implementers.
 
    In the spirit of specification re-use and promoting ease of
@@ -269,10 +273,6 @@ Internet-Draft                     jwm                     December 2019
    in the absence of such requirements, all attributes that are not
    understood by implementations MUST be ignored.
 
-   There are three classes of JWM Attribute Names: Registered Attribute
-   Names, Public Attribute Names, and Private Attribute Names.
-
-
 
 
 
@@ -281,6 +281,9 @@ Looker                    Expires June 8, 2020                  [Page 5]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   There are three classes of JWM Attribute Names: Registered Attribute
+   Names, Public Attribute Names, and Private Attribute Names.
 
 3.1.  Registered Attribute Names
 
@@ -327,9 +330,6 @@ Internet-Draft                     jwm                     December 2019
    each containing a StringOrURI value.  The processing of this
    attribute is generally application specific.  Use of this attribute
    is OPTIONAL.
-
-
-
 
 
 
@@ -467,8 +467,7 @@ Internet-Draft                     jwm                     December 2019
    value MUST be "JWM", to indicate that a Nested JWM is carried in this
    JWM.  While media type names are not case sensitive, it is
    RECOMMENDED that "JWM" always be spelled using uppercase characters
-   for compatibility with legacy implementations.  See Appendix A.2 for
-   an example of a Nested JWM.
+   for compatibility with legacy implementations.
 
 4.3.  Replicating Attributes as Header Parameters
 
@@ -498,6 +497,7 @@ Internet-Draft                     jwm                     December 2019
    the empty string for its JWS Signature value, as defined in the JWA
    specification [RFC7518]; it is an Unsecured JWS with the JWM
    Attributes Set as its JWS Payload.
+
 
 
 
@@ -593,7 +593,7 @@ Internet-Draft                     jwm                     December 2019
       Otherwise the output format for the JWE MUST be JWE JSON
       serialization format.
 
-   1.  If a nested JWM is desired, let the Message be the JWS or JWE,
+   1.  If a Nested JWM is desired, let the Message be the JWS or JWE,
        and return to Step 3, using a "cty" (content type) value of "JWM"
        in the new JOSE Header created in that step.
 

@@ -88,21 +88,21 @@
         <t>JWMs conceptually share many parallels to JWTs, these similarities can be summarized in the following way.</t>
           <t>
             <list style="symbols">
-              <t>A JWM contains a JSON based payload comprised of JWM attributes, where public attributes are defined in a IANA registry, this is conceptually 
-              parallel to JWT claims and the JWT claims IANA registry.</t>
-              <t>A JWM leverages JSON Web Message (JWS) and JSON Web Encryption (JWE) to achieve digital signing, integrity protection and or confidentiality via encryption over the JWM attribute set when required.</t>
+              <t>A JWM contains a JSON based payload comprised of attributes known as a JWM Attribute Set, where public attributes are defined in an IANA registry, this is conceptually 
+              parallel to claims, the JWT Claim Set and the JWT claims IANA registry.</t>
+              <t>A JWM leverages JSON Web Message (JWS) and or JSON Web Encryption (JWE) to achieve digital signing, integrity protection and or confidentiality via encryption for the JWM attribute set when required.</t>
             </list>
           </t>
 
           <t>JWMs also deviate in important ways from JWTs which prevents using the JWT specification directly to achieve the functionality provided by a JWM.</t>
             <t>
               <list style="symbols">
-                <t>JWTs due to the requirement of them being compact in nature, require the usage of compact serialization for both JWS and JWE representations. 
+                <t>JWTs due to the requirement of them being compact in nature and URL safe, require the usage of compact serialization for both JWS and JWE representations. 
                 This compact serialization requirement for JWE limits JWTs to only being able to encrypt a payload to one recipient. Whereas JWMs  
                 do not require the use of compact serialization of JWE, instead they permit the JSON based serialization of JWE, which allows for a JWM to be prepared for multiple 
                 recipients.</t>
                 <t>The intent of a JWM is different to a JWT. A JWM is about a sender creating a message composed of attributes that are destined for a recipient or 
-                recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience. This difference in language means a meaningful separation 
+                recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience. This conceptual difference means a meaningful separation 
                 of the terminology is required to limit confusion for specification implementers.</t>
               </list>
             </t>
@@ -276,8 +276,7 @@
         value MUST be "JWM", to indicate that a Nested JWM is carried in this
         JWM.  While media type names are not case sensitive, it is
         RECOMMENDED that "JWM" always be spelled using uppercase characters
-        for compatibility with legacy implementations.  See Appendix A.2 for
-        an example of a Nested JWM.</t>
+        for compatibility with legacy implementations.</t>
       </section>
 
       <section anchor="replicating-attributes-as-header-parameters" title="Replicating Attributes as Header Parameters">
@@ -370,7 +369,7 @@
         </list></t>
 
         <t><list style="numbers">
-          <t>If a nested JWM is desired, let the Message be the JWS or JWE, and return to Step 3, using a "cty" (content type) value of "JWM" in the new JOSE Header
+          <t>If a Nested JWM is desired, let the Message be the JWS or JWE, and return to Step 3, using a "cty" (content type) value of "JWM" in the new JOSE Header
           created in that step.</t>
           <t>Otherwise, let the resulting JWM be the JWS or JWE.</t>
         </list></t>
