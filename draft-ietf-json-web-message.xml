@@ -115,34 +115,41 @@
         a JWM, and the JWM is a JWS that has been digitally signed using 
         ECDSA with the curve p-256 and SHA-256 as the hashing algorithm 
         ("ES256"). The signer of the JWM has indicated that the key used
-        to sign the JWM is identified by "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"</t>
+        to sign the JWM is identified by "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82" (with line breaks for display purposes only):</t>
 
-        <figure><artwork><![CDATA[
-        {
-          "typ":"JWM",
-          "kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
-          "alg":"ES256"
-        }
-        ]]></artwork></figure>
+        <figure><artwork><![CDATA[{"typ":"JWM",
+ "kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+ "alg":"ES256"}]]></artwork></figure>
 
-        <t>The following is an example of a JWM Attributes Set:</t>
+        <t>Base64url encoding the octets of the UTF-8 representation of the JOSE
+        Header yields this encoded JOSE Header value (with line breaks for display purposes only):</t>
 
-        <figure><artwork><![CDATA[
-        {
-          "id": "urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
-          "type": "hello-world-message-type",
-          "to": [ "urn:uuid:a62237f0-7c4c-4787-aeb7-eaf7fd741e4d" ],
-          "from": "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
-          "expiry": 1516239022,
-          "time_stamp": 1516269022,
-          "body": {
-            "message": "Hello world!"
-          }
-        }
-        ]]></artwork></figure>
+        <t>eyJ0eXAiOiJKV00iLCJraWQiOiJ1cm46dXVpZDo4YWJkZjVmYi02MjFlLTRjZjUtYTU5NS0wNzFiYzJjOTFkODIiLCJhbGciOiJFUzI1NiJ9</t>
 
-        <t>//TODO complete this example</t>
+        <t>The following is an example of a JWM Attributes Set (with line breaks for display purposes only):</t>
 
+        <figure><artwork><![CDATA[{"id":"urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
+ "type":"hello-world-message-type",
+ "from":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
+ "expiry":1516239022,
+ "time_stamp":1516269022,
+ "body":{"message": "Hello world!"}}]]></artwork></figure>
+
+        <t>Base64url encoding the octets of the UTF-8 the JWS Payload yields this encoded JWS Payload (with line breaks for display purposes only):</t>
+
+        <t>eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=</t>
+
+        <t>Computing the signature of the encoded JOSE Header and encoded JWS Payload with the ECDSA with the curve p-256 and SHA-256 as the hashing algorithm algorithm and base64url encoding the value in the manner specified in <xref target="RFC7515"/> yields this encoded JWS Signature:</t>
+
+        <t>//TODO enter signature value</t>
+
+        <t>Concatenating these encoded parts in this order with period ('.') characters between the parts yields this complete JWM (with line breaks for display purposes only):</t>
+      
+        <t>eyJhbGciOiJub25lIn0<vspace/>
+        .<vspace/>
+        eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=<vspace/>
+        .//TODO enter signature value<vspace/>
+        </t>
       </section>
     </section>
     
@@ -322,16 +329,19 @@
 
         <t>The following is an example of a JWM Attributes Set:</t>
 
-        <t>{"iss":"joe",
-          "exp":1300819380,
-          "http://example.com/is_root":true} //TODO change</t>
+        <figure><artwork><![CDATA[{"id":"urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
+ "type":"hello-world-message-type",
+ "to":["urn:uuid:a62237f0-7c4c-4787-aeb7-eaf7fd741e4d"],
+ "from":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
+ "expiry":1516239022,
+ "time_stamp":1516269022,
+ "body":{"message": "Hello world!"}}]]></artwork></figure>
 
         <t>Base64url encoding the octets of the UTF-8 representation of the JWM
         Attributes Set yields this encoded JWS Payload (with line breaks for
         display purposes only):</t>
 
-        <t>eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
-          cGxlLmNvbS9pc19yb290Ijp0cnVlfQ //TODO change</t>
+        <t>eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=</t>
 
         <t>The encoded JWS Signature is the empty string.</t>
 
@@ -339,11 +349,12 @@
         characters between the parts yields this complete JWM (with line
         breaks for display purposes only):</t>
 
-        <t>eyJhbGciOiJub25lIn0
-          .
-          eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
-          cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
-          .</t>
+        <t>eyJhbGciOiJub25lIn0<vspace/>
+        .<vspace/>
+        eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=<vspace/>
+        .<vspace/>
+        </t>
+
       </section>
     </section>
     
@@ -384,7 +395,7 @@
         the listed steps fail, then the JWM MUST be rejected; that is,
         treated by the application as an invalid input.</t>
         <t><list style="numbers">
-          <t>If the JWM is a valid base64 string containing at least one period ('.') character.
+          <t>If the JWM is a valid base64url string containing at least one period ('.') character.
             <list style="numbers">
               <t>Let the Encoded JOSE Header be the portion of the JWM before the
               first period ('.') character.</t>
@@ -396,9 +407,9 @@
               RFC 7159 <xref target="RFC7159"/>; let the JOSE Header be this JSON object.</t>
             </list>
           </t>
-          <t>Else, if the JWM is a valid base64 string containing no period ('.') characters.
+          <t>Else, if the JWM is a valid base64url string containing no period ('.') characters.
             <list style="numbers">
-              <t>Let the Encoded JWS or JWE be the entire base64 string.</t>
+              <t>Let the Encoded JWS or JWE be the entire base64url string.</t>
               <t>Base64url decode the Encoded JWS or JWE following the
               restriction that no line breaks, whitespace, or other additional
               characters have been used.</t>
