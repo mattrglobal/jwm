@@ -130,8 +130,7 @@ Internet-Draft                     jwm                     December 2019
    application of JSON Web Signature (JWS) and JSON Web Encryption (JWE)
    can be digitally signed, integrity protected and or achieve
    confidentiality via encryption.  JWMs are inspired by JWTs [RFC7519],
-   more details about this relationship is documented in the section
-   "Relationship to JWT".
+   more details about this relationship is documented in Section 2.1.
 
 1.1.  Notational Conventions
 
@@ -161,6 +160,7 @@ Internet-Draft                     jwm                     December 2019
       from a sender intended for a recipient or recipients.  An
       attribute is represented as a name/value pair consisting of an
       Attribute Name and an Attribute Value.
+
 
 
 
@@ -285,8 +285,8 @@ Internet-Draft                     jwm                     December 2019
 3.1.  Registered Attribute Names
 
    The following Attribute Names are registered in the IANA "JSON Web
-   Message Attributes" registry established by Section 10.1.  None of
-   the attributes defined below are intended to be mandatory to use or
+   Message Attributes" registry established by Section 8.  None of the
+   attributes defined below are intended to be mandatory to use or
    implement in all cases, but rather they provide a starting point for
    a set of useful, interoperable attributes.  Applications using JWMs
    should define which specific Attributes they use and when they are
@@ -412,7 +412,7 @@ Internet-Draft                     jwm                     December 2019
 
    A producer and consumer of a JWM MAY agree to use Attribute Names
    that are Private Names: names that are not Registered Attribute Names
-   (Section 4.1) or Public Attribute Names (Section 4.2).  Unlike Public
+   Section 3.1 or Public Attribute Names Section 3.13.  Unlike Public
    Attribute Names, Private Attribute Names are subject to collision and
    should be used with caution.
 

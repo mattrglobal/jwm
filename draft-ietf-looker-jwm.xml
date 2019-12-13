@@ -39,7 +39,7 @@
       <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
       for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
       Encryption (JWE) can be digitally signed, integrity protected and or achieve confidentiality via encryption. JWMs are inspired 
-      by JWTs <xref target="RFC7519"/>, more details about this relationship is documented in the section "Relationship to JWT".</t>
+      by JWTs <xref target="RFC7519"/>, more details about this relationship is documented in <xref target="relationship-to-jwt"/>.</t>
 
       <section anchor="notational-conventions" title="Notational Conventions">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -153,7 +153,7 @@
 
         <section anchor="registered-attribute-names" title="Registered Attribute Names">
           <t>The following Attribute Names are registered in the IANA "JSON Web Message
-          Attributes" registry established by Section 10.1.  None of the attributes
+          Attributes" registry established by <xref target="iana-considerations"/>.  None of the attributes
           defined below are intended to be mandatory to use or implement in all
           cases, but rather they provide a starting point for a set of useful,
           interoperable attributes.  Applications using JWMs should define which
@@ -227,8 +227,8 @@
         </section>
 
         <section anchor="private-attribute-names" title="Private Attribute Names">
-          <t>A producer and consumer of a JWM MAY agree to use Attribute Names that are Private Names: names that are not Registered Attribute Names (Section 4.1) 
-          or Public Attribute Names (Section 4.2).  Unlike Public Attribute Names, Private Attribute Names are subject to collision and should be used with caution.</t>
+          <t>A producer and consumer of a JWM MAY agree to use Attribute Names that are Private Names: names that are not Registered Attribute Names <xref target="registered-attribute-names"/>
+          or Public Attribute Names <xref target="public-attribute-names"/>.  Unlike Public Attribute Names, Private Attribute Names are subject to collision and should be used with caution.</t>
         </section>
     </section>
 
