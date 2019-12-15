@@ -114,7 +114,7 @@ Looker                    Expires June 8, 2020                  [Page 2]
 Internet-Draft                     jwm                     December 2019
 
 
-     10.2.  Signing and Encryption Order . . . . . . . . . . . . . .  18
+     10.2.  Signing and Encryption Order . . . . . . . . . . . . . .  17
    11. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  18
    12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
@@ -940,12 +940,12 @@ Internet-Draft                     jwm                     December 2019
    verifiably be under the control of the party identified by the
    associated cryptographic operation.
 
-   //TODO the text from the JWT spec I disagreed with, you dont have an
-   issuer //you can verify if it is a JWE
+10.2.  Signing and Encryption Order
 
-
-
-
+   While syntactically the signing and encryption operations for Nested
+   JWMs may be applied in any order, if both signing and encryption are
+   necessary, normally producers should sign the message and then
+   encrypt the result (thus encrypting the signature).  This prevents
 
 
 
@@ -954,12 +954,6 @@ Looker                    Expires June 8, 2020                 [Page 17]
 Internet-Draft                     jwm                     December 2019
 
 
-10.2.  Signing and Encryption Order
-
-   While syntactically the signing and encryption operations for Nested
-   JWMs may be applied in any order, if both signing and encryption are
-   necessary, normally producers should sign the message and then
-   encrypt the result (thus encrypting the signature).  This prevents
    attacks in which the signature is stripped, leaving just an encrypted
    message, as well as providing privacy for the signer.  Furthermore,
    signatures over encrypted text are not considered valid in many
@@ -1003,17 +997,18 @@ Internet-Draft                     jwm                     December 2019
               IANA, "Media Types",
               <http://www.iana.org/assignments/media-types>.
 
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
+              editor.org/info/rfc2119>.
+
+
 
 
 Looker                    Expires June 8, 2020                 [Page 18]
 
 Internet-Draft                     jwm                     December 2019
 
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
-              editor.org/info/rfc2119>.
 
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
@@ -1049,6 +1044,11 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
+
+
+
+
+
 
 
 
