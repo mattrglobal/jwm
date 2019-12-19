@@ -115,8 +115,6 @@
                 (MAC) by leveraging JWS. Encrypted JWTs via JWE are less common and as defined in Section 8 of <xref target="RFC7519"/> 
                 they are optional to implement. Whereas JWMs require both JWS and JWE implementations.</t>
 
-                <t>Nested JWMs...?</t>
-                
                 <t>JWTs support an insecure format as defined in Section 6 of <xref target="RFC7519"/>, JWMs do not allow this format 
                 due to the documented vulnerabilities introduced.</t>
               </list>
@@ -192,22 +190,21 @@
 
         <t>eyJ0eXAiOiJKV00iLCJlbmMiOiJBRVMxMjhHQ00ifQ==</t>
 
-        <t>//TODO should we declare the encryption key next? </t>
-
         <t>The following JOSE Header declares that the sender has used Elliptic Curve Diffie-Hellman Ephemeral 
-        Static (ECDH-ES) for key agreement to encrypt the content encryption key (CEK). The keys required
+        Static (ECDH-ES+A256KW) for key agreement with AES based key wrapping to encrypt the content encryption key (CEK). The keys required
         to perform the opposite Diffie-Helman is identified by the key id of "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"
-        along with the ephemeral public key declared by the JSON object "epk" (with 
-        line breaks for display purposes only):</t>
+        along with the ephemeral public key declared by the JSON object "epk". The encrypted CEK is represented by the "encrypted_key" field 
+        (with line breaks for display purposes only):</t>
 
-        <figure><artwork><![CDATA[{"kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
- "alg":"ECDH-ES",
+        <figure><artwork><![CDATA[{"header":{"kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+ "alg":"ECDH-ES+A256KW",
  "epk":{ 
   "kty":"OKP",
   "crv":"X25519",
-  "x":"-3bLMSHYDG3_LVNh-MJvoYs_a2sAEPr4jwFfFjTrmUo"},
- "apu":"-3bLMSHYDG3_LVNh-MJvoYs_a2sAEPr4jwFfFjTrmUo",
- "apv":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"}]]></artwork></figure>
+  "x":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs"},
+ "apu":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs",
+ "apv":"dXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgy"}
+ "encrypted_key":"4PQsjDGs8IE3YqgcoGfwPTuVG25MKjojx4HSZqcjfkhr0qhwqkpUUw"}]]></artwork></figure>
 
         <t>The following is an example of a JWM Attributes Set (with line breaks for display purposes only):</t>
 
@@ -218,7 +215,39 @@
  "time_stamp":1516269022,
  "body":{"message": "Hello world!"}}]]></artwork></figure>
         
-        <t>TODO how both serialization methods here compact and JSON based serialization</t>
+        <t>Encrypting the above plaintext yields the following ciphertext in base64url form.</t>
+
+        <t>tIupQ-9MeYLdkAc1Us0Mdlp1kZ5Dbavq0No-eJ91cF0R0hE //TODO this needs to be updated</t>
+
+        <t>Composing this information into a valid JWE leads to the following possible expressions</t>
+
+        <t>Compact Serialization (with line breaks for display purposes only):</t>
+
+        <t>//TODO this expression needs to be added</t>
+
+        <t>JSON Serialization  (with line breaks for display purposes only):</t>
+
+        <figure><artwork><![CDATA[  {
+    "protected":"eyJ0eXAiOiJKV00iLCJlbmMiOiJBRVMxMjhHQ00ifQ==",
+    "recipients":[
+      {
+        "header":{
+          "kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+          "alg":"ECDH-ES+A256KW",
+          "epk":{
+            "kty":"OKP",
+            "crv":"X25519",
+            "x":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs"
+          },
+          "apu":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs",
+          "apv":"dXJuOjEyMw"
+        },
+        "encrypted_key":"4PQsjDGs8IE3YqgcoGfwPTuVG25MKjojx4HSZqcjfkhr0qhwqkpUUw"
+      }
+    ],
+    "ciphertext":"tIupQ-9MeYLdkAc1Us0Mdlp1kZ5Dbavq0No-eJ91cF0R0hE",
+    "tag":"TMRcEPc74knOIbXhLDJA_w"
+  }]]></artwork></figure>
       </section>
     </section>
 
@@ -487,8 +516,6 @@
       With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
       keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
 
-      <t>//TODO talk about supported curves???</t>
-
       <t>Support for Nested JWMs is also REQUIRED.</t>
     </section>
     
@@ -634,7 +661,6 @@
     </section>
 
     <section anchor="acknowledgements" title="Acknowledgements">
-      <t>//TODO</t>
     </section>
   </middle>
 

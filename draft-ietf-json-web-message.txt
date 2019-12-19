@@ -70,42 +70,42 @@ Table of Contents
      2.1.  Relationship to JWT . . . . . . . . . . . . . . . . . . .   4
      2.2.  Example Signed JWM  . . . . . . . . . . . . . . . . . . .   5
      2.3.  Example Encrypted JWM . . . . . . . . . . . . . . . . . .   7
-   3.  JWM Attributes  . . . . . . . . . . . . . . . . . . . . . . .   8
-     3.1.  Registered Attribute Names  . . . . . . . . . . . . . . .   8
-       3.1.1.  "id" Attribute  . . . . . . . . . . . . . . . . . . .   8
+   3.  JWM Attributes  . . . . . . . . . . . . . . . . . . . . . . .   9
+     3.1.  Registered Attribute Names  . . . . . . . . . . . . . . .   9
+       3.1.1.  "id" Attribute  . . . . . . . . . . . . . . . . . . .   9
        3.1.2.  "type" Attribute  . . . . . . . . . . . . . . . . . .   9
-       3.1.3.  "body" Attribute  . . . . . . . . . . . . . . . . . .   9
-       3.1.4.  "to" Attribute  . . . . . . . . . . . . . . . . . . .   9
-       3.1.5.  "from" Attribute  . . . . . . . . . . . . . . . . . .   9
-       3.1.6.  "thread_id" Attribute . . . . . . . . . . . . . . . .   9
-       3.1.7.  "referent_id" Attribute . . . . . . . . . . . . . . .   9
+       3.1.3.  "body" Attribute  . . . . . . . . . . . . . . . . . .  10
+       3.1.4.  "to" Attribute  . . . . . . . . . . . . . . . . . . .  10
+       3.1.5.  "from" Attribute  . . . . . . . . . . . . . . . . . .  10
+       3.1.6.  "thread_id" Attribute . . . . . . . . . . . . . . . .  10
+       3.1.7.  "referent_id" Attribute . . . . . . . . . . . . . . .  10
        3.1.8.  "time_stamp" Attribute  . . . . . . . . . . . . . . .  10
-       3.1.9.  "expiry" Attribute  . . . . . . . . . . . . . . . . .  10
-       3.1.10. "reply_url" Attribute . . . . . . . . . . . . . . . .  10
-       3.1.11. "reply_to" Attribute  . . . . . . . . . . . . . . . .  10
-     3.2.  Public Attribute Names  . . . . . . . . . . . . . . . . .  10
-     3.3.  Private Attribute Names . . . . . . . . . . . . . . . . .  10
+       3.1.9.  "expiry" Attribute  . . . . . . . . . . . . . . . . .  11
+       3.1.10. "reply_url" Attribute . . . . . . . . . . . . . . . .  11
+       3.1.11. "reply_to" Attribute  . . . . . . . . . . . . . . . .  11
+     3.2.  Public Attribute Names  . . . . . . . . . . . . . . . . .  11
+     3.3.  Private Attribute Names . . . . . . . . . . . . . . . . .  11
    4.  JOSE Header . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     4.1.  "typ" (Type) Header Parameter . . . . . . . . . . . . . .  11
-     4.2.  "cty" (Content Type) Header Parameter . . . . . . . . . .  11
+     4.1.  "typ" (Type) Header Parameter . . . . . . . . . . . . . .  12
+     4.2.  "cty" (Content Type) Header Parameter . . . . . . . . . .  12
      4.3.  Replicating Attributes as Header Parameters . . . . . . .  12
-   5.  Creating and Validating JWMs  . . . . . . . . . . . . . . . .  12
-     5.1.  Creating a JWM  . . . . . . . . . . . . . . . . . . . . .  12
-     5.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  13
-     5.3.  String Comparison Rules . . . . . . . . . . . . . . . . .  15
-   6.  Implementation Requirements . . . . . . . . . . . . . . . . .  15
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  15
-     7.1.  Registration Template . . . . . . . . . . . . . . . . . .  15
-       7.1.1.  Attribute Name: . . . . . . . . . . . . . . . . . . .  15
-       7.1.2.  Attribute Description . . . . . . . . . . . . . . . .  16
-       7.1.3.  Change Controller . . . . . . . . . . . . . . . . . .  16
-       7.1.4.  Specification Document(s) . . . . . . . . . . . . . .  16
-       7.1.5.  Initial Registry Contents . . . . . . . . . . . . . .  16
-   8.  Media Type Registration . . . . . . . . . . . . . . . . . . .  17
-     8.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  17
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
+   5.  Creating and Validating JWMs  . . . . . . . . . . . . . . . .  13
+     5.1.  Creating a JWM  . . . . . . . . . . . . . . . . . . . . .  13
+     5.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  14
+     5.3.  String Comparison Rules . . . . . . . . . . . . . . . . .  16
+   6.  Implementation Requirements . . . . . . . . . . . . . . . . .  16
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
+     7.1.  Registration Template . . . . . . . . . . . . . . . . . .  16
+       7.1.1.  Attribute Name: . . . . . . . . . . . . . . . . . . .  16
+       7.1.2.  Attribute Description . . . . . . . . . . . . . . . .  17
+       7.1.3.  Change Controller . . . . . . . . . . . . . . . . . .  17
+       7.1.4.  Specification Document(s) . . . . . . . . . . . . . .  17
+       7.1.5.  Initial Registry Contents . . . . . . . . . . . . . .  17
+   8.  Media Type Registration . . . . . . . . . . . . . . . . . . .  18
+     8.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  18
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
      9.1.  Trust Decisions . . . . . . . . . . . . . . . . . . . . .  18
-     9.2.  Signing and Encryption Order  . . . . . . . . . . . . . .  18
+     9.2.  Signing and Encryption Order  . . . . . . . . . . . . . .  19
 
 
 
@@ -114,10 +114,10 @@ Looker                    Expires June 8, 2020                  [Page 2]
 Internet-Draft                     jwm                     December 2019
 
 
-   10. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  18
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
+   10. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  19
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  19
    12. Normative References  . . . . . . . . . . . . . . . . . . . .  19
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -239,8 +239,6 @@ Internet-Draft                     jwm                     December 2019
       are optional to implement.  Whereas JWMs require both JWS and JWE
       implementations.
 
-   o  Nested JWMs...?
-
    o  JWTs support an insecure format as defined in Section 6 of
       [RFC7519], JWMs do not allow this format due to the documented
       vulnerabilities introduced.
@@ -271,6 +269,8 @@ Internet-Draft                     jwm                     December 2019
 
    The following is an example of a JWM Attributes Set (with line breaks
    for display purposes only):
+
+
 
 
 
@@ -365,24 +365,24 @@ Internet-Draft                     jwm                     December 2019
 
    eyJ0eXAiOiJKV00iLCJlbmMiOiJBRVMxMjhHQ00ifQ==
 
-   //TODO should we declare the encryption key next?
-
    The following JOSE Header declares that the sender has used Elliptic
-   Curve Diffie-Hellman Ephemeral Static (ECDH-ES) for key agreement to
-   encrypt the content encryption key (CEK).  The keys required to
-   perform the opposite Diffie-Helman is identified by the key id of
-   "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82" along with the
-   ephemeral public key declared by the JSON object "epk" (with line
-   breaks for display purposes only):
+   Curve Diffie-Hellman Ephemeral Static (ECDH-ES+A256KW) for key
+   agreement with AES based key wrapping to encrypt the content
+   encryption key (CEK).  The keys required to perform the opposite
+   Diffie-Helman is identified by the key id of "urn:uuid:8abdf5fb-621e-
+   4cf5-a595-071bc2c91d82" along with the ephemeral public key declared
+   by the JSON object "epk".  The encrypted CEK is represented by the
+   "encrypted_key" field (with line breaks for display purposes only):
 
-   {"kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
-    "alg":"ECDH-ES",
-    "epk":{
-     "kty":"OKP",
-     "crv":"X25519",
-     "x":"-3bLMSHYDG3_LVNh-MJvoYs_a2sAEPr4jwFfFjTrmUo"},
-    "apu":"-3bLMSHYDG3_LVNh-MJvoYs_a2sAEPr4jwFfFjTrmUo",
-    "apv":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"}
+{"header":{"kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+ "alg":"ECDH-ES+A256KW",
+ "epk":{
+  "kty":"OKP",
+  "crv":"X25519",
+  "x":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs"},
+ "apu":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs",
+ "apv":"dXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgy"}
+ "encrypted_key":"4PQsjDGs8IE3YqgcoGfwPTuVG25MKjojx4HSZqcjfkhr0qhwqkpUUw"}
 
    The following is an example of a JWM Attributes Set (with line breaks
    for display purposes only):
@@ -401,8 +401,54 @@ Internet-Draft                     jwm                     December 2019
     "time_stamp":1516269022,
     "body":{"message": "Hello world!"}}
 
-   TODO how both serialization methods here compact and JSON based
-   serialization
+   Encrypting the above plaintext yields the following ciphertext in
+   base64url form.
+
+   tIupQ-9MeYLdkAc1Us0Mdlp1kZ5Dbavq0No-eJ91cF0R0hE //TODO this needs to
+   be updated
+
+   Composing this information into a valid JWE leads to the following
+   possible expressions
+
+   Compact Serialization (with line breaks for display purposes only):
+
+   //TODO this expression needs to be added
+
+   JSON Serialization (with line breaks for display purposes only):
+
+  {
+    "protected":"eyJ0eXAiOiJKV00iLCJlbmMiOiJBRVMxMjhHQ00ifQ==",
+    "recipients":[
+      {
+        "header":{
+          "kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+          "alg":"ECDH-ES+A256KW",
+          "epk":{
+            "kty":"OKP",
+            "crv":"X25519",
+            "x":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs"
+          },
+          "apu":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs",
+          "apv":"dXJuOjEyMw"
+        },
+        "encrypted_key":"4PQsjDGs8IE3YqgcoGfwPTuVG25MKjojx4HSZqcjfkhr0qhwqkpUUw"
+      }
+    ],
+    "ciphertext":"tIupQ-9MeYLdkAc1Us0Mdlp1kZ5Dbavq0No-eJ91cF0R0hE",
+    "tag":"TMRcEPc74knOIbXhLDJA_w"
+  }
+
+
+
+
+
+
+
+
+Looker                    Expires June 8, 2020                  [Page 8]
+
+Internet-Draft                     jwm                     December 2019
+
 
 3.  JWM Attributes
 
@@ -443,13 +489,6 @@ Internet-Draft                     jwm                     December 2019
    value is a case-sensitive string containing a StringOrURI value.  Use
    of this attribute is OPTIONAL.
 
-
-
-Looker                    Expires June 8, 2020                  [Page 8]
-
-Internet-Draft                     jwm                     December 2019
-
-
 3.1.2.  "type" Attribute
 
    The "type" attribute is used to define the type of the message.  The
@@ -459,6 +498,13 @@ Internet-Draft                     jwm                     December 2019
    applications to inform the structure and content of the "message
    body" and indicate the presence of other JWM attributes.  Use of this
    attribute is OPTIONAL.
+
+
+
+Looker                    Expires June 8, 2020                  [Page 9]
+
+Internet-Draft                     jwm                     December 2019
+
 
 3.1.3.  "body" Attribute
 
@@ -499,13 +545,6 @@ Internet-Draft                     jwm                     December 2019
    attribute is generally application specific.  Use of this attribute
    is OPTIONAL.
 
-
-
-Looker                    Expires June 8, 2020                  [Page 9]
-
-Internet-Draft                     jwm                     December 2019
-
-
 3.1.8.  "time_stamp" Attribute
 
    The "time_stamp" attribute is used to define the time in which the
@@ -513,6 +552,15 @@ Internet-Draft                     jwm                     December 2019
    number containing a NumericDate value.  The processing of this
    attribute is generally application specific.  Use of this attribute
    is OPTIONAL.
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 10]
+
+Internet-Draft                     jwm                     December 2019
+
 
 3.1.9.  "expiry" Attribute
 
@@ -554,14 +602,6 @@ Internet-Draft                     jwm                     December 2019
    A producer and consumer of a JWM MAY agree to use Attribute Names
    that are Private Names: names that are not Registered Attribute Names
    Section 3.1 or Public Attribute Names Section 3.2.  Unlike Public
-
-
-
-Looker                    Expires June 8, 2020                 [Page 10]
-
-Internet-Draft                     jwm                     December 2019
-
-
    Attribute Names, Private Attribute Names are subject to collision and
    should be used with caution.
 
@@ -570,6 +610,14 @@ Internet-Draft                     jwm                     December 2019
    For a JWM object, the members of the JSON object represented by the
    JOSE Header describe the cryptographic operations applied to the JWM
    and optionally, additional properties of the JWM.  Depending upon
+
+
+
+Looker                    Expires June 8, 2020                 [Page 11]
+
+Internet-Draft                     jwm                     December 2019
+
+
    whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
    Header values apply.
 
@@ -610,14 +658,6 @@ Internet-Draft                     jwm                     December 2019
    RECOMMENDED that "JWM" always be spelled using uppercase characters
    for compatibility with legacy implementations.
 
-
-
-
-Looker                    Expires June 8, 2020                 [Page 11]
-
-Internet-Draft                     jwm                     December 2019
-
-
 4.3.  Replicating Attributes as Header Parameters
 
    As is also the case with JWTs, in some applications using encrypted
@@ -625,6 +665,14 @@ Internet-Draft                     jwm                     December 2019
    attributes.  This might be used, for instance, in application
    processing rules to determine whether and how to process the JWM
    before it is decrypted.
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 12]
+
+Internet-Draft                     jwm                     December 2019
+
 
    This specification allows Attributes present in the JWM Attributes
    Set to be replicated as JOSE Header Parameters in a JWM that is a
@@ -666,14 +714,6 @@ Internet-Draft                     jwm                     December 2019
       a JWS MUST be followed.  If the resulting JWS features only a
       single signature, it can optionally be formated into JWS compact
       serialization format allowing the message to be URL safe.  If
-
-
-
-Looker                    Expires June 8, 2020                 [Page 12]
-
-Internet-Draft                     jwm                     December 2019
-
-
       however, the resulting JWS features multiple signatures and URL
       safety for the message is still required, the entire JWS in JSON
       serialization format MUST be encoded to base64url format.
@@ -682,6 +722,14 @@ Internet-Draft                     jwm                     December 2019
 
    o  Else, if the JWM is a JWE, create a JWE using the JWM Attribute
       Set as the plaintext for the JWE; all steps specified in JWE
+
+
+
+Looker                    Expires June 8, 2020                 [Page 13]
+
+Internet-Draft                     jwm                     December 2019
+
+
       [RFC7516] for creating a JWE MUST be followed.  If the resulting
       JWE features only a single recipient, it can optionally be
       formated into JWE compact serialization format allowing the
@@ -723,18 +771,20 @@ Internet-Draft                     jwm                     December 2019
    2.  Else, if the JWM is a valid base64url string containing no period
        ('.') characters.
 
-
-
-Looker                    Expires June 8, 2020                 [Page 13]
-
-Internet-Draft                     jwm                     December 2019
-
-
        1.  Let the Encoded JWS or JWE be the entire base64url string.
 
        2.  Base64url decode the Encoded JWS or JWE following the
            restriction that no line breaks, whitespace, or other
            additional characters have been used.
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 14]
+
+Internet-Draft                     jwm                     December 2019
+
 
        3.  Verify that the resulting octet sequence is a UTF-8-encoded
            representation of a completely valid JSON object conforming
@@ -778,18 +828,19 @@ Internet-Draft                     jwm                     December 2019
        RFC 7159 [RFC7159]; let the JWM Attributes Set be this JSON
        object.
 
-
-
-
-Looker                    Expires June 8, 2020                 [Page 14]
-
-Internet-Draft                     jwm                     December 2019
-
-
    Finally, note that it is an application decision which algorithms may
    be used in a given context.  Even if a JWM can be successfully
    validated, unless the algorithms used in the JWM are acceptable to
    the application, it SHOULD reject the JWM.
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 15]
+
+Internet-Draft                     jwm                     December 2019
+
 
 5.3.  String Comparison Rules
 
@@ -821,8 +872,6 @@ Internet-Draft                     jwm                     December 2019
    128-bit and 256-bit keys ("A128GCM" and "A256GCM") MUST also be
    supported.
 
-   //TODO talk about supported curves???
-
    Support for Nested JWMs is also REQUIRED.
 
 7.  IANA Considerations
@@ -834,18 +883,20 @@ Internet-Draft                     jwm                     December 2019
    The name requested (e.g., "type").  Because a core goal of this
    specification is for the resulting representations to be compact, it
    is RECOMMENDED that the name be short - that is, not to exceed 8
-
-
-
-Looker                    Expires June 8, 2020                 [Page 15]
-
-Internet-Draft                     jwm                     December 2019
-
-
    characters without a compelling reason to do so.  This name is case
    sensitive.  Names may not match other registered names in a case-
    insensitive manner unless the Designated Experts state that there is
    a compelling reason to allow an exception.
+
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 16]
+
+Internet-Draft                     jwm                     December 2019
+
 
 7.1.2.  Attribute Description
 
@@ -891,17 +942,17 @@ Internet-Draft                     jwm                     December 2019
    o Change Controller:
    o Specification Document(s):
 
-
-
-Looker                    Expires June 8, 2020                 [Page 16]
-
-Internet-Draft                     jwm                     December 2019
-
-
    o Attribute Name: "thread_id"
    o Attribute Description: Message Thread ID
    o Change Controller:
    o Specification Document(s):
+
+
+
+Looker                    Expires June 8, 2020                 [Page 17]
+
+Internet-Draft                     jwm                     December 2019
+
 
    o Attribute Name: "referent_id"
    o Attribute Description: Message Referent ID
@@ -946,19 +997,19 @@ Internet-Draft                     jwm                     December 2019
    Considerations") of [RFC7515] apply equally to the JWM Attributes Set
    in the same manner that they do to the JOSE Header.
 
-
-
-
-Looker                    Expires June 8, 2020                 [Page 17]
-
-Internet-Draft                     jwm                     December 2019
-
-
 9.1.  Trust Decisions
 
    The contents of a JWM cannot be relied upon in a trust decision
    unless its contents have been cryptographically secured and bound to
    the context necessary for the trust decision.  In particular, the
+
+
+
+Looker                    Expires June 8, 2020                 [Page 18]
+
+Internet-Draft                     jwm                     December 2019
+
+
    key(s) used to sign and/or encrypt the JWM will typically need to
    verifiably be under the control of the party identified by the
    associated cryptographic operation.
@@ -996,20 +1047,6 @@ Internet-Draft                     jwm                     December 2019
 
 11.  Acknowledgements
 
-   //TODO
-
-
-
-
-
-
-
-
-Looker                    Expires June 8, 2020                 [Page 18]
-
-Internet-Draft                     jwm                     December 2019
-
-
 12.  Normative References
 
    [ECMAScript]
@@ -1021,6 +1058,13 @@ Internet-Draft                     jwm                     December 2019
    [IANA.MediaTypes]
               IANA, "Media Types",
               <http://www.iana.org/assignments/media-types>.
+
+
+
+Looker                    Expires June 8, 2020                 [Page 19]
+
+Internet-Draft                     jwm                     December 2019
+
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1061,4 +1105,16 @@ Author's Address
 
 
 
-Looker                    Expires June 8, 2020                 [Page 19]
+
+
+
+
+
+
+
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 20]
