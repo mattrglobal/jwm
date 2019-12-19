@@ -157,8 +157,7 @@
 
         <t>CtPivEwo4eDSyjdEGJNi7wudp7suB2l9gj3jWR1FW8J8yPAp8qgo-8yJeJr5Dsl_w4XIMa_2Wt2O7AE2Kuckw</t>
 
-        <t>TODO modify this example to express the result in both compact serialization and JSON serialization</t>
-        <t>Concatenating these encoded parts in this order with period ('.') characters between the parts yields this complete JWM (with line breaks for display purposes only):</t>
+        <t>Compact Serialization (with line breaks for display purposes only):</t>
       
         <t>eyJhbGciOiJub25lIn0<vspace/>
         .<vspace/>
@@ -166,6 +165,19 @@
         .<vspace/>
         CtPivEwo4eDSyjdEGJNi7wudp7suB2l9gj3jWR1FW8J8yPAp8qgo-8yJeJr5Dsl_w4XIMa_2Wt2O7AE2Kuckw<vspace/>
         </t>
+
+        <t>JSON Serialization: (with line breaks for display purposes only):</t>
+
+<figure><artwork><![CDATA[    {
+      "payload":"eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=",
+      "signatures":[
+        {
+          "protected":"eyJhbGciOiJub25lIn0",
+          "signature":"CtPivEwo4eDSyjdEGJNi7wudp7suB2l9gj3jWR1FW8J8yPAp8qgo-8yJeJr5Dsl_w4XIMa_2Wt2O7AE2Kuckw"
+        }
+      ]
+    }]]></artwork></figure>
+
       </section>
 
       <section anchor="example-encrypted-jwm" title="Example Encrypted JWM">
@@ -178,7 +190,7 @@
         <t>The above JOSE header forms the protected header portion of the resulting JWE and hence must be base64url encoded, the 
         product of base64url encoding the octets of the UTF-8 yeilds the following (with line breaks for display purposes only):</t>
 
-        <t>//TODO</t>
+        <t>eyJ0eXAiOiJKV00iLCJlbmMiOiJBRVMxMjhHQ00ifQ==</t>
 
         <t>//TODO should we declare the encryption key next? </t>
 
@@ -195,7 +207,7 @@
   "crv":"X25519",
   "x":"-3bLMSHYDG3_LVNh-MJvoYs_a2sAEPr4jwFfFjTrmUo"},
  "apu":"-3bLMSHYDG3_LVNh-MJvoYs_a2sAEPr4jwFfFjTrmUo",
- "apv":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82//TODO"}]]></artwork></figure>
+ "apv":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"}]]></artwork></figure>
 
         <t>The following is an example of a JWM Attributes Set (with line breaks for display purposes only):</t>
 
@@ -205,6 +217,8 @@
  "expiry":1516239022,
  "time_stamp":1516269022,
  "body":{"message": "Hello world!"}}]]></artwork></figure>
+        
+        <t>TODO how both serialization methods here compact and JSON based serialization</t>
       </section>
     </section>
 
@@ -299,31 +313,22 @@
     </section>
 
     <section anchor="jose-header" title="JOSE Header">
-      <t>For a JWM object, the members of the JSON object represented by the
-      JOSE Header describe the cryptographic operations applied to the JWM
-      and optionally, additional properties of the JWM. Depending upon
-      whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
+      <t>For a JWM object, the members of the JSON object represented by the JOSE Header describe the cryptographic operations applied to the JWM
+      and optionally, additional properties of the JWM. Depending upon whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
       Header values apply.</t>
 
-      <t>This specification further specifies the use of the following Header
-      Parameters in both the cases where the JWM is a JWS and where it is a
-      JWE.</t>
+      <t>This specification further specifies the use of the following Header Parameters in both the cases where the JWM is a JWS and where 
+      it is a JWE.</t>
 
       <section anchor="typ-type-header-parameter" title="&quot;typ&quot; (Type) Header Parameter">
-        <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used
-        by JWM applications to declare the media type <xref target="IANA.MediaTypes"/> of
-        this complete JWM.  This is intended for use by the JWM application
-        when values that are not JWMs could also be present in an application
-        data structure that can contain a JWM object; the application can use
-        this value to disambiguate among the different kinds of objects that
-        might be present.  It will typically not be used by applications when
-        it is already known that the object is a JWM.  This parameter is
-        ignored by JWM implementations; any processing of this parameter is
-        performed by the JWM application.  If present, it is RECOMMENDED that
-        its value be "JWM" to indicate that this object is a JWM.  While
-        media type names are not case sensitive, it is RECOMMENDED that "JWM"
-        always be spelled using uppercase characters for compatibility with
-        legacy implementations.  Use of this Header Parameter is OPTIONAL.</t>
+        <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used by JWM applications 
+        to declare the media type <xref target="IANA.MediaTypes"/> of this complete JWM.  This is intended for use by the JWM application
+        when values that are not JWMs could also be present in an application data structure that can contain a JWM object; the application 
+        can use this value to disambiguate among the different kinds of objects that might be present.  It will typically not be used by 
+        applications when it is already known that the object is a JWM.  This parameter is ignored by JWM implementations; any processing of 
+        this parameter is performed by the JWM application.  If present, it is RECOMMENDED that its value be "JWM" to indicate that this object 
+        is a JWM.  While media type names are not case sensitive, it is RECOMMENDED that "JWM" always be spelled using uppercase characters for 
+        compatibility with legacy implementations.  Use of this Header Parameter is OPTIONAL.</t>
       </section>
 
       <section anchor="cty-content-type-header-parameter" title="&quot;cty&quot; (Content Type) Header Parameter">
