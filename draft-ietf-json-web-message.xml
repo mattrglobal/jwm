@@ -123,7 +123,7 @@
       <section anchor="example-signed-jwm" title="Example Signed JWM">
         <t>The following example JOSE Header declares that the object is a JWM, and the JWM is a JWS that has been digitally signed using 
         ECDSA with the curve p-256 and SHA-256 as the hashing algorithm ("ES256"). The signer of the JWM has indicated that the key used
-        to sign the JWM is identified by "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82" (with line breaks for display purposes only):</t>
+        to sign the JWM is identified by "Ef1sFuyOozYm3CEY4iCdwqxiSyXZ5Br-eUDdQXk6jaQ" (with line breaks for display purposes only):</t>
 
         <figure><artwork><![CDATA[{"typ":"JWM",
  "kid":"Ef1sFuyOozYm3CEY4iCdwqxiSyXZ5Br-eUDdQXk6jaQ",
@@ -190,7 +190,7 @@
 
         <t>The following JOSE Header declares that the sender has used Elliptic Curve Diffie-Hellman Ephemeral 
         Static (ECDH-ES+A256KW) for key agreement with AES based key wrapping to encrypt the content encryption key (CEK). The keys required
-        to perform the opposite Diffie-Helman are identified by the key id of "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"
+        to perform the opposite Diffie-Helman are identified by the key id of "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg"
         along with the ephemeral public key declared by the JSON object "epk". The encrypted CEK is represented by the "encrypted_key" field 
         (with line breaks for display purposes only):</t>
 
@@ -290,7 +290,7 @@
       Specific applications of JWMs will require implementations to understand and process some attributes in particular ways.  However, in the absence 
       of such requirements, all attributes that are not understood by implementations MUST be ignored.</t>
 
-      <t>There are three classes of JWM Attribute Names: Registered Attribute Names, Public Attribute Names, and Private Attribute Names.</t>
+      <t>There are three classes of JWM Attribute Names: Registered Attribute Names, Public Attribute Names and Private Attribute Names.</t>
 
       <section anchor="registered-attribute-names" title="Registered Attribute Names">
         <t>The following Attribute Names are registered in the IANA "JSON Web Message Attributes" registry established by <xref target="iana-considerations"/>.  None of the attributes
@@ -376,7 +376,7 @@
       and optionally, additional properties of the JWM. Depending upon whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
       Header values apply.</t>
 
-      <t>This specification further specifies the use of the following Header Parameters in both the cases where the JWM is a JWS and where 
+      <t>This specification further specifies the use of the following header parameters in both the cases where the JWM is a JWS and where 
       it is a JWE.</t>
 
       <section anchor="typ-type-header-parameter" title="&quot;typ&quot; (Type) Header Parameter">
@@ -546,9 +546,8 @@
       With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
       keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
 
-      <t>Usage of the "none" algorithm identifier as defined in the JOSE Web Algorithms section 3.6 
-      <xref target="RFC7518"/> MUST not be used.</t>
-
+      <t>Usage of the "none" algorithm identifier in a JWM as defined in the JOSE Web Algorithms section 3.6 
+      <xref target="RFC7518"/> MUST be considered invalid.</t>
 
       <t>Support for Nested JWMs is also REQUIRED.</t>
     </section>

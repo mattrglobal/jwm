@@ -247,7 +247,7 @@ Internet-Draft                     jwm                     December 2019
    and the JWM is a JWS that has been digitally signed using ECDSA with
    the curve p-256 and SHA-256 as the hashing algorithm ("ES256").  The
    signer of the JWM has indicated that the key used to sign the JWM is
-   identified by "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82" (with
+   identified by "Ef1sFuyOozYm3CEY4iCdwqxiSyXZ5Br-eUDdQXk6jaQ" (with
    line breaks for display purposes only):
 
    {"typ":"JWM",
@@ -354,11 +354,11 @@ Internet-Draft                     jwm                     December 2019
    Curve Diffie-Hellman Ephemeral Static (ECDH-ES+A256KW) for key
    agreement with AES based key wrapping to encrypt the content
    encryption key (CEK).  The keys required to perform the opposite
-   Diffie-Helman are identified by the key id of "urn:uuid:8abdf5fb-
-   621e-4cf5-a595-071bc2c91d82" along with the ephemeral public key
-   declared by the JSON object "epk".  The encrypted CEK is represented
-   by the "encrypted_key" field (with line breaks for display purposes
-   only):
+   Diffie-Helman are identified by the key id of
+   "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg" along with the
+   ephemeral public key declared by the JSON object "epk".  The
+   encrypted CEK is represented by the "encrypted_key" field (with line
+   breaks for display purposes only):
 
    {
    "kid": "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg",
@@ -510,7 +510,7 @@ Internet-Draft                     jwm                     December 2019
    understood by implementations MUST be ignored.
 
    There are three classes of JWM Attribute Names: Registered Attribute
-   Names, Public Attribute Names, and Private Attribute Names.
+   Names, Public Attribute Names and Private Attribute Names.
 
 3.1.  Registered Attribute Names
 
@@ -662,8 +662,8 @@ Internet-Draft                     jwm                     December 2019
    whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
    Header values apply.
 
-   This specification further specifies the use of the following Header
-   Parameters in both the cases where the JWM is a JWS and where it is a
+   This specification further specifies the use of the following header
+   parameters in both the cases where the JWM is a JWS and where it is a
    JWE.
 
 
@@ -923,8 +923,8 @@ Internet-Draft                     jwm                     December 2019
    128-bit and 256-bit keys ("A128GCM" and "A256GCM") MUST also be
    supported.
 
-   Usage of the "none" algorithm identifier as defined in the JOSE Web
-   Algorithms section 3.6 [RFC7518] MUST not be used.
+   Usage of the "none" algorithm identifier in a JWM as defined in the
+   JOSE Web Algorithms section 3.6 [RFC7518] MUST be considered invalid.
 
    Support for Nested JWMs is also REQUIRED.
 
