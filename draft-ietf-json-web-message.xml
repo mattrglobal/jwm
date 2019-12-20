@@ -166,11 +166,16 @@
         <t>JSON Serialization: (with line breaks for display purposes only):</t>
 
 <figure><artwork><![CDATA[    {
-      "payload":"eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=",
+      "payload":"eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDl
+      kLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5c
+      GUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDc
+      xYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxN
+      TE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=",
       "signatures":[
         {
           "protected":"eyJhbGciOiJub25lIn0",
-          "signature":"CtPivEwo4eDSyjdEGJNi7wudp7suB2l9gj3jWR1FW8J8yPAp8qgo-8yJeJr5Dsl_w4XIMa_2Wt2O7AE2Kuckw"
+          "signature":"CtPivEwo4eDSyjdEGJNi7wudp7suB2l9gj3jWR1FW8J8y
+          PAp8qgo-8yJeJr5Dsl_w4XIMa_2Wt2O7AE2Kuckw"
         }
       ]
     }]]></artwork></figure>
@@ -200,7 +205,7 @@
   }
 }]]></artwork></figure>
 
-        <t>Because the JWE features a single recipient, the two JOSE headers are combinded into a single JOSE header, that can be represented as the following.</t>
+        <t>Because the JWE features a single recipient, the two JOSE headers are combined into a single JOSE header, that can be represented as the following.</t>
 
         <figure><artwork><![CDATA[{"typ": "JWM",
   "enc": "A256GCM",
@@ -233,27 +238,43 @@
 
         <t>Compact Serialization (with line breaks for display purposes only):</t>
 
-        <t>eyJ0eXAiOiJKV00iLCJlbmMiOiJBMjU2R0NNIiwia2lkIjoiUEdvWHpzME5XYVJfbWVLZ1RaTGJFdURvU1ZUYUZ1eXJiV0k3VjlkcGpDZyIsImFsZyI6IkVDREgtRVMrQTI1NktXIiwiZXBrIjp7Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoibzhKbktsdWVFbEtLOXJiQ2NaS0Zjb0RKNElkNFJZU2VabUpiTnB1Zl9FTSIsInkiOiJ5VXpYdUJHNXhrU0xGdGdOQ0xxaldDdmgwRFRtZDlHczZkYlJyS1lzamJjIn19</vspace>
-        .
-        nFeVxpB6qASyQORVqOX9o89bYvD0GV-uhAsHpiVmQYmcT513j8uzOw</vspace>
-        .</vspace>
-        bYeutdVSJGG57heL</vspace>
-        .</vspace>
-        G61Yg068PU9t9kMzmY9c9w0TR_VV2jopBdb6ncZcC1OvkhhEdvcds0HIt6uv6A6VG2VP_zerVATrI2_vy5uQlDp6YgULir0RV43LUn8fh5xoKrV2ZTf8jfNGTTeVIIl5xEd9NRC4CeT8kC6HGc419FwvMAPjractIr6O-KREscWn4LjRfm-shmQWFWw2FyI0PQdC0ufHgcriDdDwKbI8Leo7nMkE6d9MlXqZT2aLH9jpY1dI28_8n0Nc9NQBv6c6RCxl5fJkHwQZ_4egRg6kX6OZh1e_JWowejjE5t8</vspace>
-        .</vspace>
+        <t>eyJ0eXAiOiJKV00iLCJlbmMiOiJBMjU2R0NNIiwia2lkIjoiUEdvWHpzME5XYVJfbWVLZ1RaTGJFdURvU1ZUYUZ1eXJiV0k3VjlkcGpDZyIsImFsZyI6I
+        kVDREgtRVMrQTI1NktXIiwiZXBrIjp7Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoibzhKbktsdWVFbEtLOXJiQ2NaS0Zjb0RKNElkNFJZU2VabUpiT
+        nB1Zl9FTSIsInkiOiJ5VXpYdUJHNXhrU0xGdGdOQ0xxaldDdmgwRFRtZDlHczZkYlJyS1lzamJjIn19<vspace/>
+        .<vspace/>
+        nFeVxpB6qASyQORVqOX9o89bYvD0GV-uhAsHpiVmQYmcT513j8uzOw<vspace/>
+        .<vspace/>
+        bYeutdVSJGG57heL<vspace/>
+        .<vspace/>
+        G61Yg068PU9t9kMzmY9c9w0TR_VV2jopBdb6ncZcC1OvkhhEdvcds0HIt6uv6A6VG2VP_zerVATrI2_vy5uQlDp6YgULir0RV43LUn8fh5xoKrV2ZTf8jfNGT
+        TeVIIl5xEd9NRC4CeT8kC6HGc419FwvMAPjractIr6O-KREscWn4LjRfm-shmQWFWw2FyI0PQdC0ufHgcriDdDwKbI8Leo7nMkE6d9MlXqZT2aLH9jpY1dI28
+        _8n0Nc9NQBv6c6RCxl5fJkHwQZ_4egRg6kX6OZh1e_JWowejjE5t8<vspace/>
+        .<vspace/>
         _8MLOQ4SkPksmydaWTCJ9w</t>
 
         <t>JSON Serialization (with line breaks for display purposes only):</t>
 
         <figure><artwork><![CDATA[  {
-  "protected": "eyJ0eXAiOiJKV00iLCJlbmMiOiJBMjU2R0NNIiwia2lkIjoiUEdvWHpzME5XYVJfbWVLZ1RaTGJFdURvU1ZUYUZ1eXJiV0k3VjlkcGpDZyIsImFsZyI6IkVDREgtRVMrQTI1NktXIiwiZXBrIjp7Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiNlBiU0dSc3liZ0duVDB1V3UxcjZaeVk2Z01CVFlUbXYtU1lJakpHWUdydyIsInkiOiI4U25pUVRZNXpTN1FvbEczZ3k2U2FwcVBFMVp4SV9XNDNGaVBtRm9QMlI0In19",
+  "protected": "eyJ0eXAiOiJKV00iLCJlbmMiOiJBMjU2R0NNIiwi
+  a2lkIjoiUEdvWHpzME5XYVJfbWVLZ1RaTGJFdURvU1ZUYUZ1eXJiV0
+  k3VjlkcGpDZyIsImFsZyI6IkVDREgtRVMrQTI1NktXIiwiZXBrIjp7
+  Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiNlBiU0dSc3liZ0
+  duVDB1V3UxcjZaeVk2Z01CVFlUbXYtU1lJakpHWUdydyIsInkiOiI4
+  U25pUVRZNXpTN1FvbEczZ3k2U2FwcVBFMVp4SV9XNDNGaVBtRm9QMl
+  I0In19",
   "recipients": [
     {
-      "encrypted_key": "RU_RpQKd4lglN_Nslxf4OZiUCjah6zeuwrnrbmmmN5wsBZQfP0LGvg"
+      "encrypted_key": "RU_RpQKd4lglN_Nslxf4OZiUCjah6zeu
+      wrnrbmmmN5wsBZQfP0LGvg"
     }
   ],
   "iv": "aoTg7H1txyzHw0N8",
-  "ciphertext": "eu9aQQA-s3lmozzZn5viTGszQKtD1l44WG-JtpCo1-ONQh1aTT5v7BQXbtKNCrNjxCUKWngHeZxe5pSzylDqklUie4S4uUiVCEkAMcqRlgF8eAWBgDZkeUeoZaViSQ0kdVfhPhzlOSA7kU8gjY182Nochaf8rnn6DUTcJqii11E_2eav0y176vWEyYvbHvxiXvCUKEVZV0VAV3SoVTLwlrCUth6D-975XfBfvl_BlRsYcP0myMs1tOgVSb7nRF0N2crrCMyc5FC6tdYqLiKZC2K6HBxBp1K-AcVY1Ww",
+  "ciphertext": "eu9aQQA-s3lmozzZn5viTGszQKtD1l44WG-JtpC
+  o1-ONQh1aTT5v7BQXbtKNCrNjxCUKWngHeZxe5pSzylDqklUie4S4u
+  UiVCEkAMcqRlgF8eAWBgDZkeUeoZaViSQ0kdVfhPhzlOSA7kU8gjY1
+  82Nochaf8rnn6DUTcJqii11E_2eav0y176vWEyYvbHvxiXvCUKEVZV
+  0VAV3SoVTLwlrCUth6D-975XfBfvl_BlRsYcP0myMs1tOgVSb7nRF0
+  N2crrCMyc5FC6tdYqLiKZC2K6HBxBp1K-AcVY1Ww",
   "tag": "pBF3Dpz3CAWm5CwCMt6rxw"
 }]]></artwork></figure>
       </section>
@@ -304,7 +325,7 @@
         </section>
 
         <section anchor="attributes-thread-id" title="&quot;thread_id&quot; Attribute">
-          <t>The "thread_id" attribute is used to associate the JWM to a group of related messages often refered to as a thread. The "thread_id" attribute value 
+          <t>The "thread_id" attribute is used to associate the JWM to a group of related messages often referred to as a thread. The "thread_id" attribute value 
           is a case-sensitive string containing a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute 
           is OPTIONAL.</t>
         </section>
