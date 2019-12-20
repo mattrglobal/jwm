@@ -1104,8 +1104,8 @@ Internet-Draft                     jwm                     December 2019
 11.  Acknowledgements
 
    The authors of this specification would like to acknowledge the
-   significant contributions of ideas and review of this document from
-   the following individuals:
+   following individuals for the significant contribution of ideas and
+   time spent reviewing this document:
    Kyle Den Hartog
 
 12.  Normative References
