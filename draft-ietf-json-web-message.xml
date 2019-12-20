@@ -183,7 +183,7 @@
         AES in Galois/Counter Mode (GCM) with 128-bit for content encryption (with line breaks for display purposes only):</t>
 
         <figure><artwork><![CDATA[{"typ":"JWM",
- "enc":"AES128GCM"}]]></artwork></figure>
+ "enc":"A128GCM"}]]></artwork></figure>
 
         <t>The above JOSE header forms the protected header portion of the resulting JWE and hence must be base64url encoded, the 
         product of base64url encoding the octets of the UTF-8 yeilds the following (with line breaks for display purposes only):</t>
@@ -196,15 +196,15 @@
         along with the ephemeral public key declared by the JSON object "epk". The encrypted CEK is represented by the "encrypted_key" field 
         (with line breaks for display purposes only):</t>
 
-        <figure><artwork><![CDATA[{"header":{"kid":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
- "alg":"ECDH-ES+A256KW",
- "epk":{ 
-  "kty":"OKP",
-  "crv":"X25519",
-  "x":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs"},
- "apu":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs",
- "apv":"dXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgy"}
- "encrypted_key":"4PQsjDGs8IE3YqgcoGfwPTuVG25MKjojx4HSZqcjfkhr0qhwqkpUUw"}]]></artwork></figure>
+        <figure><artwork><![CDATA[{"header":{"kid": "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82",
+  "alg": "ECDH-ES",
+  "epk": {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "2zGQyHeVemvdlvznICVcQCyLcoSmtEfEVyv6-O7Ucvc",
+    "y": "GIi_Th17y2eacxqi0HPMiIDRt7Fj7ehlgSjdfbh-DT4"
+  }
+},"encrypted_key": "lJjPqQ-n6OZe7XN91v-VJlaXLx0x5FCc"}]]></artwork></figure>
 
         <t>The following is an example of a JWM Attributes Set (with line breaks for display purposes only):</t>
 
@@ -217,13 +217,23 @@
         
         <t>Encrypting the above plaintext yields the following ciphertext in base64url form.</t>
 
-        <t>tIupQ-9MeYLdkAc1Us0Mdlp1kZ5Dbavq0No-eJ91cF0R0hE //TODO this needs to be updated</t>
+        <t>IQXWu1m7KPxnN0ehLrUqyQLSN_qBeUeOZAhfNuOObdODV-Z2fVmXHDxmi9j68iIerLP-np1weMqFObO_C36GKKQ-7U6-
+        YGXOkIHSV1o1A6oRRv2mlX9A5mlZKeYFe6THh9vO_ko6YKeId-8PIcMaT_qv_tmJumvS1Y-zeRgxL_wguPHQycjjIocChmP
+        qfTMYxUWAy8TefgyWZg-PLogSiPZHBkKiOOLG432g4wSAxkOiHzCGGGB-WSHJYHot958fTd_c3oudYSix2fzKc3j1ovmSNV4J5tlROL3941g</t>
 
         <t>Composing this information into a valid JWE leads to the following possible expressions</t>
 
         <t>Compact Serialization (with line breaks for display purposes only):</t>
 
-        <t>//TODO this expression needs to be added</t>
+        <t>eyJ0eXAiOiJKV00iLCJhbGciOiJFQ0RILUVTK0EyNTZLVyIsImVuYyI6IkEyNTZHQ00iLCJlcGsiOnsia3R5IjoiRUMiLCJjcnYiOiJQLTI1NiIsIngiOiJiMlRLc2FmV2J4alFFLV9MNHByQ0pSUy1tTEFienVYNzRUMWZHU0prbzI0IiwieSI6Ind1TFduMFlHcEVXVE1qTW53TFpid1BNUXdUa0R4NUJFM2k5NTk4OWNOQzgifX0</vspace>
+        .</vspace>
+        P6F4daLFTDtPdIhtdvTMe6zWs-5IWTPOTGuCGtReLveV31cTxG6New</vspace>
+        .</vspace>
+        tFczt_Xiv1b2i4YO
+        .</vspace>
+        IQXWu1m7KPxnN0ehLrUqyQLSN_qBeUeOZAhfNuOObdODV-Z2fVmXHDxmi9j68iIerLP-np1weMqFObO_C36GKKQ-7U6-YGXOkIHSV1o1A6oRRv2mlX9A5mlZKeYFe6THh9vO_ko6YKeId-8PIcMaT_qv_tmJumvS1Y-zeRgxL_wguPHQycjjIocChmPqfTMYxUWAy8TefgyWZg-PLogSiPZHBkKiOOLG432g4wSAxkOiHzCGGGB-WSHJYHot958fTd_c3oudYSix2fzKc3j1ovmSNV4J5tlROL3941g</vspace>
+        .</vspace>
+        jvGLkFodweI0YiCda7re9Q</t>
 
         <t>JSON Serialization  (with line breaks for display purposes only):</t>
 
@@ -242,11 +252,11 @@
           "apu":"d7rIddZWblHmCc0mYZJw39SGteink_afiLraUb-qwgs",
           "apv":"dXJuOjEyMw"
         },
-        "encrypted_key":"4PQsjDGs8IE3YqgcoGfwPTuVG25MKjojx4HSZqcjfkhr0qhwqkpUUw"
+        "encrypted_key":"P6F4daLFTDtPdIhtdvTMe6zWs-5IWTPOTGuCGtReLveV31cTxG6New"
       }
     ],
-    "ciphertext":"tIupQ-9MeYLdkAc1Us0Mdlp1kZ5Dbavq0No-eJ91cF0R0hE",
-    "tag":"TMRcEPc74knOIbXhLDJA_w"
+    "ciphertext":"IQXWu1m7KPxnN0ehLrUqyQLSN_qBeUeOZAhfNuOObdODV-Z2fVmXHDxmi9j68iIerLP-np1weMqFObO_C36GKKQ-7U6-YGXOkIHSV1o1A6oRRv2mlX9A5mlZKeYFe6THh9vO_ko6YKeId-8PIcMaT_qv_tmJumvS1Y-zeRgxL_wguPHQycjjIocChmPqfTMYxUWAy8TefgyWZg-PLogSiPZHBkKiOOLG432g4wSAxkOiHzCGGGB-WSHJYHot958fTd_c3oudYSix2fzKc3j1ovmSNV4J5tlROL3941g",
+    "tag":"jvGLkFodweI0YiCda7re9Q"
   }]]></artwork></figure>
       </section>
     </section>
