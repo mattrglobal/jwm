@@ -27,7 +27,7 @@ Now install the `xml2rfc` package using pip.
 
 ### Updating Docs
 
-Update `draft-ietf-json-web-message.xml` file with your desired changes.
+Update `draft-looker-jwm.xml` file with your desired changes.
 
 Run the following to compile the new RFC txt file from the XML.
 
