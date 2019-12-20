@@ -77,8 +77,6 @@
 
             <t hangText="Nested JWM">A JWM in which nested signing and/or encryption is employed. In Nested JWMs, a JWM is used as the payload 
             or plaintext value of an enclosing JWS or JWE structure, respectively.</t>
-
-            <t hangText="Unsecured JWM">A JWM whose attributes are not integrity protected or encrypted.</t>
           </list>
         </t>
       </section>
@@ -547,6 +545,10 @@
       of a Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported. 
       With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
       keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
+
+      <t>Usage of the "none" algorithm identifier as defined in the JOSE Web Algorithms section 3.6 
+      <xref target="RFC7518"/> MUST not be used.</t>
+
 
       <t>Support for Nested JWMs is also REQUIRED.</t>
     </section>
