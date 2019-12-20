@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-looker-jwm-01"
+<rfc category="std" docName="draft-json-web-message-01"
      ipr="trust200902">
 
   <front>
@@ -52,9 +52,11 @@
 
       <section anchor="terminology" title="Terminology">
         <t>The terms "JSON Web Signature (JWS)", "Base64url Encoding", "Header Parameter", "JOSE Header", 
-        "JWS Payload", "JWS Signature", "JWS Compact Serialization" and "JWS JSON Serialization" are defined by the JWS specification <xref target="RFC7515"/>.</t>
+        "JWS Payload", "JWS Signature", "JWS Compact Serialization" and "JWS JSON Serialization" are defined 
+        by the JWS specification <xref target="RFC7515"/>.</t>
 
-        <t>The terms "JSON Web Encryption (JWE)", "JWE Compact Serialization" and "JWE JSON Serialization" are defined by the JWE specification <xref target="RFC7516"/>.</t>
+        <t>The terms "JSON Web Encryption (JWE)", "JWE Compact Serialization" and "JWE JSON Serialization" 
+        are defined by the JWE specification <xref target="RFC7516"/>.</t>
 
         <t>The terms "StringOrURI", "NumericDate" are defined by the JWT specification <xref target="RFC7519"/>.</t>
 
@@ -62,21 +64,19 @@
 
         <t>
           <list style="hanging">
-            <t hangText="JSON Web Message">A JWM Attribute Set, encoded in a JWS or JWE, enabling it to be digitally signed and/or encrypted.</t>
+            <t hangText="JSON Web Message">A JWM Attribute Set, encoded in a JWS and or JWE, enabling it to be digitally signed and/or encrypted.</t>
 
             <t hangText="JWM Attribute Set">A JSON object of attributes conveyed by the JWM.</t>
 
-            <t hangText="Attribute">A piece of information conveyed in a message, sent from a sender intended for processing by a recipient or recipients. An attribute is represented as a name/value pair 
-            consisting of an Attribute Name and an Attribute Value.</t>
+            <t hangText="Attribute">A piece of information conveyed in a message, sent from a sender intended for processing by a recipient 
+            or recipients. An attribute is represented as a name/value pair consisting of an Attribute Name and an Attribute Value.</t>
 
             <t hangText="Attribute Name">The name portion of an attribute representation. An attribute name is always a string.</t>
 
             <t hangText="Attribute Value">The value portion of an attribute representation. An attribute value can be any JSON value.</t>
 
-            <t hangText="Nested JWM">A JWM in which nested signing and/or encryption is employed. In Nested JWMs, a JWM is used as the payload or plaintext value of an enclosing 
-            JWS or JWE structure, respectively.</t>
-
-            <t hangText="Unsecured JWM">A JWM whose attributes are not integrity protected or encrypted.</t>
+            <t hangText="Nested JWM">A JWM in which nested signing and/or encryption is employed. In Nested JWMs, a JWM is used as the payload 
+            or plaintext value of an enclosing JWS or JWE structure, respectively.</t>
           </list>
         </t>
       </section>
@@ -88,62 +88,199 @@
         <t>JWMs conceptually share many parallels to JWTs, these similarities can be summarized in the following way.</t>
           <t>
             <list style="symbols">
-              <t>A JWM contains a JSON based payload comprised of attributes known as a JWM Attribute Set, where public attributes are defined in an IANA registry, this is conceptually 
-              parallel to claims, the JWT Claim Set and the JWT claims IANA registry.</t>
-              <t>A JWM leverages JSON Web Message (JWS) and or JSON Web Encryption (JWE) to achieve digital signing, integrity protection and or confidentiality via encryption for the JWM attribute set when required.</t>
+              <t>A JWM contains a JSON object comprised of attributes known as a JWM Attribute Set, where the attributes featured in the set can be public, private
+              or registered in an IANA registry, this is conceptually parallel to claims in JWTs, the JWT Claim Set and the JWT claims IANA registry.</t>
+              
+              <t>A JWM leverages JSON Web Signature (JWS) and or JSON Web Encryption (JWE) to achieve digital signing, integrity protection and 
+              or confidentiality via encryption for the JWM attribute set in similar ways to JWT for the JWT claim set.</t>
             </list>
           </t>
 
           <t>JWMs also deviate in important ways from JWTs which prevents using the JWT specification directly to achieve the functionality provided by a JWM.</t>
             <t>
               <list style="symbols">
-                <t>JWTs due to the requirement of them being compact in nature and URL safe, require the usage of compact serialization for both JWS and JWE representations. 
-                This compact serialization requirement for JWE limits JWTs to only being able to encrypt a payload to one recipient. Whereas JWMs  
-                do not require the use of compact serialization of JWE, instead they permit the JSON based serialization of JWE, which allows for a JWM to be prepared for multiple 
-                recipients.</t>
-                <t>The intent of a JWM is different to a JWT. A JWM is about a sender creating a message composed of attributes that are destined for a recipient or 
-                recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience. This conceptual difference means a meaningful separation 
-                of the terminology is required to limit confusion for specification implementers.</t>
+                <t>JWTs due to the requirement of them being compact in nature and URL safe, mandate the usage of compact serialization for both 
+                JWS and JWE representations. This compact serialization requirement for JWS and JWE limits JWTs to only being able to feature a single 
+                digital signature and or encrypt a payload to a single recipient. Whereas JWMs do not require the use of compact serialization of JWE, 
+                instead they permit the JSON based serialization of JWS and JWE, which allows for a JWM to feature multiple digital signature or encrypted 
+                to multiple recipients.</t>
+
+                <t>JWM and JWT have different intents. A JWM is about a sender creating a message composed of attributes, where the message is destined for a 
+                recipient or recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience.</t>
+
+                <t>The primary usage of JWTs centers around creating tokens that are digitally signed or integrity protected through a Message Authentication Code 
+                (MAC) by leveraging JWS. Encrypted JWTs via JWE are less common and as defined in Section 8 of <xref target="RFC7519"/> 
+                they are optional to implement. Whereas JWMs require both JWS and JWE implementations.</t>
+
+                <t>JWTs support an insecure format as defined in Section 6 of <xref target="RFC7519"/>, JWMs do not allow this format 
+                due to the vulnerabilities it introduces.</t>
               </list>
             </t>
 
-          <t>In the spirit of specification re-use and promoting ease of understanding, this specifications structure is inspired by <eref target="https://tools.ietf.org/html/rfc7519">JWT</eref>.</t>
+          <t>In the spirit of specification re-use and promoting ease of understanding, this specifications structure is inspired by <xref target="RFC7519"/>.</t>
       </section>
       
-      <section anchor="example-jwm" title="Example JWM">
-        <t>The following example JOSE Header declares that the encoded object is
-        a JWM, and the JWM is a JWS that is MACed using the HMAC SHA-256
-        algorithm:</t>
+      <section anchor="example-signed-jwm" title="Example Signed JWM">
+        <t>The following example JOSE Header declares that the object is a JWM, and the JWM is a JWS that has been digitally signed using 
+        ECDSA with the curve p-256 and SHA-256 as the hashing algorithm ("ES256"). The signer of the JWM has indicated that the key used
+        to sign the JWM is identified by "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82" (with line breaks for display purposes only):</t>
 
-        <t>//TODO change this example to not use an HMAC signature</t>
+        <figure><artwork><![CDATA[{"typ":"JWM",
+ "kid":"Ef1sFuyOozYm3CEY4iCdwqxiSyXZ5Br-eUDdQXk6jaQ",
+ "alg":"ES256"}]]></artwork></figure>
 
-        <t><spanx style="verb">json
-        {"typ":"JWM",
-          "alg":"HS256"}
-        </spanx></t>
+        <t>Base64url encoding the octets of the UTF-8 representation of the JOSE
+        Header yields this encoded JOSE Header value (with line breaks for display purposes only):</t>
 
-        <t>The following is an example of a JWM Attributes Set:</t>
+        <t>eyJ0eXAiOiJKV00iLCJraWQiOiJFZjFzRnV5T296WW0zQ0VZNGlDZHdxeGlTeVhaNUJyLWVVRGRRWGs2amFRIiwiYWxnIjoiRVMyNTYifQ</t>
 
-        <t><spanx style="verb">json
+        <t>The following is an example of a JWM Attributes Set (with line breaks for display purposes only):</t>
+
+        <figure><artwork><![CDATA[{"id":"urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
+ "type":"hello-world-message-type",
+ "from":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
+ "expiry":1516239022,
+ "time_stamp":1516269022,
+ "body":{"message": "Hello world!"}}]]></artwork></figure>
+
+        <t>Base64url encoding the octets of the UTF-8 the JWS Payload yields this encoded JWS Payload (with line breaks for display purposes only):</t>
+
+        <t>eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0</t>
+
+        <t>Computing the signature of the encoded JOSE Header and encoded JWS Payload with the ECDSA with the curve p-256 and SHA-256 as the hashing 
+        algorithm algorithm and base64url encoding the value in the manner specified in <xref target="RFC7515"/> yields this encoded JWS Signature:</t>
+
+        <t>H8-ceviETFwgo7A2kMhrKGmlw0cEDEzCCmN8MzOVoL1RMz5dAY0kzG1Fsou_r_FUftb7tlGqCdOVeR9EajIe6Q</t>
+
+        <t>Compact Serialization (with line breaks for display purposes only):</t>
+
+        <t>eyJ0eXAiOiJKV00iLCJraWQiOiJFZjFzRnV5T296WW0zQ0VZNGlDZHdxeGlTeVhaNUJyLWVVRGRRWGs2amFRIiwiYWxnIjoiRVMyNTYifQ<vspace/>
+        .<vspace/>
+        eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0<vspace/>
+        .<vspace/>
+        H8-ceviETFwgo7A2kMhrKGmlw0cEDEzCCmN8MzOVoL1RMz5dAY0kzG1Fsou_r_FUftb7tlGqCdOVeR9EajIe6Q</t>
+
+        <t>JSON Serialization: (with line breaks for display purposes only):</t>
+
+<figure><artwork><![CDATA[    {
+      "payload":"eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDl
+      kLTJiOWM3ZWU1MTExNyIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5c
+      GUiLCJmcm9tIjoidXJuOnV1aWQ6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDc
+      xYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxN
+      TE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJIZWxsbyB3b3JsZCEifX0=",
+      "signatures":[
         {
-          "id": "urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
-          "type": "hello-world-message-type",
-          "thread_id": "urn:uuid:66c61afc-037b-4229-ace4-5ec4d788903e",
-          "to": [ "urn:uuid:a62237f0-7c4c-4787-aeb7-eaf7fd741e4d" ],
-          "from": "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
-          "expiry": 1516239022,
-          "time_stamp": 1516269022,
-          "body": {
-            "message": "Hello world!"
-          }
+          "protected":"eyJhbGciOiJub25lIn0",
+          "signature":"CtPivEwo4eDSyjdEGJNi7wudp7suB2l9gj3jWR1FW8J8y
+          PAp8qgo-8yJeJr5Dsl_w4XIMa_2Wt2O7AE2Kuckw"
         }
-        </spanx></t>
-
-        <t>//TODO complete this example</t>
+      ]
+    }]]></artwork></figure>
 
       </section>
+
+      <section anchor="example-encrypted-jwm" title="Example Encrypted JWM">
+        <t>The following example JOSE Header declares that the object is a JWM, and the JWM is a JWE that has been encrypted using
+        AES in Galois/Counter Mode (GCM) with 256-bit for content encryption (with line breaks for display purposes only):</t>
+
+        <figure><artwork><![CDATA[{
+ "typ":"JWM",
+ "enc":"A256GCM"
+}]]></artwork></figure>
+
+        <t>The following JOSE Header declares that the sender has used Elliptic Curve Diffie-Hellman Ephemeral 
+        Static (ECDH-ES+A256KW) for key agreement with AES based key wrapping to encrypt the content encryption key (CEK). The keys required
+        to perform the opposite Diffie-Helman are identified by the key id of "urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82"
+        along with the ephemeral public key declared by the JSON object "epk". The encrypted CEK is represented by the "encrypted_key" field 
+        (with line breaks for display purposes only):</t>
+
+        <figure><artwork><![CDATA[{
+"kid": "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg",
+"alg": "ECDH-ES+A256KW",
+  "epk": {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "6PbSGRsybgGnT0uWu1r6ZyY6gMBTYTmv-SYIjJGYGrw",
+    "y": "8SniQTY5zS7QolG3gy6SapqPE1ZxI_W43FiPmFoP2R4"
+  }
+}]]></artwork></figure>
+
+        <t>Because the JWE features a single recipient, the two JOSE headers are combined into a single JOSE header, that can be represented as the following.</t>
+
+        <figure><artwork><![CDATA[{
+  "typ": "JWM",
+  "enc": "A256GCM",
+  "kid": "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg",
+  "alg": "ECDH-ES+A256KW",
+  "epk": {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "6PbSGRsybgGnT0uWu1r6ZyY6gMBTYTmv-SYIjJGYGrw",
+    "y": "8SniQTY5zS7QolG3gy6SapqPE1ZxI_W43FiPmFoP2R4"
+  }
+}]]></artwork></figure>
+
+        <t>The following is an example of a JWM Attributes Set (with line breaks for display purposes only):</t>
+
+        <figure><artwork><![CDATA[{"id":"urn:uuid:ef5a7369-f0b9-4143-a49d-2b9c7ee51117",
+ "type":"hello-world-message-type",
+ "from":"urn:uuid:8abdf5fb-621e-4cf5-a595-071bc2c91d82", 
+ "expiry":1516239022,
+ "time_stamp":1516269022,
+ "body":{"message": "Hello world!"}}]]></artwork></figure>
+        
+        <t>Encrypting the above plaintext for the recipient yields the following ciphertext in base64url form.</t>
+
+        <t>G61Yg068PU9t9kMzmY9c9w0TR_VV2jopBdb6ncZcC1OvkhhEdvcds0HIt6uv6A6VG2VP_zerVATrI2_vy5uQlDp6YgULir0RV43LUn8fh5xo
+        KrV2ZTf8jfNGTTeVIIl5xEd9NRC4CeT8kC6HGc419FwvMAPjractIr6O-KREscWn4LjRfm-shmQWFWw2FyI0PQdC0ufHgcriDdDwKbI8Leo7nMk
+        E6d9MlXqZT2aLH9jpY1dI28_8n0Nc9NQBv6c6RCxl5fJkHwQZ_4egRg6kX6OZh1e_JWowejjE5t8</t>
+
+        <t>Composing this information into a valid JWE leads to the following possible expressions</t>
+
+        <t>Compact Serialization (with line breaks for display purposes only):</t>
+
+        <t>eyJ0eXAiOiJKV00iLCJlbmMiOiJBMjU2R0NNIiwia2lkIjoiUEdvWHpzME5XYVJfbWVLZ1RaTGJFdURvU1ZUYUZ1eXJiV0k3VjlkcGpDZyIsImFsZyI6I
+        kVDREgtRVMrQTI1NktXIiwiZXBrIjp7Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoibzhKbktsdWVFbEtLOXJiQ2NaS0Zjb0RKNElkNFJZU2VabUpiT
+        nB1Zl9FTSIsInkiOiJ5VXpYdUJHNXhrU0xGdGdOQ0xxaldDdmgwRFRtZDlHczZkYlJyS1lzamJjIn19<vspace/>
+        .<vspace/>
+        nFeVxpB6qASyQORVqOX9o89bYvD0GV-uhAsHpiVmQYmcT513j8uzOw<vspace/>
+        .<vspace/>
+        bYeutdVSJGG57heL<vspace/>
+        .<vspace/>
+        G61Yg068PU9t9kMzmY9c9w0TR_VV2jopBdb6ncZcC1OvkhhEdvcds0HIt6uv6A6VG2VP_zerVATrI2_vy5uQlDp6YgULir0RV43LUn8fh5xoKrV2ZTf8jfNGT
+        TeVIIl5xEd9NRC4CeT8kC6HGc419FwvMAPjractIr6O-KREscWn4LjRfm-shmQWFWw2FyI0PQdC0ufHgcriDdDwKbI8Leo7nMkE6d9MlXqZT2aLH9jpY1dI28
+        _8n0Nc9NQBv6c6RCxl5fJkHwQZ_4egRg6kX6OZh1e_JWowejjE5t8<vspace/>
+        .<vspace/>
+        _8MLOQ4SkPksmydaWTCJ9w</t>
+
+        <t>JSON Serialization (with line breaks for display purposes only):</t>
+
+        <figure><artwork><![CDATA[  {
+  "protected": "eyJ0eXAiOiJKV00iLCJlbmMiOiJBMjU2R0NNIiwi
+  a2lkIjoiUEdvWHpzME5XYVJfbWVLZ1RaTGJFdURvU1ZUYUZ1eXJiV0
+  k3VjlkcGpDZyIsImFsZyI6IkVDREgtRVMrQTI1NktXIiwiZXBrIjp7
+  Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiNlBiU0dSc3liZ0
+  duVDB1V3UxcjZaeVk2Z01CVFlUbXYtU1lJakpHWUdydyIsInkiOiI4
+  U25pUVRZNXpTN1FvbEczZ3k2U2FwcVBFMVp4SV9XNDNGaVBtRm9QMl
+  I0In19",
+  "recipients": [
+    {
+      "encrypted_key": "RU_RpQKd4lglN_Nslxf4OZiUCjah6zeu
+      wrnrbmmmN5wsBZQfP0LGvg"
+    }
+  ],
+  "iv": "aoTg7H1txyzHw0N8",
+  "ciphertext": "eu9aQQA-s3lmozzZn5viTGszQKtD1l44WG-JtpC
+  o1-ONQh1aTT5v7BQXbtKNCrNjxCUKWngHeZxe5pSzylDqklUie4S4u
+  UiVCEkAMcqRlgF8eAWBgDZkeUeoZaViSQ0kdVfhPhzlOSA7kU8gjY1
+  82Nochaf8rnn6DUTcJqii11E_2eav0y176vWEyYvbHvxiXvCUKEVZV
+  0VAV3SoVTLwlrCUth6D-975XfBfvl_BlRsYcP0myMs1tOgVSb7nRF0
+  N2crrCMyc5FC6tdYqLiKZC2K6HBxBp1K-AcVY1Ww",
+  "tag": "pBF3Dpz3CAWm5CwCMt6rxw"
+}]]></artwork></figure>
+      </section>
     </section>
-    
+
     <section anchor="jwm-attributes" title="JWM Attributes">
       <t>The JWM Attributes Set represents a JSON object whose members are the attributes conveyed by the JWM. The Attribute Names 
       within a JWM Attributes Set MUST be unique; JWM parsers MUST either reject JWMs with duplicate Attribute Names or use a JSON parser 
@@ -155,14 +292,10 @@
 
       <t>There are three classes of JWM Attribute Names: Registered Attribute Names, Public Attribute Names, and Private Attribute Names.</t>
 
-        <section anchor="registered-attribute-names" title="Registered Attribute Names">
-          <t>The following Attribute Names are registered in the IANA "JSON Web Message
-          Attributes" registry established by <xref target="iana-considerations"/>.  None of the attributes
-          defined below are intended to be mandatory to use or implement in all
-          cases, but rather they provide a starting point for a set of useful,
-          interoperable attributes.  Applications using JWMs should define which
-          specific Attributes they use and when they are required or optional.</t>
-        </section>
+      <section anchor="registered-attribute-names" title="Registered Attribute Names">
+        <t>The following Attribute Names are registered in the IANA "JSON Web Message Attributes" registry established by <xref target="iana-considerations"/>.  None of the attributes
+        defined below are intended to be mandatory to use or implement in all cases, but rather they provide a starting point for a set of useful, interoperable attributes. Applications 
+        using JWMs should define which specific Attributes they use and when they are required or optional.</t>
 
         <section anchor="attributes-id" title="&quot;id&quot; Attribute">
           <t>The "id" attribute is used to define a unique identifier for a JWM. The "id" attribute value MUST be assigned in a manner that ensures 
@@ -193,7 +326,7 @@
         </section>
 
         <section anchor="attributes-thread-id" title="&quot;thread_id&quot; Attribute">
-          <t>The "thread_id" attribute is used to associate the JWM to a group of related messages often refered to as a thread. The "thread_id" attribute value 
+          <t>The "thread_id" attribute is used to associate the JWM to a group of related messages often referred to as a thread. The "thread_id" attribute value 
           is a case-sensitive string containing a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute 
           is OPTIONAL.</t>
         </section>
@@ -205,69 +338,61 @@
 
         <section anchor="attributes-time-stamp" title="&quot;time_stamp&quot; Attribute">
           <t>The "time_stamp" attribute is used to define the time in which the message was created. The "time_stamp" attributes value MUST be a number containing a 
-          NumericDate value. Use of this attribute is OPTIONAL.</t>
+          NumericDate value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
 
         <section anchor="attributes-expiry" title="&quot;expiry&quot; Attribute">
           <t>The "expiry" attribute is used to define the lifespan or lifetime of the JWM. The "expiry" attributes value MUST be a number containing a NumericDate 
-          value. Use of this attribute is OPTIONAL.</t>
+          value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
 
         <section anchor="attributes-reply-url" title="&quot;reply_url&quot; Attribute">
           <t>The "reply_url" attribute is used to define a url to which a response to the message can be sent. The "reply_url" attribute value is a case-sensitive 
-          string containing a StringOrURI value. Use of this attribute is OPTIONAL.</t>
+          string containing a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
 
         <section anchor="attributes-reply-to" title="&quot;reply_to&quot; Attribute">
           <t>The "reply_to" attribute is used to define who a response to the message should be sent to. The "reply_to" attribute value is a case-sensitive string 
-          containing a StringOrURI value OR an array of case-sensitive strings containing StringOrURI values. Use of this attribute is OPTIONAL.</t>
+          containing a StringOrURI value OR an array of case-sensitive strings containing StringOrURI values. The processing of this attribute is generally application specific. 
+          Use of this attribute is OPTIONAL.</t>
         </section>
+      </section>
 
-        <section anchor="public-attribute-names" title="Public Attribute Names">
-          <t>Attribute Names can be defined at will by those using JWMs.  However, in order to prevent collisions, any new Attribute Name should either be 
-          registered in the IANA "JSON Web Message Attributes" registry established by Section 10.1 or be a Public Name: a value that contains a Collision-Resistant Name. 
-          In each case, the definer of the name or value needs to take reasonable precautions to make sure they are in control of the part of the namespace they use to 
-          define the Attribute Name.</t>
-        </section>
+      <section anchor="public-attribute-names" title="Public Attribute Names">
+        <t>Attribute Names can be defined at will by those using JWMs.  However, in order to prevent collisions, any new Attribute Name should either be 
+        registered in the IANA "JSON Web Message Attributes" registry established by <xref target="iana-considerations"/> or be a Public Name: 
+        a value that contains a Collision-Resistant Name. In each case, the definer of the name or value needs to take reasonable precautions to make sure they are in 
+        control of the part of the namespace they use to define the Attribute Name.</t>
+      </section>
 
-        <section anchor="private-attribute-names" title="Private Attribute Names">
-          <t>A producer and consumer of a JWM MAY agree to use Attribute Names that are Private Names: names that are not Registered Attribute Names <xref target="registered-attribute-names"/>
-          or Public Attribute Names <xref target="public-attribute-names"/>.  Unlike Public Attribute Names, Private Attribute Names are subject to collision and should be used with caution.</t>
-        </section>
+      <section anchor="private-attribute-names" title="Private Attribute Names">
+        <t>A producer and consumer of a JWM MAY agree to use Attribute Names that are Private Names: names that are not Registered Attribute Names <xref target="registered-attribute-names"/>
+        or Public Attribute Names <xref target="public-attribute-names"/>.  Unlike Public Attribute Names, Private Attribute Names are subject to collision and should be used with caution.</t>
+      </section>
     </section>
 
     <section anchor="jose-header" title="JOSE Header">
-      <t>For a JWM object, the members of the JSON object represented by the
-      JOSE Header describe the cryptographic operations applied to the JWM
-      and optionally, additional properties of the JWM. Depending upon
-      whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
+      <t>For a JWM object, the members of the JSON object represented by the JOSE Header describe the cryptographic operations applied to the JWM
+      and optionally, additional properties of the JWM. Depending upon whether the JWM is a JWS or JWE, the corresponding rules for the JOSE
       Header values apply.</t>
 
-      <t>This specification further specifies the use of the following Header
-      Parameters in both the cases where the JWM is a JWS and where it is a
-      JWE.</t>
+      <t>This specification further specifies the use of the following Header Parameters in both the cases where the JWM is a JWS and where 
+      it is a JWE.</t>
 
       <section anchor="typ-type-header-parameter" title="&quot;typ&quot; (Type) Header Parameter">
-        <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used
-        by JWM applications to declare the media type <xref target="IANA.MediaTypes"/> of
-        this complete JWM.  This is intended for use by the JWM application
-        when values that are not JWMs could also be present in an application
-        data structure that can contain a JWM object; the application can use
-        this value to disambiguate among the different kinds of objects that
-        might be present.  It will typically not be used by applications when
-        it is already known that the object is a JWM.  This parameter is
-        ignored by JWM implementations; any processing of this parameter is
-        performed by the JWM application.  If present, it is RECOMMENDED that
-        its value be "JWM" to indicate that this object is a JWM.  While
-        media type names are not case sensitive, it is RECOMMENDED that "JWM"
-        always be spelled using uppercase characters for compatibility with
-        legacy implementations.  Use of this Header Parameter is OPTIONAL.</t>
+        <t>The "typ" (type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/> is used by JWM applications 
+        to declare the media type <xref target="IANA.MediaTypes"/> of this complete JWM.  This is intended for use by the JWM application
+        when values that are not JWMs could also be present in an application data structure that can contain a JWM object; the application 
+        can use this value to disambiguate among the different kinds of objects that might be present.  It will typically not be used by 
+        applications when it is already known that the object is a JWM.  This parameter is ignored by JWM implementations; any processing of 
+        this parameter is performed by the JWM application.  If present, it is RECOMMENDED that its value be "JWM" to indicate that this object 
+        is a JWM.  While media type names are not case sensitive, it is RECOMMENDED that "JWM" always be spelled using uppercase characters for 
+        compatibility with legacy implementations.  Use of this Header Parameter is OPTIONAL.</t>
       </section>
 
       <section anchor="cty-content-type-header-parameter" title="&quot;cty&quot; (Content Type) Header Parameter">
         <t>The "cty" (content type) Header Parameter defined by <xref target="RFC7515"/> and <xref target="RFC7516"/>
-        is used by this specification to convey structural information about
-        the JWM.</t>
+        is used by this specification to convey structural information about the JWM.</t>
 
         <t>In the normal case in which nested signing or encryption operations
         are not employed, the use of this Header Parameter is NOT
@@ -280,7 +405,7 @@
       </section>
 
       <section anchor="replicating-attributes-as-header-parameters" title="Replicating Attributes as Header Parameters">
-        <t>As is also the case with JWTs, in some applications using encrypted JWMs,
+        <t>In some applications using encrypted JWMs,
         it is useful to have an unencrypted representation of some attributes. 
         This might be used, for instance, in application processing rules to 
         determine whether and how to process the JWM before it is decrypted.</t>
@@ -297,54 +422,6 @@
       </section>
     </section>
 
-    <section anchor="unsecured-jwms" title="Unsecured JWMs">
-      <t>To support use cases in which the JWM content is secured by a means
-      other than a signature and/or encryption contained within the JWM
-      (such as a signature on a data structure containing the JWM), JWMs
-      MAY also be created without a signature or encryption.  An Unsecured
-      JWM is a JWS using the "alg" Header Parameter value "none" and with
-      the empty string for its JWS Signature value, as defined in the JWA
-      specification <xref target="RFC7518"/>; it is an Unsecured JWS with the JWM Attributes Set
-      as its JWS Payload.</t>
-
-      <section anchor="example-unsecured-jwm" title="Example Unsecured JWM">
-        <t>The following example JOSE Header declares that the encoded object is
-        an Unsecured JWM:</t>
-
-        <t>{"alg":"none"}</t>
-
-        <t>Base64url encoding the octets of the UTF-8 representation of the JOSE
-        Header yields this encoded JOSE Header value:</t>
-
-        <t>eyJhbGciOiJub25lIn0</t>
-
-        <t>The following is an example of a JWM Attributes Set:</t>
-
-        <t>{"iss":"joe",
-          "exp":1300819380,
-          "http://example.com/is_root":true} //TODO change</t>
-
-        <t>Base64url encoding the octets of the UTF-8 representation of the JWM
-        Attributes Set yields this encoded JWS Payload (with line breaks for
-        display purposes only):</t>
-
-        <t>eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
-          cGxlLmNvbS9pc19yb290Ijp0cnVlfQ //TODO change</t>
-
-        <t>The encoded JWS Signature is the empty string.</t>
-
-        <t>Concatenating these encoded parts in this order with period ('.')
-        characters between the parts yields this complete JWM (with line
-        breaks for display purposes only):</t>
-
-        <t>eyJhbGciOiJub25lIn0
-          .
-          eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
-          cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
-          .</t>
-      </section>
-    </section>
-    
     <section anchor="creating-and-validating-jwms" title="Creating and Validating JWMs">
       <section anchor="creating-a-jwm" title="Creating a JWM">
         <t>To create a JWM, the following steps are performed. The order of the steps is not significant in cases where there 
@@ -359,12 +436,12 @@
 
         <t><list style="symbols">
           <t>If the JWM is a JWS, create a JWS using the JWM Attribute Set as the JWS Payload; all steps specified in JWS <xref target="RFC7515"/> for creating a JWS MUST be followed. 
-           If the resulting JWS features only a single signature, it can then optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
-           the resulting JWS features multiple signatures and URL safety is required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
+           If the resulting JWS features only a single signature, it can optionally be formated into JWS compact serialization format allowing the message to be URL safe. If however, 
+           the resulting JWS features multiple signatures and URL safety for the message is still required, the entire JWS in JSON serialization format MUST be encoded to base64url format. Otherwise the output format 
            for the JWS MUST be JWS JSON serialization format.</t>
           <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE <xref target="RFC7516"/> for creating a JWE MUST be followed. 
-          If the resulting JWE features only a single recipient, it can then optionally be formated into a JWE compact serialization format allowing the message to be URL safe. If however, the 
-          resulting JWE features multiple recipients and URL safety is required the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
+          If the resulting JWE features only a single recipient, it can optionally be formated into JWE compact serialization format allowing the message to be URL safe. If however, the 
+          resulting JWE features multiple recipients and URL safety for the message is still required, the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
           the JWE MUST be JWE JSON serialization format.</t>
         </list></t>
 
@@ -382,7 +459,7 @@
         the listed steps fail, then the JWM MUST be rejected; that is,
         treated by the application as an invalid input.</t>
         <t><list style="numbers">
-          <t>If the JWM is a valid base64 string containing at least one period ('.') character.
+          <t>If the JWM is a valid base64url string containing at least one period ('.') character.
             <list style="numbers">
               <t>Let the Encoded JOSE Header be the portion of the JWM before the
               first period ('.') character.</t>
@@ -394,9 +471,9 @@
               RFC 7159 <xref target="RFC7159"/>; let the JOSE Header be this JSON object.</t>
             </list>
           </t>
-          <t>Else, if the JWM is a valid base64 string containing no period ('.') characters.
+          <t>Else, if the JWM is a valid base64url string containing no period ('.') characters.
             <list style="numbers">
-              <t>Let the Encoded JWS or JWE be the entire base64 string.</t>
+              <t>Let the Encoded JWS or JWE be the entire base64url string.</t>
               <t>Base64url decode the Encoded JWS or JWE following the
               restriction that no line breaks, whitespace, or other additional
               characters have been used.</t>
@@ -444,7 +521,7 @@
       </section>
 
       <section anchor="string-comparison-rules" title="String Comparison Rules">
-        <t>These rules are identical to those outlined in Section 7.3 of <xref target="RFC7519"/>.</t>
+        <t>These rules are identical to those applied to JWTs outlined in Section 7.3 of <xref target="RFC7519"/>.</t>
       </section>
     </section>
 
@@ -454,13 +531,13 @@
       specification can impose additional requirements upon implementations
       that they use.</t>
 
-      <t>Supported for digitally signed JWMs using JWS is REQUIRED. Of the signature and 
+      <t>Support for digitally signed JWMs using JWS is REQUIRED. Of the signature and 
       MAC algorithms specified in JSON Web Algorithms <xref target="RFC7518"/>, only 
-      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") and "none" MUST be 
-      implemented by conforming JWM implementations. It is RECOMMENDED that implementations
-      also support ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and 
-      EdDSA using the Ed25519 curve and SHA-512 hash algorithm. Support for other 
-      algorithms and key sizes is OPTIONAL.</t>
+      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") MUST be implemented 
+      by conforming JWM implementations. It is RECOMMENDED that implementations also support
+      ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and EdDSA using the 
+      Ed25519 curve and SHA-512 hash algorithm. Support for other algorithms and key sizes is 
+      OPTIONAL.</t>
 
       <t>Support for encrypted JWMs using JWE is also REQUIRED. Of the encryption algorithms
       specified in <xref target="RFC7518"/>, using Elliptic Curve Diffie-Hellman Ephemeral 
@@ -469,6 +546,10 @@
       With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
       keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
 
+      <t>Usage of the "none" algorithm identifier as defined in the JOSE Web Algorithms section 3.6 
+      <xref target="RFC7518"/> MUST not be used.</t>
+
+
       <t>Support for Nested JWMs is also REQUIRED.</t>
     </section>
     
@@ -476,19 +557,23 @@
       <section anchor="registration-template" title="Registration Template">
         <section anchor="attribute-name-registration-template" title="Attribute Name:">
           <t>The name requested (e.g., "type").  Because a core goal of this specification is for the resulting representations to be compact,
-          it is RECOMMENDED that the name be short &#8211; that is, not to exceed 8 characters without a compelling reason to do so.  This name is case sensitive.  Names may not match other registered names in a case-insensitive manner unless the Designated Experts state that there is a compelling reason to allow an exception.</t>
+          it is RECOMMENDED that the name be short &#8211; that is, not to exceed 8 characters without a compelling reason to do so.  This name 
+          is case sensitive.  Names may not match other registered names in a case-insensitive manner unless the Designated Experts state that 
+          there is a compelling reason to allow an exception.</t>
         </section>
 
         <section anchor="attribute-description-registration-template" title="Attribute Description">
-          <t>Brief description of the claim (e.g., "Message Type").</t>
+          <t>Brief description of the attribute (e.g., "Message Type").</t>
         </section>
 
         <section anchor="change-controller-registration-template" title="Change Controller">
-          <t>For Standards Track RFCs, list the "IESG".  For others, give the name of the responsible party.  Other details (e.g., postal address, email address, home page URI) may also be included.</t>
+          <t>For Standards Track RFCs, list the "IESG".  For others, give the name of the responsible party.  Other details (e.g., postal address, 
+          email address, home page URI) may also be included.</t>
         </section>
 
         <section anchor="specification-document-registration-template" title="Specification Document(s)">
-          <t>Reference to the document or documents that specify the parameter, preferably including URIs that can be used to retrieve copies of the documents.  An indication of the relevant sections may also be included but is not required.</t>
+          <t>Reference to the document or documents that specify the parameter, preferably including URIs that can be used to retrieve copies of 
+          the documents.  An indication of the relevant sections may also be included but is not required.</t>
         </section>
 
         <section anchor="initial-registry-contents-registration-template" title="Initial Registry Contents">
@@ -575,9 +660,6 @@
         key(s) used to sign and/or encrypt the JWM will typically need to
         verifiably be under the control of the party identified by the associated
         cryptographic operation.</t>
-
-        <t>//TODO the text from the JWT spec I disagreed with, you dont have an issuer
-        //you can verify if it is a JWE</t>
       </section>
 
       <section anchor="signing-and-encryption-order" title="Signing and Encryption Order">
@@ -613,7 +695,6 @@
     </section>
 
     <section anchor="acknowledgements" title="Acknowledgements">
-      <t>//TODO</t>
     </section>
   </middle>
 

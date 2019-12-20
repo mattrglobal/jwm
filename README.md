@@ -1,6 +1,8 @@
-# JSON Web Message (JWM) RFC Draft
+# JSON Web Message (JWM) IETF Internet Draft RFC
 
-This is a draft RFC outline the definition of JSON Web Messages.
+JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web Encryption (JWE) can be digitally signed, integrity protected and or achieve confidentiality via encryption.
+
+This is currently an IETF internet draft RFC available [here](//TODO).
 
 ## Contributing
 
@@ -25,10 +27,8 @@ Now install the `xml2rfc` package using pip.
 
 ### Updating Docs
 
-Update `draft-ietf-looker-jwm.xml` file with your desired changes.
+Update `draft-ietf-json-web-message.xml` file with your desired changes.
 
 Run the following to compile the new RFC txt file from the XML.
 
 `xml2rfc *.xml`
-
-//TODO add a pre-commit hook so the latest draft is always in the repo?
