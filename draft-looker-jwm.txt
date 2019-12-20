@@ -9,7 +9,7 @@ Expires: June 8, 2020
 
 
                             JSON Web Message
-                       draft-json-web-message-01
+                          draft-looker-jwm-01
 
 Abstract
 
