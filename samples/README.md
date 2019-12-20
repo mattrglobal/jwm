@@ -9,8 +9,10 @@ Run the following to install dependencies
 
 ## Running
 
-Run either of the following commands and observe the console based result
+Run any of the following commands and observe the console based result
 
 `node example-signed-jwm.js`
 
-`node example-encrypted-jwm.js`
+`node example-encrypted-jwm-single-recipient.js`
+
+`node example-encrypted-jwm-multiple-recipients.js`
