@@ -185,8 +185,10 @@
         <t>The following example JOSE Header declares that the object is a JWM, and the JWM is a JWE that has been encrypted using
         AES in Galois/Counter Mode (GCM) with 256-bit for content encryption (with line breaks for display purposes only):</t>
 
-        <figure><artwork><![CDATA[{"typ":"JWM",
- "enc":"A256GCM"}]]></artwork></figure>
+        <figure><artwork><![CDATA[{
+ "typ":"JWM",
+ "enc":"A256GCM"
+}]]></artwork></figure>
 
         <t>The following JOSE Header declares that the sender has used Elliptic Curve Diffie-Hellman Ephemeral 
         Static (ECDH-ES+A256KW) for key agreement with AES based key wrapping to encrypt the content encryption key (CEK). The keys required
@@ -194,8 +196,9 @@
         along with the ephemeral public key declared by the JSON object "epk". The encrypted CEK is represented by the "encrypted_key" field 
         (with line breaks for display purposes only):</t>
 
-        <figure><artwork><![CDATA[{"kid": "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg",
-  "alg": "ECDH-ES+A256KW",
+        <figure><artwork><![CDATA[{
+"kid": "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg",
+"alg": "ECDH-ES+A256KW",
   "epk": {
     "kty": "EC",
     "crv": "P-256",
@@ -206,7 +209,8 @@
 
         <t>Because the JWE features a single recipient, the two JOSE headers are combined into a single JOSE header, that can be represented as the following.</t>
 
-        <figure><artwork><![CDATA[{"typ": "JWM",
+        <figure><artwork><![CDATA[{
+  "typ": "JWM",
   "enc": "A256GCM",
   "kid": "PGoXzs0NWaR_meKgTZLbEuDoSVTaFuyrbWI7V9dpjCg",
   "alg": "ECDH-ES+A256KW",
