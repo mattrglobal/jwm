@@ -1,0 +1,12 @@
+{
+  "name": "jwm-samples",
+  "version": "1.0.0",
+  "description": "JWM Samples",
+  "author": "Tobias Looker",
+  "license": "ISC",
+  "dependencies": {
+    "base64url": "^3.0.1",
+    "fs-extra": "^8.1.0",
+    "jose": "^1.17.2"
+  }
+}
