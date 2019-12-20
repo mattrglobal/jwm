@@ -18,26 +18,36 @@ async function main(){
     };
 
     //Get recipient key
-    const recipient = await fs.readFile("example-keys/example-recipient.json");
-    const recipientJWK = JSON.parse(recipient.toString());
-    key = jose.JWK.asKey(recipientJWK);
-
+    const recipientJWK = JSON.parse(await fs.readFile("example-keys/example-recipient.json"));
+    const key = jose.JWK.asKey(recipientJWK);
+    
     //Prepare JWM
     const jwe = new jose.JWE.Encrypt(
         JSON.stringify(plaintext),
-        { enc : "A128GCM", kid : key.kid, typ : 'JWM' });
+        { 
+            typ : 'JWM',
+            enc : "A256GCM",
+            kid : key.kid, 
+            alg : 'ECDH-ES+A256KW'
+        });
 
     //Encrypt to single recipient
     jwe.recipient(key);
 
+    //Produce the general serialization of the JWM
     const jwmGeneral = jwe.encrypt('general');
+    const jwmCompact = jwe.encrypt('compact');
 
     console.log("JSON Serialization:");
     console.log(JSON.stringify(jwmGeneral, null, 2));
 
-    console.log("Protected Header:");
-    var protectedHeader = JSON.parse(base64url.decode(jwmGeneral.protected));
-    console.log(JSON.stringify(protectedHeader,null,2));
+    console.log("Compact Serialization:");
+    console.log(jwmCompact);
+    
+    const protectedHeader = JSON.parse(base64url.decode(jwmGeneral.protected));
+
+    console.log("Header:");
+    console.log(JSON.stringify(protectedHeader, null, 2));
 }
 
 main();

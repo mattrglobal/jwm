@@ -18,14 +18,14 @@ async function main(){
     };
 
     //Get sender key
-    const sender = await fs.readFile("example-keys/example-sender.json");
-    const senderJWK = JSON.parse(sender.toString());
-    key = jose.JWK.asKey(senderJWK);
+    const senderJWK = JSON.parse(await fs.readFile("example-keys/example-sender.json"));
+    const key = jose.JWK.asKey(senderJWK);
 
     //Sign JWM
     const jws = new jose.JWS.Sign(payload);
 
-    //Hmm, why is this called recipients? Should it not be issuers?
+    //Hmm, why is this called recipients? 
+    //Should it not be issuers?
     jws.recipient(key, { typ : 'JWM', kid : key.kid, alg : 'ES256' });
 
     const compactOutput = jws.sign("compact");
@@ -35,10 +35,10 @@ async function main(){
     console.log(compactOutput);
 
     console.log("JSON Output: ");
-    console.log(jsonOutput);
+    console.log(JSON.stringify(jsonOutput, null,2));
 
     console.log("Header Output: ");
-    console.log(base64url.decode(jsonOutput.signatures[0].protected));
+    console.log(JSON.stringify(JSON.parse(base64url.decode(jsonOutput.signatures[0].protected)),null,2));
 }
 
 main();
