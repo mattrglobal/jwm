@@ -694,6 +694,10 @@
     </section>
 
     <section anchor="acknowledgements" title="Acknowledgements">
+    <t>The authors of this specification would like to acknowledge the 
+    following individuals for the significant contribution of ideas and 
+    time spent reviewing this document:<vspace/>
+    Kyle Den Hartog</t>
     </section>
   </middle>
 

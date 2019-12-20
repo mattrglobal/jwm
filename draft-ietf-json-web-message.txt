@@ -1103,7 +1103,24 @@ Internet-Draft                     jwm                     December 2019
 
 11.  Acknowledgements
 
+   The authors of this specification would like to acknowledge the
+   significant contributions of ideas and review of this document from
+   the following individuals:
+   Kyle Den Hartog
+
 12.  Normative References
+
+
+
+
+
+
+
+
+Looker                    Expires June 8, 2020                 [Page 20]
+
+Internet-Draft                     jwm                     December 2019
+
 
    [ECMAScript]
               Ecma International, "ECMAScript Language Specification,
@@ -1114,13 +1131,6 @@ Internet-Draft                     jwm                     December 2019
    [IANA.MediaTypes]
               IANA, "Media Types",
               <http://www.iana.org/assignments/media-types>.
-
-
-
-Looker                    Expires June 8, 2020                 [Page 20]
-
-Internet-Draft                     jwm                     December 2019
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1157,16 +1167,6 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
-
-
-
-
-
-
-
-
-
-
 
 
 
