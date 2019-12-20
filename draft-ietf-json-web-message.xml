@@ -101,22 +101,21 @@
           <t>JWMs also deviate in important ways from JWTs which prevents using the JWT specification directly to achieve the functionality provided by a JWM.</t>
             <t>
               <list style="symbols">
-                <t>JWTs due to the requirement of them being compact in nature and URL safe, require the usage of compact serialization for both 
+                <t>JWTs due to the requirement of them being compact in nature and URL safe, mandate the usage of compact serialization for both 
                 JWS and JWE representations. This compact serialization requirement for JWS and JWE limits JWTs to only being able to feature a single 
                 digital signature and or encrypt a payload to a single recipient. Whereas JWMs do not require the use of compact serialization of JWE, 
                 instead they permit the JSON based serialization of JWS and JWE, which allows for a JWM to feature multiple digital signature or encrypted 
                 to multiple recipients.</t>
 
                 <t>JWM and JWT have different intents. A JWM is about a sender creating a message composed of attributes, where the message is destined for a 
-                recipient or recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience. This conceptual difference 
-                means a meaningful separation of the terminology is required to limit confusion for specification implementers.</t>
+                recipient or recipients. Whereas a JWT is about an issuer expressing claims about a subject to an audience.</t>
 
                 <t>The primary usage of JWTs centers around creating tokens that are digitally signed or integrity protected through a Message Authentication Code 
                 (MAC) by leveraging JWS. Encrypted JWTs via JWE are less common and as defined in Section 8 of <xref target="RFC7519"/> 
                 they are optional to implement. Whereas JWMs require both JWS and JWE implementations.</t>
 
                 <t>JWTs support an insecure format as defined in Section 6 of <xref target="RFC7519"/>, JWMs do not allow this format 
-                due to the documented vulnerabilities introduced.</t>
+                due to the vulnerabilities it introduces.</t>
               </list>
             </t>
 
@@ -404,7 +403,7 @@
       </section>
 
       <section anchor="replicating-attributes-as-header-parameters" title="Replicating Attributes as Header Parameters">
-        <t>As is also the case with JWTs, in some applications using encrypted JWMs,
+        <t>In some applications using encrypted JWMs,
         it is useful to have an unencrypted representation of some attributes. 
         This might be used, for instance, in application processing rules to 
         determine whether and how to process the JWM before it is decrypted.</t>
@@ -558,7 +557,7 @@
         </section>
 
         <section anchor="attribute-description-registration-template" title="Attribute Description">
-          <t>Brief description of the claim (e.g., "Message Type").</t>
+          <t>Brief description of the attribute (e.g., "Message Type").</t>
         </section>
 
         <section anchor="change-controller-registration-template" title="Change Controller">
