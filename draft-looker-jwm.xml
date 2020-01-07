@@ -29,17 +29,21 @@
 
     <abstract>
       <t>JSON Web Message (JWM) is a flexible way to encode application-level messages in JSON
-      for transfer over a variety of transport protocols. By using JWMs in conjunction with JSON Web Signature (JWS) and JSON Web
-      Encryption (JWE), messages can achieve confidentiality, integrity, and non-repudiation.</t>
+      for transfer over a variety of transport protocols. JWMs use JSON Web
+      Encryption (JWE) to protect integrity, achieve confidentiality, and achieve repudiable authentication;
+      alternatively or in addition, they use JSON Web Signatures (JWS) to associate messages with a non-repudiable
+      digital signature.</t>
     </abstract>
   </front>
 
   <middle>
     <section anchor="introduction" title="Introduction">
-      <t>JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable 
-      for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web 
-      Encryption (JWE) can be digitally signed, integrity protected and or achieve confidentiality via encryption. JWMs are inspired 
-      by JWTs <xref target="RFC7519"/>, more details about this relationship is documented in <xref target="relationship-to-jwt"/>.</t>
+      <t>JSON Web Message (JWM) is a flexible way to encode application-level messages in JSON
+        for transfer over a variety of transport protocols. JWMs use JSON Web
+        Encryption (JWE) to protect integrity, achieve confidentiality, and achieve repudiable authentication;
+        alternatively or in addition, they use JSON Web Signatures (JWS) to associate messages with a non-repudiable
+        digital signature. JWMs are inspired by JWTs <xref target="RFC7519"/>; more details about this relationship
+        are documented in <xref target="relationship-to-jwt"/>.</t>
 
       <section anchor="notational-conventions" title="Notational Conventions">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -109,8 +113,8 @@
                 <t>Because JWTs must be compact and URL-safe, they require compact serialization for both
                 JWS and JWE representations. This means JWTs can feature only a single
                 digital signature, and/or encrypt for only a single recipient. In contrast, JWMs support multiple
-                digital signatures, and encryption for multiple recipients. They therefore
-                permit the JSON-based serialization of JWS and JWE.</t>
+                digital signatures, and encryption for multiple recipients. They achieve this
+                using the JSON-based serialization of JWS and JWE.</t>
 
                 <t>JWTs support an insecure format as defined in Section 6 of <xref target="RFC7519"/>, JWMs do not allow this format
                 due to the vulnerabilities it introduces.</t>
