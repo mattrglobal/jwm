@@ -4,21 +4,21 @@
 
 Network Working Group                                     T. Looker, Ed.
 Internet-Draft                                                     Mattr
-Intended status: Standards Track                        December 6, 2019
-Expires: June 8, 2020
+Intended status: Standards Track                       December 21, 2019
+Expires: June 23, 2020
 
 
                             JSON Web Message
-                          draft-looker-jwm-01
+                          draft-looker-jwm-00
 
 Abstract
 
-   JSON Web Message (JWM) is a flexible way of describing an
-   application-level message encoded in JSON that is suitable for
-   transfer over a variety of transport protocols.  JWMs through the
-   application of JSON Web Signature (JWS) and JSON Web Encryption (JWE)
-   can be digitally signed, integrity protected and or achieve
-   confidentiality via encryption.
+   JSON Web Message (JWM) is a flexible way to encode application-level
+   messages in JSON for transfer over a variety of transport protocols.
+   JWMs use JSON Web Encryption (JWE) to protect integrity, achieve
+   confidentiality, and achieve repudiable authentication; alternatively
+   or in addition, they use JSON Web Signatures (JWS) to associate
+   messages with a non-repudiable digital signature.
 
 Status of This Memo
 
@@ -28,14 +28,14 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 8, 2020.
+   This Internet-Draft will expire on June 23, 2020.
 
 Copyright Notice
 
@@ -44,7 +44,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Looker                    Expires June 8, 2020                  [Page 1]
+Looker                    Expires June 23, 2020                 [Page 1]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Looker                    Expires June 8, 2020                  [Page 2]
+Looker                    Expires June 23, 2020                 [Page 2]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -121,13 +121,14 @@ Internet-Draft                     jwm                     December 2019
 
 1.  Introduction
 
-   JSON Web Message (JWM) is a flexible way of describing an
-   application-level message encoded in JSON that is suitable for
-   transfer over a variety of transport protocols.  JWMs through the
-   application of JSON Web Signature (JWS) and JSON Web Encryption (JWE)
-   can be digitally signed, integrity protected and or achieve
-   confidentiality via encryption.  JWMs are inspired by JWTs [RFC7519],
-   more details about this relationship is documented in Section 2.1.
+   JSON Web Message (JWM) is a flexible way to encode application-level
+   messages in JSON for transfer over a variety of transport protocols.
+   JWMs use JSON Web Encryption (JWE) to protect integrity, achieve
+   confidentiality, and achieve repudiable authentication; alternatively
+   or in addition, they use JSON Web Signatures (JWS) to associate
+   messages with a non-repudiable digital signature.  JWMs are inspired
+   by JWTs [RFC7519]; more details about this relationship are
+   documented in Section 2.1.
 
 1.1.  Notational Conventions
 
@@ -153,22 +154,24 @@ Internet-Draft                     jwm                     December 2019
 
    The following terms are defined by this specification:
 
-   JSON Web Message  A JWM Attribute Set, encoded in a JWS and or JWE,
+   JSON Web Message  A JWM Attribute Set, encoded in a JWS and/or JWE,
       enabling it to be digitally signed and/or encrypted.
 
    JWM Attribute Set  A JSON object of attributes conveyed by the JWM.
 
    Attribute  A piece of information conveyed in a message, sent from a
-      sender intended for processing by a recipient or recipients.  An
-      attribute is represented as a name/value pair consisting of an
-      Attribute Name and an Attribute Value.
+      sender intended for processing by one or more recipients.  An
 
 
 
-Looker                    Expires June 8, 2020                  [Page 3]
+
+Looker                    Expires June 23, 2020                 [Page 3]
 
 Internet-Draft                     jwm                     December 2019
 
+
+      attribute is represented in a JWM Attribute Set as a name/value
+      pair consisting of an Attribute Name and an Attribute Value.
 
    Attribute Name  The name portion of an attribute representation.  An
       attribute name is always a string.
@@ -185,46 +188,26 @@ Internet-Draft                     jwm                     December 2019
 
 2.1.  Relationship to JWT
 
-   JWMs conceptually share many parallels to JWTs, these similarities
-   can be summarized in the following way.
+   JWMs conceptually share parallels to JWTs:
 
    o  A JWM contains a JSON object comprised of attributes known as a
       JWM Attribute Set, where the attributes featured in the set can be
-      public, private or registered in an IANA registry, this is
-      conceptually parallel to claims in JWTs, the JWT Claim Set and the
-      JWT claims IANA registry.
+      public, private or registered in an IANA registry.  This is
+      conceptually parallel to claims in JWTs, the JWT Claim Set, and
+      the JWT claims IANA registry.
 
    o  A JWM leverages JSON Web Signature (JWS) and or JSON Web
       Encryption (JWE) to achieve digital signing, integrity protection
       and or confidentiality via encryption for the JWM attribute set in
       similar ways to JWT for the JWT claim set.
 
-   JWMs also deviate in important ways from JWTs which prevents using
-   the JWT specification directly to achieve the functionality provided
-   by a JWM.
-
-   o  JWTs due to the requirement of them being compact in nature and
-      URL safe, mandate the usage of compact serialization for both JWS
-      and JWE representations.  This compact serialization requirement
-      for JWS and JWE limits JWTs to only being able to feature a single
-      digital signature and or encrypt a payload to a single recipient.
-      Whereas JWMs do not require the use of compact serialization of
-      JWE, instead they permit the JSON based serialization of JWS and
-      JWE, which allows for a JWM to feature multiple digital signature
-      or encrypted to multiple recipients.
+   JWMs also deviate from JWTs in important ways that prevent a
+   converged specification.
 
    o  JWM and JWT have different intents.  A JWM is about a sender
       creating a message composed of attributes, where the message is
       destined for a recipient or recipients.  Whereas a JWT is about an
       issuer expressing claims about a subject to an audience.
-
-
-
-
-Looker                    Expires June 8, 2020                  [Page 4]
-
-Internet-Draft                     jwm                     December 2019
-
 
    o  The primary usage of JWTs centers around creating tokens that are
       digitally signed or integrity protected through a Message
@@ -233,12 +216,27 @@ Internet-Draft                     jwm                     December 2019
       are optional to implement.  Whereas JWMs require both JWS and JWE
       implementations.
 
+   o  Because JWTs must be compact and URL-safe, they require compact
+      serialization for both JWS and JWE representations.  This means
+
+
+
+Looker                    Expires June 23, 2020                 [Page 4]
+
+Internet-Draft                     jwm                     December 2019
+
+
+      JWTs can feature only a single digital signature, and/or encrypt
+      for only a single recipient.  In contrast, JWMs support multiple
+      digital signatures, and encryption for multiple recipients.  They
+      achieve this using the JSON-based serialization of JWS and JWE.
+
    o  JWTs support an insecure format as defined in Section 6 of
       [RFC7519], JWMs do not allow this format due to the
       vulnerabilities it introduces.
 
    In the spirit of specification re-use and promoting ease of
-   understanding, this specifications structure is inspired by
+   understanding, this specification's structure is inspired by
    [RFC7519].
 
 2.2.  Example Signed JWM
@@ -277,7 +275,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                  [Page 5]
+
+
+Looker                    Expires June 23, 2020                 [Page 5]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -290,8 +290,8 @@ Internet-Draft                     jwm                     December 2019
 
    Computing the signature of the encoded JOSE Header and encoded JWS
    Payload with the ECDSA with the curve p-256 and SHA-256 as the
-   hashing algorithm algorithm and base64url encoding the value in the
-   manner specified in [RFC7515] yields this encoded JWS Signature:
+   hashing algorithm and base64url encoding the value in the manner
+   specified in [RFC7515] yields this encoded JWS Signature:
 
    H8-ceviETFwgo7A2kMhrKGmlw0cEDEzCCmN8MzOVoL1RMz5dAY0kzG1Fsou_r_FUftb7t
    lGqCdOVeR9EajIe6Q
@@ -333,7 +333,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                  [Page 6]
+Looker                    Expires June 23, 2020                 [Page 6]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -389,7 +389,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                  [Page 7]
+Looker                    Expires June 23, 2020                 [Page 7]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -445,7 +445,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                  [Page 8]
+Looker                    Expires June 23, 2020                 [Page 8]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -501,7 +501,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                  [Page 9]
+Looker                    Expires June 23, 2020                 [Page 9]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -557,7 +557,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 10]
+Looker                    Expires June 23, 2020                [Page 10]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -613,7 +613,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 11]
+Looker                    Expires June 23, 2020                [Page 11]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -669,7 +669,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 12]
+Looker                    Expires June 23, 2020                [Page 12]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -725,7 +725,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 13]
+Looker                    Expires June 23, 2020                [Page 13]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -781,7 +781,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 14]
+Looker                    Expires June 23, 2020                [Page 14]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -837,7 +837,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 15]
+Looker                    Expires June 23, 2020                [Page 15]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -893,7 +893,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 16]
+Looker                    Expires June 23, 2020                [Page 16]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -949,7 +949,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 17]
+Looker                    Expires June 23, 2020                [Page 17]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -1005,7 +1005,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 18]
+Looker                    Expires June 23, 2020                [Page 18]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -1061,7 +1061,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 19]
+Looker                    Expires June 23, 2020                [Page 19]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -1117,7 +1117,7 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 8, 2020                 [Page 20]
+Looker                    Expires June 23, 2020                [Page 20]
 
 Internet-Draft                     jwm                     December 2019
 
@@ -1125,8 +1125,8 @@ Internet-Draft                     jwm                     December 2019
    [ECMAScript]
               Ecma International, "ECMAScript Language Specification,
               5.1 Edition", ECMA Standard 262, June 2011,
-              <http://www.ecma-international.org/ecma-262/5.1/
-              ECMA-262.pdf>.
+              <http://www.ecma-international.org/ecma-262/5.1/ECMA-
+              262.pdf>.
 
    [IANA.MediaTypes]
               IANA, "Media Types",
@@ -1134,8 +1134,8 @@ Internet-Draft                     jwm                     December 2019
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
-              editor.org/info/rfc2119>.
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
@@ -1150,8 +1150,8 @@ Internet-Draft                     jwm                     December 2019
               <https://www.rfc-editor.org/info/rfc7516>.
 
    [RFC7518]  Jones, M., "JSON Web Algorithms (JWA)", RFC 7518,
-              DOI 10.17487/RFC7518, May 2015, <https://www.rfc-
-              editor.org/info/rfc7518>.
+              DOI 10.17487/RFC7518, May 2015,
+              <https://www.rfc-editor.org/info/rfc7518>.
 
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
@@ -1173,4 +1173,5 @@ Author's Address
 
 
 
-Looker                    Expires June 8, 2020                 [Page 21]
+Looker                    Expires June 23, 2020                [Page 21]
+
