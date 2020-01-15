@@ -1,8 +1,10 @@
 # JSON Web Message (JWM) IETF Internet Draft RFC
 
-JSON Web Message (JWM) is a flexible way of describing an application-level message encoded in JSON that is suitable for transfer over a variety of transport protocols. JWMs through the application of JSON Web Signature (JWS) and JSON Web Encryption (JWE) can be digitally signed, integrity protected and or achieve confidentiality via encryption.
+JSON Web Message (JWM) aims to create an approachable basis for standardized secure messaging leveraging popular web technologies through the extension of the JOSE family of specifications.
 
 This is currently an IETF internet draft RFC available [here](https://datatracker.ietf.org/doc/draft-looker-jwm/).
+
+For a blog post explaining some more of the rationale behind JWM checkout [this link](https://medium.com/mattr-global/jwm-a-new-standard-for-secure-messaging-a21d3daa4403).
 
 ## Contributing
 
