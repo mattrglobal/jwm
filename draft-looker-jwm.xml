@@ -557,7 +557,7 @@
       <section anchor="registration-template" title="Registration Template">
         <section anchor="attribute-name-registration-template" title="Attribute Name:">
           <t>The name requested (e.g., "type").  Because a core goal of this specification is for the resulting representations to be compact,
-          it is RECOMMENDED that the name be short &#8211; that is, not to exceed 8 characters without a compelling reason to do so.  This name 
+          it is RECOMMENDED that the name be short &#8211; that is, not to exceed 15 characters without a compelling reason to do so.  This name 
           is case sensitive.  Names may not match other registered names in a case-insensitive manner unless the Designated Experts state that 
           there is a compelling reason to allow an exception.</t>
         </section>
