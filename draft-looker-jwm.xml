@@ -537,20 +537,20 @@
 
       <t>Support for digitally signed JWMs using JWS is REQUIRED. Of the signature and 
       MAC algorithms specified in JSON Web Algorithms <xref target="RFC7518"/>, only 
-      ECDSA using the Ed25519 curve and SHA-512 hash algorithm MUST be implemented 
+      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") MUST be implemented 
       by conforming JWM implementations. It is RECOMMENDED that implementations also support
-      ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and EdDSA using the 
-      P-256 curve and SHA-256 hash algorithm ("ES256"). Support for other algorithms and key sizes is 
+      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") MUST be implemented
+      Ed25519 curve and SHA-512 hash algorithm. Support for other algorithms and key sizes is 
       OPTIONAL.</t>
 
       <t>Support for encrypted JWMs using JWE is also REQUIRED. Of the encryption algorithms
       specified in <xref target="RFC7518"/>, using Elliptic Curve Diffie-Hellman Ephemeral 
-      Static (ECDH-ES) with the X25519 curve to agree upon a key and using 
+      Static (ECDH-ES) with the P-256 curve to agree upon a key and using 
       this key to to perform key wrapping of a Content Encryption Key ("ECDH-ES+A128KW" and 
       "ECDH-ES+A256KW") MUST be supported. With regards to content encryption, AES in 
       Galois/Counter Mode (GCM) with 128-bit and 256-bit keys ("A128GCM" and "A256GCM") 
       MUST also be supported. It is RECOMMENDED that implementations also support ECDH-ES and
-      key wrapping variants using the P-256 curve also.</t>
+      key wrapping variants using the X25519 curve also.</t>
 
       <t>Usage of the "none" algorithm identifier in a JWM as defined in the JOSE Web Algorithms section 3.6 
       <xref target="RFC7518"/> MUST be considered invalid.</t>
@@ -695,11 +695,13 @@
     </section>
 
     <section anchor="acknowledgements" title="Acknowledgements">
-    <t>The authors of this specification would like to acknowledge the 
+    <t>The authors of this draft would like to acknowledge the 
     following individuals for the significant contribution of ideas and 
     time spent reviewing this document:<vspace/>
     Kyle Den Hartog<vspace/>
-    Daniel Hardman<vspace/></t>
+    Daniel Hardman<vspace/>
+    Troy Ronda<vspace/>
+    Troy Ronda<vspace/></t>
     </section>
   </middle>
 
