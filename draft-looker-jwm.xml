@@ -539,7 +539,7 @@
       MAC algorithms specified in JSON Web Algorithms <xref target="RFC7518"/>, only 
       ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") MUST be implemented 
       by conforming JWM implementations. It is RECOMMENDED that implementations also support
-      ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") MUST be implemented
+      ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and EdDSA using the
       Ed25519 curve and SHA-512 hash algorithm. Support for other algorithms and key sizes is 
       OPTIONAL.</t>
 
