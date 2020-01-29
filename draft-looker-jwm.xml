@@ -429,9 +429,12 @@
         are no dependencies between the inputs and outputs of the steps.</t>
 
         <t><list style="numbers">
-          <t>Create a JWM Attribute Set containing the desired attributes. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding.</t>
+          <t>Create a JWM Attribute Set containing the desired attributes. Note that whitespace is explicitly allowed in the 
+          representation and no canonicalization need be performed before encoding.</t>
           <t>Let the Message be the octets of the UTF-8 representation of the JWM Attributes Set.</t>
-          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS <xref target="RFC7515"/> or JWE <xref target="RFC7516"/> specification. Note that whitespace is explicitly allowed in the representation and no canonicalization need be performed before encoding. THE JOSE "typ" header must be set to "JWM".</t>
+          <t>Create a JOSE Header containing the desired set of Header Parameters. The JWM MUST conform to either the JWS 
+          <xref target="RFC7515"/> or JWE <xref target="RFC7516"/> specification. Note that whitespace is explicitly allowed 
+          in the representation and no canonicalization need be performed before encoding.</t>
           <t>Depending upon whether the JWM is a JWS or JWE, there are two cases:</t>
         </list></t>
 
@@ -536,16 +539,18 @@
       MAC algorithms specified in JSON Web Algorithms <xref target="RFC7518"/>, only 
       ECDSA using the P-256 curve and SHA-256 hash algorithm ("ES256") MUST be implemented 
       by conforming JWM implementations. It is RECOMMENDED that implementations also support
-      ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and EdDSA using the 
+      ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512") and EdDSA using the
       Ed25519 curve and SHA-512 hash algorithm. Support for other algorithms and key sizes is 
       OPTIONAL.</t>
 
       <t>Support for encrypted JWMs using JWE is also REQUIRED. Of the encryption algorithms
       specified in <xref target="RFC7518"/>, using Elliptic Curve Diffie-Hellman Ephemeral 
-      Static (ECDH-ES) to agree upon a key and using this key to to perform key wrapping
-      of a Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported. 
-      With regards to content encryption, AES in Galois/Counter Mode (GCM) with 128-bit and 256-bit
-      keys ("A128GCM" and "A256GCM") MUST also be supported.</t>
+      Static (ECDH-ES) with the P-256 curve to agree upon a key and using 
+      this key to to perform key wrapping of a Content Encryption Key ("ECDH-ES+A128KW" and 
+      "ECDH-ES+A256KW") MUST be supported. With regards to content encryption, AES in 
+      Galois/Counter Mode (GCM) with 128-bit and 256-bit keys ("A128GCM" and "A256GCM") 
+      MUST also be supported. It is RECOMMENDED that implementations also support ECDH-ES and
+      key wrapping variants using the X25519 curve also.</t>
 
       <t>Usage of the "none" algorithm identifier in a JWM as defined in the JOSE Web Algorithms section 3.6 
       <xref target="RFC7518"/> MUST be considered invalid.</t>
@@ -557,7 +562,7 @@
       <section anchor="registration-template" title="Registration Template">
         <section anchor="attribute-name-registration-template" title="Attribute Name:">
           <t>The name requested (e.g., "type").  Because a core goal of this specification is for the resulting representations to be compact,
-          it is RECOMMENDED that the name be short &#8211; that is, not to exceed 8 characters without a compelling reason to do so.  This name 
+          it is RECOMMENDED that the name be short &#8211; that is, not to exceed 15 characters without a compelling reason to do so.  This name 
           is case sensitive.  Names may not match other registered names in a case-insensitive manner unless the Designated Experts state that 
           there is a compelling reason to allow an exception.</t>
         </section>
@@ -690,11 +695,13 @@
     </section>
 
     <section anchor="acknowledgements" title="Acknowledgements">
-    <t>The authors of this specification would like to acknowledge the 
+    <t>The authors of this draft would like to acknowledge the 
     following individuals for the significant contribution of ideas and 
     time spent reviewing this document:<vspace/>
     Kyle Den Hartog<vspace/>
-    Daniel Hardman<vspace/></t>
+    Daniel Hardman<vspace/>
+    Troy Ronda<vspace/>
+    George Aristy<vspace/></t>
     </section>
   </middle>
 

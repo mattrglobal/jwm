@@ -741,8 +741,7 @@ Internet-Draft                     jwm                     December 2019
        Parameters.  The JWM MUST conform to either the JWS [RFC7515] or
        JWE [RFC7516] specification.  Note that whitespace is explicitly
        allowed in the representation and no canonicalization need be
-       performed before encoding.  THE JOSE "typ" header must be set to
-       "JWM".
+       performed before encoding.
 
    4.  Depending upon whether the JWM is a JWS or JWE, there are two
        cases:
@@ -774,6 +773,7 @@ Internet-Draft                     jwm                     December 2019
        in the new JOSE Header created in that step.
 
    2.  Otherwise, let the resulting JWM be the JWS or JWE.
+
 
 
 
@@ -903,12 +903,14 @@ Internet-Draft                     jwm                     December 2019
 
    Support for encrypted JWMs using JWE is also REQUIRED.  Of the
    encryption algorithms specified in [RFC7518], using Elliptic Curve
-   Diffie-Hellman Ephemeral Static (ECDH-ES) to agree upon a key and
-   using this key to to perform key wrapping of a Content Encryption Key
-   ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST be supported.  With
-   regards to content encryption, AES in Galois/Counter Mode (GCM) with
-   128-bit and 256-bit keys ("A128GCM" and "A256GCM") MUST also be
-   supported.
+   Diffie-Hellman Ephemeral Static (ECDH-ES) with the P-256 curve to
+   agree upon a key and using this key to to perform key wrapping of a
+   Content Encryption Key ("ECDH-ES+A128KW" and "ECDH-ES+A256KW") MUST
+   be supported.  With regards to content encryption, AES in Galois/
+   Counter Mode (GCM) with 128-bit and 256-bit keys ("A128GCM" and
+   "A256GCM") MUST also be supported.  It is RECOMMENDED that
+   implementations also support ECDH-ES and key wrapping variants using
+   the X25519 curve also.
 
    Usage of the "none" algorithm identifier in a JWM as defined in the
    JOSE Web Algorithms section 3.6 [RFC7518] MUST be considered invalid.
@@ -923,7 +925,7 @@ Internet-Draft                     jwm                     December 2019
 
    The name requested (e.g., "type").  Because a core goal of this
    specification is for the resulting representations to be compact, it
-   is RECOMMENDED that the name be short - that is, not to exceed 8
+   is RECOMMENDED that the name be short - that is, not to exceed 15
    characters without a compelling reason to do so.  This name is case
    sensitive.  Names may not match other registered names in a case-
    insensitive manner unless the Designated Experts state that there is
@@ -943,8 +945,6 @@ Internet-Draft                     jwm                     December 2019
 
    Reference to the document or documents that specify the parameter,
    preferably including URIs that can be used to retrieve copies of the
-   documents.  An indication of the relevant sections may also be
-   included but is not required.
 
 
 
@@ -953,6 +953,9 @@ Looker                    Expires June 23, 2020                [Page 17]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   documents.  An indication of the relevant sections may also be
+   included but is not required.
 
 7.1.5.  Initial Registry Contents
 
@@ -999,9 +1002,6 @@ Internet-Draft                     jwm                     December 2019
    o Attribute Name: "reply_url"
    o Attribute Description: Message Reply URL
    o Change Controller:
-   o Specification Document(s):
-
-   o Attribute Name: "reply_to"
 
 
 
@@ -1010,6 +1010,9 @@ Looker                    Expires June 23, 2020                [Page 18]
 Internet-Draft                     jwm                     December 2019
 
 
+   o Specification Document(s):
+
+   o Attribute Name: "reply_to"
    o Attribute Description: Message Reply To
    o Change Controller:
    o Specification Document(s):
@@ -1055,9 +1058,6 @@ Internet-Draft                     jwm                     December 2019
    Note that potential concerns about security issues related to the
    order of signing and encryption operations are already addressed by
    the underlying JWS and JWE specifications; in particular, because JWE
-   only supports the use of authenticated encryption algorithms,
-   cryptographic concerns about the potential need to sign after
-
 
 
 
@@ -1066,6 +1066,8 @@ Looker                    Expires June 23, 2020                [Page 19]
 Internet-Draft                     jwm                     December 2019
 
 
+   only supports the use of authenticated encryption algorithms,
+   cryptographic concerns about the potential need to sign after
    encryption that apply in many contexts do not apply to this
    specification.
 
@@ -1083,11 +1085,13 @@ Internet-Draft                     jwm                     December 2019
 
 11.  Acknowledgements
 
-   The authors of this specification would like to acknowledge the
-   following individuals for the significant contribution of ideas and
-   time spent reviewing this document:
+   The authors of this draft would like to acknowledge the following
+   individuals for the significant contribution of ideas and time spent
+   reviewing this document:
    Kyle Den Hartog
    Daniel Hardman
+   Troy Ronda
+   George Aristy
 
 12.  Normative References
 
@@ -1110,10 +1114,6 @@ Internet-Draft                     jwm                     December 2019
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
               2014, <https://www.rfc-editor.org/info/rfc7159>.
 
-   [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
-              Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
-              2015, <https://www.rfc-editor.org/info/rfc7515>.
-
 
 
 
@@ -1121,6 +1121,10 @@ Looker                    Expires June 23, 2020                [Page 20]
 
 Internet-Draft                     jwm                     December 2019
 
+
+   [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
+              Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
+              2015, <https://www.rfc-editor.org/info/rfc7515>.
 
    [RFC7516]  Jones, M. and J. Hildebrand, "JSON Web Encryption (JWE)",
               RFC 7516, DOI 10.17487/RFC7516, May 2015,
@@ -1144,10 +1148,6 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
-
-
-
-
 
 
 
