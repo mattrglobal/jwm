@@ -217,7 +217,7 @@ Internet-Draft                     jwm                     December 2019
       serialization for both JWS and JWE representations.  This means
       JWTs can feature only a single digital signature, and/or encrypt
       for only a single recipient.  In contrast, JWMs support multiple
-
+      digital signatures, and encryption for multiple recipients.  They
 
 
 
@@ -226,8 +226,9 @@ Looker                    Expires June 23, 2020                 [Page 4]
 Internet-Draft                     jwm                     December 2019
 
 
-      digital signatures, and encryption for multiple recipients.  They
-      achieve this using the JSON-based serialization of JWS and JWE.
+      achieve this using the JSON-based serialization of JWS and the
+      General JSON serialization of JWE.  The Flattened JSON
+      serialization of JWE is not used in JWM.
 
    o  JWTs support an insecure format as defined in Section 6 of
       [RFC7519], JWMs do not allow this format due to the
@@ -273,7 +274,6 @@ Internet-Draft                     jwm                     December 2019
 
    eyJpZCI6InVybjp1dWlkOmVmNWE3MzY5LWYwYjktNDE0My1hNDlkLTJiOWM3ZWU1MTExN
    yIsInR5cGUiOiJoZWxsby13b3JsZC1tZXNzYWdlLXR5cGUiLCJmcm9tIjoidXJuOnV1aW
-   Q6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE
 
 
 
@@ -282,6 +282,7 @@ Looker                    Expires June 23, 2020                 [Page 5]
 Internet-Draft                     jwm                     December 2019
 
 
+   Q6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE
    2MjM5MDIyLCJ0aW1lX3N0YW1wIjoxNTE2MjY5MDIyLCJib2R5Ijp7Im1lc3NhZ2UiOiJI
    ZWxsbyB3b3JsZCEifX0
 
@@ -325,7 +326,6 @@ Internet-Draft                     jwm                     December 2019
            }
          ]
        }
-
 
 
 

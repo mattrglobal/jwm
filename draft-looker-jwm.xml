@@ -114,7 +114,7 @@
                 JWS and JWE representations. This means JWTs can feature only a single
                 digital signature, and/or encrypt for only a single recipient. In contrast, JWMs support multiple
                 digital signatures, and encryption for multiple recipients. They achieve this
-                using the JSON-based serialization of JWS and JWE.</t>
+                using the JSON-based serialization of JWS and the General JSON serialization of JWE. The Flattened JSON serialization of JWE is not used in JWM.</t>
 
                 <t>JWTs support an insecure format as defined in Section 6 of <xref target="RFC7519"/>, JWMs do not allow this format
                 due to the vulnerabilities it introduces.</t>
