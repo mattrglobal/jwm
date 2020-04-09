@@ -446,7 +446,7 @@
           <t>Else, if the JWM is a JWE, create a JWE using the JWM Attribute Set as the plaintext for the JWE; all steps specified in JWE <xref target="RFC7516"/> for creating a JWE MUST be followed. 
           If the resulting JWE features only a single recipient, it can optionally be formated into JWE compact serialization format allowing the message to be URL safe. If however, the 
           resulting JWE features multiple recipients and URL safety for the message is still required, the entire JWE in JSON serialization format MUST be encoded to base64url format. Otherwise the output format for 
-          the JWE MUST be JWE JSON serialization format.</t>
+          the JWE MUST be General JWE JSON serialization format. The Flattened JWE JSON serialization format is not acceptable for a JWM.</t>
         </list></t>
 
         <t><list style="numbers">
