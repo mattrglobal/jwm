@@ -77,11 +77,10 @@ Table of Contents
        3.1.3.  "body" Attribute  . . . . . . . . . . . . . . . . . .  10
        3.1.4.  "to" Attribute  . . . . . . . . . . . . . . . . . . .  11
        3.1.5.  "from" Attribute  . . . . . . . . . . . . . . . . . .  11
-       3.1.6.  "thread_id" Attribute . . . . . . . . . . . . . . . .  11
-       3.1.7.  "created_time" Attribute  . . . . . . . . . . . . . .  11
-       3.1.8.  "expires_time" Attribute  . . . . . . . . . . . . . .  11
-       3.1.9.  "reply_url" Attribute . . . . . . . . . . . . . . . .  11
-       3.1.10. "reply_to" Attribute  . . . . . . . . . . . . . . . .  12
+       3.1.6.  "created_time" Attribute  . . . . . . . . . . . . . .  11
+       3.1.7.  "expires_time" Attribute  . . . . . . . . . . . . . .  11
+       3.1.8.  "reply_url" Attribute . . . . . . . . . . . . . . . .  11
+       3.1.9.  "reply_to" Attribute  . . . . . . . . . . . . . . . .  11
      3.2.  Public Attribute Names  . . . . . . . . . . . . . . . . .  12
      3.3.  Private Attribute Names . . . . . . . . . . . . . . . . .  12
    4.  JOSE Header . . . . . . . . . . . . . . . . . . . . . . . . .  12
@@ -90,7 +89,7 @@ Table of Contents
      4.3.  Replicating Attributes as Header Parameters . . . . . . .  13
    5.  Creating and Validating JWMs  . . . . . . . . . . . . . . . .  13
      5.1.  Creating a JWM  . . . . . . . . . . . . . . . . . . . . .  13
-     5.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  15
+     5.2.  Validating a JWM  . . . . . . . . . . . . . . . . . . . .  14
      5.3.  String Comparison Rules . . . . . . . . . . . . . . . . .  16
    6.  Implementation Requirements . . . . . . . . . . . . . . . . .  16
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
@@ -99,13 +98,14 @@ Table of Contents
        7.1.2.  Attribute Description . . . . . . . . . . . . . . . .  17
        7.1.3.  Change Controller . . . . . . . . . . . . . . . . . .  17
        7.1.4.  Specification Document(s) . . . . . . . . . . . . . .  17
-       7.1.5.  Initial Registry Contents . . . . . . . . . . . . . .  18
-   8.  Media Type Registration . . . . . . . . . . . . . . . . . . .  19
-     8.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  19
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
+       7.1.5.  Initial Registry Contents . . . . . . . . . . . . . .  17
+   8.  Media Type Registration . . . . . . . . . . . . . . . . . . .  18
+     8.1.  Registry Contents . . . . . . . . . . . . . . . . . . . .  18
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
      9.1.  Trust Decisions . . . . . . . . . . . . . . . . . . . . .  19
      9.2.  Signing and Encryption Order  . . . . . . . . . . . . . .  19
-   10. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  20
+   10. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  19
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
 
 
 
@@ -114,7 +114,6 @@ Looker                    Expires June 23, 2020                 [Page 2]
 Internet-Draft                     jwm                     December 2019
 
 
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
    12. Normative References  . . . . . . . . . . . . . . . . . . . .  20
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  21
 
@@ -162,6 +161,7 @@ Internet-Draft                     jwm                     December 2019
       sender intended for processing by one or more recipients.  An
       attribute is represented in a JWM Attribute Set as a name/value
       pair consisting of an Attribute Name and an Attribute Value.
+
 
 
 
@@ -577,15 +577,7 @@ Internet-Draft                     jwm                     December 2019
    StringOrURI value.  The processing of this attribute is generally
    application specific.  Use of this attribute is OPTIONAL.
 
-3.1.6.  "thread_id" Attribute
-
-   The "thread_id" attribute is used to associate the JWM to a group of
-   related messages often referred to as a thread.  The "thread_id"
-   attribute value is a case-sensitive string containing a StringOrURI
-   value.  The processing of this attribute is generally application
-   specific.  Use of this attribute is OPTIONAL.
-
-3.1.7.  "created_time" Attribute
+3.1.6.  "created_time" Attribute
 
    The "created_time" attribute is used to define the time in which the
    message was created.  The "created_time" attributes value MUST be a
@@ -593,7 +585,7 @@ Internet-Draft                     jwm                     December 2019
    attribute is generally application specific.  Use of this attribute
    is OPTIONAL.
 
-3.1.8.  "expires_time" Attribute
+3.1.7.  "expires_time" Attribute
 
    The "expires_time" attribute is used to define the lifespan or
    lifetime of the JWM.  The "expires_time" attributes value MUST be a
@@ -601,13 +593,21 @@ Internet-Draft                     jwm                     December 2019
    attribute is generally application specific.  Use of this attribute
    is OPTIONAL.
 
-3.1.9.  "reply_url" Attribute
+3.1.8.  "reply_url" Attribute
 
    The "reply_url" attribute is used to define a url to which a response
    to the message can be sent.  The "reply_url" attribute value is a
    case-sensitive string containing a StringOrURI value.  The processing
    of this attribute is generally application specific.  Use of this
    attribute is OPTIONAL.
+
+3.1.9.  "reply_to" Attribute
+
+   The "reply_to" attribute is used to define who a response to the
+   message should be sent to.  The "reply_to" attribute value is a case-
+   sensitive string containing an array of case-sensitive strings
+   containing StringOrURI values.  The processing of this attribute is
+   generally application specific.  Use of this attribute is OPTIONAL.
 
 
 
@@ -617,14 +617,6 @@ Looker                    Expires June 23, 2020                [Page 11]
 
 Internet-Draft                     jwm                     December 2019
 
-
-3.1.10.  "reply_to" Attribute
-
-   The "reply_to" attribute is used to define who a response to the
-   message should be sent to.  The "reply_to" attribute value is a case-
-   sensitive string containing an array of case-sensitive strings
-   containing StringOrURI values.  The processing of this attribute is
-   generally application specific.  Use of this attribute is OPTIONAL.
 
 3.2.  Public Attribute Names
 
@@ -666,14 +658,6 @@ Internet-Draft                     jwm                     December 2019
    present in an application data structure that can contain a JWM
    object; the application can use this value to disambiguate among the
    different kinds of objects that might be present.  It will typically
-
-
-
-Looker                    Expires June 23, 2020                [Page 12]
-
-Internet-Draft                     jwm                     December 2019
-
-
    not be used by applications when it is already known that the object
    is a JWM.  This parameter is ignored by JWM implementations; any
    processing of this parameter is performed by the JWM application.  If
@@ -682,6 +666,13 @@ Internet-Draft                     jwm                     December 2019
    it is RECOMMENDED that "JWM" always be spelled using uppercase
    characters for compatibility with legacy implementations.  Use of
    this Header Parameter is OPTIONAL.
+
+
+
+Looker                    Expires June 23, 2020                [Page 12]
+
+Internet-Draft                     jwm                     December 2019
+
 
 4.2.  "cty" (Content Type) Header Parameter
 
@@ -723,19 +714,21 @@ Internet-Draft                     jwm                     December 2019
    steps is not significant in cases where there are no dependencies
    between the inputs and outputs of the steps.
 
-
-
-Looker                    Expires June 23, 2020                [Page 13]
-
-Internet-Draft                     jwm                     December 2019
-
-
    1.  Create a JWM Attribute Set containing the desired attributes.
        Note that whitespace is explicitly allowed in the representation
        and no canonicalization need be performed before encoding.
 
    2.  Let the Message be the octets of the UTF-8 representation of the
        JWM Attributes Set.
+
+
+
+
+
+Looker                    Expires June 23, 2020                [Page 13]
+
+Internet-Draft                     jwm                     December 2019
+
 
    3.  Create a JOSE Header containing the desired set of Header
        Parameters.  The JWM MUST conform to either the JWS [RFC7515] or
@@ -775,17 +768,6 @@ Internet-Draft                     jwm                     December 2019
 
    2.  Otherwise, let the resulting JWM be the JWS or JWE.
 
-
-
-
-
-
-
-Looker                    Expires June 23, 2020                [Page 14]
-
-Internet-Draft                     jwm                     December 2019
-
-
 5.2.  Validating a JWM
 
    When validating a JWM, the following steps are performed.  The order
@@ -796,6 +778,13 @@ Internet-Draft                     jwm                     December 2019
 
    1.  If the JWM is a valid base64url string containing at least one
        period ('.') character.
+
+
+
+Looker                    Expires June 23, 2020                [Page 14]
+
+Internet-Draft                     jwm                     December 2019
+
 
        1.  Let the Encoded JOSE Header be the portion of the JWM before
            the first period ('.') character.
@@ -835,13 +824,6 @@ Internet-Draft                     jwm                     December 2019
    5.  Determine whether the JWM is a JWS or a JWE using any of the
        methods described in Section 9 of [RFC7516].
 
-
-
-Looker                    Expires June 23, 2020                [Page 15]
-
-Internet-Draft                     jwm                     December 2019
-
-
    6.  Depending upon whether the JWM is a JWS or JWE, there are two
        cases:
 
@@ -852,6 +834,13 @@ Internet-Draft                     jwm                     December 2019
        *  Else, if the JWM is a JWE, follow the steps specified in
           [RFC7516] for validating a JWE.  Let the Message be the
           resulting plaintext.
+
+
+
+Looker                    Expires June 23, 2020                [Page 15]
+
+Internet-Draft                     jwm                     December 2019
+
 
    7.  If the JOSE Header contains a "cty" (content type) value of
        "JWM", then the Message is a JWM that was the subject of nested
@@ -890,14 +879,6 @@ Internet-Draft                     jwm                     December 2019
    algorithm ("ES256") MUST be implemented by conforming JWM
    implementations.  It is RECOMMENDED that implementations also support
    ECDSA using the P-521 curve and the SHA-512 hash algorithm ("ES512")
-
-
-
-Looker                    Expires June 23, 2020                [Page 16]
-
-Internet-Draft                     jwm                     December 2019
-
-
    and EdDSA using the Ed25519 curve and SHA-512 hash algorithm.
    Support for other algorithms and key sizes is OPTIONAL.
 
@@ -909,6 +890,14 @@ Internet-Draft                     jwm                     December 2019
    be supported.  With regards to content encryption, AES in Galois/
    Counter Mode (GCM) with 128-bit and 256-bit keys ("A128GCM" and
    "A256GCM") MUST also be supported.  It is RECOMMENDED that
+
+
+
+Looker                    Expires June 23, 2020                [Page 16]
+
+Internet-Draft                     jwm                     December 2019
+
+
    implementations also support ECDH-ES and key wrapping variants using
    the X25519 curve also.
 
@@ -945,15 +934,6 @@ Internet-Draft                     jwm                     December 2019
 
    Reference to the document or documents that specify the parameter,
    preferably including URIs that can be used to retrieve copies of the
-
-
-
-
-Looker                    Expires June 23, 2020                [Page 17]
-
-Internet-Draft                     jwm                     December 2019
-
-
    documents.  An indication of the relevant sections may also be
    included but is not required.
 
@@ -966,6 +946,14 @@ Internet-Draft                     jwm                     December 2019
 
    o Attribute Name: "type"
    o Attribute Description: Message Type
+
+
+
+Looker                    Expires June 23, 2020                [Page 17]
+
+Internet-Draft                     jwm                     December 2019
+
+
    o Change Controller:
    o Specification Document(s):
 
@@ -984,11 +972,6 @@ Internet-Draft                     jwm                     December 2019
    o Change Controller:
    o Specification Document(s):
 
-   o Attribute Name: "thread_id"
-   o Attribute Description: Message Thread ID
-   o Change Controller:
-   o Specification Document(s):
-
    o Attribute Name: "created_time"
    o Attribute Description: Message Created Time
    o Change Controller:
@@ -1002,14 +985,6 @@ Internet-Draft                     jwm                     December 2019
    o Attribute Name: "reply_url"
    o Attribute Description: Message Reply URL
    o Change Controller:
-
-
-
-Looker                    Expires June 23, 2020                [Page 18]
-
-Internet-Draft                     jwm                     December 2019
-
-
    o Specification Document(s):
 
    o Attribute Name: "reply_to"
@@ -1027,6 +1002,13 @@ Internet-Draft                     jwm                     December 2019
    application must be addressed by JWM/JWS/JWE/JWK agents.  Among these
    issues are protecting the user's asymmetric private and symmetric
    secret keys and employing countermeasures to various attacks.
+
+
+
+Looker                    Expires June 23, 2020                [Page 18]
+
+Internet-Draft                     jwm                     December 2019
+
 
    All the security considerations in the JWS specification also apply
    to JWM, as do the JWE security considerations when encryption is
@@ -1058,14 +1040,6 @@ Internet-Draft                     jwm                     December 2019
    Note that potential concerns about security issues related to the
    order of signing and encryption operations are already addressed by
    the underlying JWS and JWE specifications; in particular, because JWE
-
-
-
-Looker                    Expires June 23, 2020                [Page 19]
-
-Internet-Draft                     jwm                     December 2019
-
-
    only supports the use of authenticated encryption algorithms,
    cryptographic concerns about the potential need to sign after
    encryption that apply in many contexts do not apply to this
@@ -1082,6 +1056,15 @@ Internet-Draft                     jwm                     December 2019
    support endpoint authentication, such as Transport Layer Security
    (TLS).  Omitting privacy-sensitive information from a JWM is the
    simplest way of minimizing privacy issues.
+
+
+
+
+
+Looker                    Expires June 23, 2020                [Page 19]
+
+Internet-Draft                     jwm                     December 2019
+
 
 11.  Acknowledgements
 
@@ -1114,14 +1097,6 @@ Internet-Draft                     jwm                     December 2019
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
               2014, <https://www.rfc-editor.org/info/rfc7159>.
 
-
-
-
-Looker                    Expires June 23, 2020                [Page 20]
-
-Internet-Draft                     jwm                     December 2019
-
-
    [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web
               Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May
               2015, <https://www.rfc-editor.org/info/rfc7515>.
@@ -1138,6 +1113,15 @@ Internet-Draft                     jwm                     December 2019
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/info/rfc7519>.
 
+
+
+
+
+Looker                    Expires June 23, 2020                [Page 20]
+
+Internet-Draft                     jwm                     December 2019
+
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
@@ -1148,6 +1132,22 @@ Author's Address
    Mattr
 
    Email: tobias.looker@mattr.global
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
