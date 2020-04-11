@@ -331,12 +331,6 @@
           value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
 
-        <section anchor="attributes-thread-id" title="&quot;thread_id&quot; Attribute">
-          <t>The "thread_id" attribute is used to associate the JWM to a group of related messages often referred to as a thread. The "thread_id" attribute value 
-          is a case-sensitive string containing a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute 
-          is OPTIONAL.</t>
-        </section>
-
         <section anchor="attributes-created-time" title="&quot;created_time&quot; Attribute">
           <t>The "created_time" attribute is used to define the time in which the message was created. The "created_time" attributes value MUST be a number containing a 
           NumericDate value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
@@ -607,11 +601,6 @@
           o  Change Controller:<vspace/>
           o  Specification Document(s):</t>
 
-          <t>o  Attribute Name: "thread_id"<vspace/>
-          o  Attribute Description: Message Thread ID<vspace/>
-          o  Change Controller:<vspace/>
-          o  Specification Document(s):</t>
-
           <t>o  Attribute Name: "created_time"<vspace/>
           o  Attribute Description: Message Created Time<vspace/>
           o  Change Controller:<vspace/>
@@ -701,7 +690,8 @@
     Kyle Den Hartog<vspace/>
     Daniel Hardman<vspace/>
     Troy Ronda<vspace/>
-    George Aristy<vspace/></t>
+    George Aristy<vspace/>
+	Sam Curren<vspace/></t>
     </section>
   </middle>
 
