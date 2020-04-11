@@ -1075,6 +1075,7 @@ Internet-Draft                     jwm                     December 2019
    Daniel Hardman
    Troy Ronda
    George Aristy
+   Sam Curren
 
 12.  Normative References
 
@@ -1112,7 +1113,6 @@ Internet-Draft                     jwm                     December 2019
    [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, "JSON Web Token
               (JWT)", RFC 7519, DOI 10.17487/RFC7519, May 2015,
               <https://www.rfc-editor.org/info/rfc7519>.
-
 
 
 
