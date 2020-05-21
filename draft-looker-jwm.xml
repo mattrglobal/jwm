@@ -347,9 +347,8 @@
         </section>
 
         <section anchor="attributes-reply-to" title="&quot;reply_to&quot; Attribute">
-          <t>The "reply_to" attribute is used to define who a response to the message should be sent to. The "reply_to" attribute value is a case-sensitive string 
-          containing an array of case-sensitive strings containing StringOrURI values. The processing of this attribute is generally application specific. 
-          Use of this attribute is OPTIONAL.</t>
+          <t>The "reply_to" attribute is used to define who a response to the message should be sent to. The "reply_to" attribute value is an array of case-sensitive strings each 
+          containing a StringOrURI value. The processing of this attribute is generally application specific. Use of this attribute is OPTIONAL.</t>
         </section>
       </section>
 
