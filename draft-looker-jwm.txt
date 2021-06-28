@@ -4,8 +4,8 @@
 
 Network Working Group                                     T. Looker, Ed.
 Internet-Draft                                                     Mattr
-Intended status: Standards Track                       December 21, 2019
-Expires: June 23, 2020
+Intended status: Standards Track                            June 6, 2021
+Expires: December 8, 2021
 
 
                             JSON Web Message
@@ -35,11 +35,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 23, 2020.
+   This Internet-Draft will expire on December 8, 2021.
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2021 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Looker                    Expires June 23, 2020                 [Page 1]
+Looker                  Expires December 8, 2021                [Page 1]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Looker                    Expires June 23, 2020                 [Page 2]
+Looker                  Expires December 8, 2021                [Page 2]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    12. Normative References  . . . . . . . . . . . . . . . . . . . .  20
@@ -165,9 +165,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 3]
+Looker                  Expires December 8, 2021                [Page 3]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    Attribute Name  The name portion of an attribute representation.  An
@@ -221,9 +221,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 4]
+Looker                  Expires December 8, 2021                [Page 4]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
       achieve this using the JSON-based serialization of JWS and the
@@ -277,9 +277,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 5]
+Looker                  Expires December 8, 2021                [Page 5]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    Q6OGFiZGY1ZmItNjIxZS00Y2Y1LWE1OTUtMDcxYmMyYzkxZDgyIiwiZXhwaXJ5IjoxNTE
@@ -333,9 +333,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 6]
+Looker                  Expires December 8, 2021                [Page 6]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
 2.3.  Example Encrypted JWM
@@ -389,9 +389,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 7]
+Looker                  Expires December 8, 2021                [Page 7]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    {
@@ -445,9 +445,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 8]
+Looker                  Expires December 8, 2021                [Page 8]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    awEW6ssGMbQxmvv4FPf0smom4QvPNrgLaxFiMMRXmUTgcs6mLcSJDbUhwLfGfnEeu2a0b
@@ -501,9 +501,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                 [Page 9]
+Looker                  Expires December 8, 2021                [Page 9]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    in the absence of such requirements, all attributes that are not
@@ -557,9 +557,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 10]
+Looker                  Expires December 8, 2021               [Page 10]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
 3.1.4.  "to" Attribute
@@ -613,9 +613,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 11]
+Looker                  Expires December 8, 2021               [Page 11]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
 3.2.  Public Attribute Names
@@ -669,9 +669,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 12]
+Looker                  Expires December 8, 2021               [Page 12]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
 4.2.  "cty" (Content Type) Header Parameter
@@ -725,9 +725,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 13]
+Looker                  Expires December 8, 2021               [Page 13]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    3.  Create a JOSE Header containing the desired set of Header
@@ -781,9 +781,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 14]
+Looker                  Expires December 8, 2021               [Page 14]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
        1.  Let the Encoded JOSE Header be the portion of the JWM before
@@ -837,9 +837,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 15]
+Looker                  Expires December 8, 2021               [Page 15]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    7.  If the JOSE Header contains a "cty" (content type) value of
@@ -893,9 +893,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 16]
+Looker                  Expires December 8, 2021               [Page 16]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    implementations also support ECDH-ES and key wrapping variants using
@@ -949,9 +949,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 17]
+Looker                  Expires December 8, 2021               [Page 17]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    o Change Controller:
@@ -1005,9 +1005,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 18]
+Looker                  Expires December 8, 2021               [Page 18]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    All the security considerations in the JWS specification also apply
@@ -1061,9 +1061,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 19]
+Looker                  Expires December 8, 2021               [Page 19]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
 11.  Acknowledgements
@@ -1117,9 +1117,9 @@ Internet-Draft                     jwm                     December 2019
 
 
 
-Looker                    Expires June 23, 2020                [Page 20]
+Looker                  Expires December 8, 2021               [Page 20]
 
-Internet-Draft                     jwm                     December 2019
+Internet-Draft                     jwm                         June 2021
 
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
@@ -1173,4 +1173,4 @@ Author's Address
 
 
 
-Looker                    Expires June 23, 2020                [Page 21]
+Looker                  Expires December 8, 2021               [Page 21]
